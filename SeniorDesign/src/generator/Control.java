@@ -13,9 +13,10 @@ public class Control {
 	
 	public static void main(String[] args) {
 		ProblemComponent problem = new ProblemComponent(1);
-		Converter converter = new Converter();
 		
-		PrintWriter code = converter.convertProblem(problem);
+		Converter converter = new Converter();
+		converter.convertProblem(problem);
+		
 		String[] codeArr = {path};
 		try {
 			languageInterpreter.main(codeArr);
@@ -39,7 +40,7 @@ public class Control {
 			e.printStackTrace();
 		}
 		
-		System.out.println("\nWhat is the value of " +problem.getTestVariable());
+		System.out.println("What is the value of " +problem.getTestVariable());
 		System.out.println("1. " + problem.getCorrectAnswer());
 		System.out.println("2. " + problem.getIncorrect1());
 		System.out.println("3. " + problem.getIncorrect2());

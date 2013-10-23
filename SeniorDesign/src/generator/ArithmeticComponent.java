@@ -16,7 +16,7 @@ public class ArithmeticComponent extends LogicComponent {
 	public int createLines(){
 		String testVariable = parentFunction.getTestVariable();
 		int initialValue = parentFunction.getVariables().get(testVariable);
-		int increment = random.nextInt(20);;
+		int increment = random.nextInt(20);
 		
 		Line additionLine = new Line();
 		childLines.add(additionLine);
@@ -25,7 +25,6 @@ public class ArithmeticComponent extends LogicComponent {
 		additionLine.addition(testVariable, increment);
 		
 		int newValue = initialValue + increment;
-		//add 6 to testVariable
 		return newValue;
 	}
 	

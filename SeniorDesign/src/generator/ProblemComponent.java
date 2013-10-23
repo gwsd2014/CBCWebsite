@@ -27,7 +27,7 @@ public class ProblemComponent extends Component {
 		Random rand = new Random();
 
 		// now create the incorrect answers
-
+		
 		incorrectAnswer1 = (int) (correctAnswer * rand.nextGaussian());
 		while (incorrectAnswer1 == correctAnswer) {
 			incorrectAnswer1 = (int) (correctAnswer * rand.nextGaussian());

@@ -13,6 +13,7 @@ public class Converter {
 			output = new PrintWriter("src/output.txt");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
+			System.out.println("Fialed");
 			e.printStackTrace();
 		}
 	}

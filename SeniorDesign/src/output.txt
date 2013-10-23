@@ -1,0 +1,6 @@
+class one
+	function foo ( )
+		var x = 0 
+		x = x + 9 
+	endfunction
+endclass

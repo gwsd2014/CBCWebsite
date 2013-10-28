@@ -1,6 +1,11 @@
 class one
 	function foo ( )
-		var x = 0 
-		x = x + 19 
+		var h = 8 
+		var p = 6 
+		var k = -3 
+
+		p = p + p 
+		k = k + h 
+		h = h + h 
 	endfunction
 endclass

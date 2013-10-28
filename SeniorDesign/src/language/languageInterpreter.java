@@ -1,20 +1,19 @@
 package language;
 import org.antlr.runtime.*;
 
-public class languageInterpreter {
+public class LanguageInterpreter {
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) throws Exception{
-		languageLexer lex = new languageLexer(new ANTLRFileStream(args[0]));
+		LanguageLexer lex = new LanguageLexer(new ANTLRFileStream(args[0]));
         CommonTokenStream tokens = new CommonTokenStream(lex);
  
-        languageParser parser = new languageParser(tokens);
+        LanguageParser parser = new LanguageParser(tokens);
  
         try {
             parser.file();
-            System.out.println("Correctly parsed");
         } catch (RecognitionException e)  {
             e.printStackTrace();
         }

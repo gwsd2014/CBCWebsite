@@ -5,10 +5,10 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 
 public class Converter {
-	
+
 	PrintWriter output;
-	
-	public Converter(){
+
+	public Converter() {
 		try {
 			output = new PrintWriter("src/output.txt");
 		} catch (FileNotFoundException e) {
@@ -23,7 +23,7 @@ public class Converter {
 				.hasNext();) {
 			convertClass(i.next());
 		}
-		
+
 		output.close();
 		return output;
 	}
@@ -31,8 +31,8 @@ public class Converter {
 	public void convertClass(ClassComponent classComp) {
 		output.println("class " + classComp.getName());
 
-		for (Iterator<FunctionComponent> i = classComp.getChildren()
-				.iterator(); i.hasNext();) {
+		for (Iterator<FunctionComponent> i = classComp.getChildren().iterator(); i
+				.hasNext();) {
 			convertFunction(i.next(), 1);
 		}
 		output.println("endclass");
@@ -45,10 +45,11 @@ public class Converter {
 			indent += "\t";
 		}
 
-		output.println(indent + "function " + function.getName()+ " ( )");
+		output.println(indent + "function " + function.getName() + " ( )");
 
 		// print the variable declarations at the top of the function
-		for (Iterator<Line> i = function.getChildLines().iterator(); i.hasNext();) {
+		for (Iterator<Line> i = function.getChildLines().iterator(); i
+				.hasNext();) {
 			convertLine(i.next(), indentation + 1);
 		}
 
@@ -70,7 +71,8 @@ public class Converter {
 
 		// Arithmetic
 		if (logic instanceof ArithmeticComponent) {
-			for (Iterator<Line> i = ((ArithmeticComponent) logic).getChildLines().iterator(); i.hasNext();) {
+			for (Iterator<Line> i = ((ArithmeticComponent) logic)
+					.getChildLines().iterator(); i.hasNext();) {
 				convertLine(i.next(), indentation);
 			}
 		}
@@ -81,6 +83,11 @@ public class Converter {
 	}
 
 	public void convertLine(Line line, int indentation) {
+		if (line.getIsBlank()) {
+			output.print("\n");
+			return;
+		}
+
 		String indent = "";
 		// add correct value of indentation for every line in this function
 		for (int i = 0; i < indentation; i++) {

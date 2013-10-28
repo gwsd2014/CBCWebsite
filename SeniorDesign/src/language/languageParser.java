@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 @SuppressWarnings("all")
-public class languageParser extends Parser {
+public class LanguageParser extends Parser {
 	public static final String[] tokenNames = new String[] {
 		"<invalid>", "<EOR>", "<DOWN>", "<UP>", "ASSIGN", "CLASS", "COMMA", "ENDCLASS", 
 		"ENDFUNCTION", "FUNCTION", "ID", "LPAREN", "MINUS", "PLUS", "RPAREN", 
@@ -40,14 +40,14 @@ public class languageParser extends Parser {
 	// delegators
 
 
-	public languageParser(TokenStream input) {
+	public LanguageParser(TokenStream input) {
 		this(input, new RecognizerSharedState());
 	}
-	public languageParser(TokenStream input, RecognizerSharedState state) {
+	public LanguageParser(TokenStream input, RecognizerSharedState state) {
 		super(input, state);
 	}
 
-	@Override public String[] getTokenNames() { return languageParser.tokenNames; }
+	@Override public String[] getTokenNames() { return LanguageParser.tokenNames; }
 	@Override public String getGrammarFileName() { return "C:\\Users\\Michael\\Documents\\My Dropbox\\Senior Design\\pseudoLanguage\\language.g"; }
 
 

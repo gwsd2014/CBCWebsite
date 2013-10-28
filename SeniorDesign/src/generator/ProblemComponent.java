@@ -13,12 +13,11 @@ public class ProblemComponent extends Component {
 	private LinkedList<ClassComponent> childClasses;
 
 	// Constructor
-	public ProblemComponent(int diff) {
+	public ProblemComponent(Difficulty difficulty) {
 		childClasses = new LinkedList<ClassComponent>();
-		testVariable = "x";
+		testVariable = chooseVariable();
 
-		ProblemTypes problemType = chooseProblemType(diff);
-		createClasses(problemType);
+		createClasses(difficulty);
 
 		setAnswers();
 	}
@@ -27,7 +26,7 @@ public class ProblemComponent extends Component {
 		Random rand = new Random();
 
 		// now create the incorrect answers
-		
+
 		incorrectAnswer1 = (int) (correctAnswer * rand.nextGaussian());
 		while (incorrectAnswer1 == correctAnswer) {
 			incorrectAnswer1 = (int) (correctAnswer * rand.nextGaussian());
@@ -44,45 +43,41 @@ public class ProblemComponent extends Component {
 		}
 	}
 
-	// choose problemType
-	private ProblemTypes chooseProblemType(int difficulty) {
-		if (difficulty == 1) {
-			return ProblemTypes.VAR_DECLARATION;
-		}
-		return ProblemTypes.INVALID;
-	}
-
 	// create classes
-	private void createClasses(ProblemTypes problemType) {
+	private void createClasses(Difficulty difficulty) {
 
-		// create test class
-		ClassComponent firstClass = new ClassComponent("one");
-		childClasses.add(firstClass);
-		firstClass.setParent(this);
-		correctAnswer = firstClass.createFunctions();
+		switch (difficulty.getLevel()) {
+		case 1:
+			ClassComponent firstClass = new ClassComponent("one", difficulty,
+					this);
+			childClasses.add(firstClass);
+			correctAnswer = firstClass.createFunctions();
+			break;
+		}
+
 	}
-	
-	public String getTestVariable(){
+
+	public String getTestVariable() {
 		return testVariable;
 	}
-	
-	public int getCorrectAnswer(){
+
+	public int getCorrectAnswer() {
 		return correctAnswer;
 	}
-	
-	public int getIncorrect1(){
+
+	public int getIncorrect1() {
 		return incorrectAnswer1;
 	}
-	
-	public int getIncorrect2(){
+
+	public int getIncorrect2() {
 		return incorrectAnswer2;
 	}
-	
-	public int getIncorrect3(){
+
+	public int getIncorrect3() {
 		return incorrectAnswer3;
 	}
-	
-	public LinkedList<ClassComponent> getChildren(){
+
+	public LinkedList<ClassComponent> getChildren() {
 		return childClasses;
 	}
 }

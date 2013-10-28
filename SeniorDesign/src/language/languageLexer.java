@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 @SuppressWarnings("all")
-public class languageLexer extends Lexer {
+public class LanguageLexer extends Lexer {
 	public static final int EOF=-1;
 	public static final int ASSIGN=4;
 	public static final int CLASS=5;
@@ -33,11 +33,11 @@ public class languageLexer extends Lexer {
 		return new Lexer[] {};
 	}
 
-	public languageLexer() {} 
-	public languageLexer(CharStream input) {
+	public LanguageLexer() {} 
+	public LanguageLexer(CharStream input) {
 		this(input, new RecognizerSharedState());
 	}
-	public languageLexer(CharStream input, RecognizerSharedState state) {
+	public LanguageLexer(CharStream input, RecognizerSharedState state) {
 		super(input,state);
 	}
 	@Override public String getGrammarFileName() { return "C:\\Users\\Michael\\Documents\\My Dropbox\\Senior Design\\pseudoLanguage\\language.g"; }

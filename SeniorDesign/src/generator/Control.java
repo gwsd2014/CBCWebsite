@@ -3,23 +3,23 @@ package generator;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 
-import language.languageInterpreter;
+import language.LanguageInterpreter;
 
 public class Control {
 
 	private final static String path = "src/output.txt";
 	
 	public static void main(String[] args) {
-		ProblemComponent problem = new ProblemComponent(1);
+		Difficulty DM = new Difficulty();
+		ProblemComponent problem = new ProblemComponent(DM);
 		
 		Converter converter = new Converter();
 		converter.convertProblem(problem);
 		
 		String[] codeArr = {path};
 		try {
-			languageInterpreter.main(codeArr);
+			LanguageInterpreter.main(codeArr);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

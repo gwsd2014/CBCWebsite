@@ -7,13 +7,13 @@ import java.util.Random;
 import java.util.Set;
 
 public class ArithmeticComponent extends LogicComponent {
-	private FunctionComponent parentFunction;
+	private Component parentComponent;
 	private LinkedList<Line> childLines;
 	private Random random;
 	private Difficulty difficulty;
 
-	public ArithmeticComponent(Difficulty diff, FunctionComponent parent) {
-		parentFunction = parent;
+	public ArithmeticComponent(Difficulty diff, Component parent) {
+		parentComponent = parent;
 		difficulty = diff;
 		childLines = new LinkedList<Line>();
 		random = new Random();
@@ -25,14 +25,13 @@ public class ArithmeticComponent extends LogicComponent {
 		HashMap<String, Integer> currentMap = parentMap;
 
 		// create a random amount of arithmetic operations, depending on the
-		// difficulty weight
-		for (int i = 0; i < difficulty.getWeight(); i++) {
-			
-			
+		// difficulty weight, maximum 5
+		for (int i = 0; i < difficulty.getWeight() && i < 5; i++) {
+
 			// if it is the final line, make sure to modify the test variable
 			// one more time, else randomly choose another variable to modify
 			String leftVariable = testVariable;
-			if (i < difficulty.getWeight()-1) {
+			if (i < difficulty.getWeight() - 1) {
 				Iterator<String> leftSideIterator = currentMap.keySet()
 						.iterator();
 				leftVariable = leftSideIterator.next();
@@ -40,7 +39,7 @@ public class ArithmeticComponent extends LogicComponent {
 					leftVariable = leftSideIterator.next();
 				}
 			}
-			
+
 			// randomly decide whether to add by value or by variable
 			if (random.nextGaussian() < 0) {
 				// adding by value
@@ -83,8 +82,8 @@ public class ArithmeticComponent extends LogicComponent {
 		return currentMap;
 	}
 
-	public FunctionComponent getParent() {
-		return parentFunction;
+	public Component getParent() {
+		return parentComponent;
 	}
 
 	public LinkedList<Line> getChildLines() {

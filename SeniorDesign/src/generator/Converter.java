@@ -13,7 +13,7 @@ public class Converter {
 			output = new PrintWriter("src/output.txt");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Fialed");
+			System.out.println("Failed");
 			e.printStackTrace();
 		}
 	}
@@ -78,7 +78,23 @@ public class Converter {
 		}
 
 		// Conditional
+		if (logic instanceof ConditionalComponent) {
+			// print test statement
+			ConditionalComponent conditional = (ConditionalComponent) logic;
+			output.println("\n" + indent + "if ( "
+					+ conditional.getLeftVariable() + " "
+					+ tokenConversion(conditional.getComparator()) + " "
+					+ conditional.getRightValue() + " )");
 
+			convertLogic(conditional.getIfComponent(), indentation + 1);
+
+			output.println(indent + "endif");
+			output.println(indent + "else");
+
+			convertLogic(conditional.getElseComponent(), indentation + 1);
+
+			output.println(indent + "endelse");
+		}
 		// Loop
 	}
 
@@ -121,15 +137,25 @@ public class Converter {
 		case DIGIT:
 			// TODO ERROR STATEMENT
 			break;
+		case ELSE:
+			return "else";
 		case ENDCLASS:
 			return "endclass";
+		case ENDELSE:
+			return "endelse";
 		case ENDFUNCTION:
 			return "endfunction";
+		case ENDIF:
+			return "endif";
+		case EQUALS:
+			return "==";
 		case FUNCTION:
 			return "function";
 		case ID:
 			// TODO ERROR STATEMENT
 			break;
+		case IF:
+			return "if";
 		case LPAREN:
 			return "(";
 		case MINUS:

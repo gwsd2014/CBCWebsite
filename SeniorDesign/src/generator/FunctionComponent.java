@@ -72,6 +72,11 @@ public class FunctionComponent extends Component {
 
 		variables = firstArith.createLines(variables, testVariable);
 
+		ConditionalComponent firstCondition = new ConditionalComponent(difficulty, this);
+		childLogics.add(firstCondition);
+		
+		variables = firstCondition.createLines(variables, testVariable);
+		
 		return variables.get(testVariable);
 	}
 

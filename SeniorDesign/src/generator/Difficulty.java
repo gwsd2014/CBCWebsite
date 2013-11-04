@@ -17,14 +17,18 @@ public class Difficulty {
 	 * 
 	 * @return difficulty
 	 */
-	public int adjustDifficulty() {
-		return -1;
+	public void adjustDifficulty(boolean correct) {
+		if(correct){
+			weight += 1;
+		}else if(weight > 1){
+			weight -= 1;
+		}
 	}
 
 	public Difficulty() {
 		level = 1;
 		type = ProblemType.MULTI_CHOICE;
-		weight = 3;
+		weight = 1;
 	}
 
 	public int getLevel() {

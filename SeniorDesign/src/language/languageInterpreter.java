@@ -14,6 +14,7 @@ public class LanguageInterpreter {
  
         try {
             parser.file();
+            System.out.println("Parsed");
         } catch (RecognitionException e)  {
             e.printStackTrace();
         }

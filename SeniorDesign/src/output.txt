@@ -1,11 +1,14 @@
 class one
 	function foo ( )
-		var h = 8 
-		var p = 6 
-		var k = -3 
+		var u = 8 
 
-		p = p + p 
-		k = k + h 
-		h = h + h 
+		u = u + -7 
+
+		if ( u == -5 )
+			u = u + u 
+		endif
+		else
+			u = u + -4 
+		endelse
 	endfunction
 endclass

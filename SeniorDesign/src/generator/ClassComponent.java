@@ -20,19 +20,50 @@ public class ClassComponent extends Component {
 		childFunctions = new LinkedList<FunctionComponent>();
 	}
 
-	// create functions
-	public int createFunctions() {
-
+	public int levelOne(){
 		FunctionComponent firstFunction = new FunctionComponent("foo",
 				difficulty, this);
 		childFunctions.add(firstFunction);
 		firstFunction.declareVariables();
 
-		int newValue = firstFunction.createLogics();
+		int newValue = firstFunction.levelOneLogics();
+
+		return newValue;
+	}
+	
+	public int levelTwo(){
+		FunctionComponent firstFunction = new FunctionComponent("foo",
+				difficulty, this);
+		childFunctions.add(firstFunction);
+		firstFunction.declareVariables();
+
+		int newValue = firstFunction.levelTwoLogics();
+
+		return newValue;
+	}
+	
+	public int levelThree(){
+		FunctionComponent firstFunction = new FunctionComponent("foo",
+				difficulty, this);
+		childFunctions.add(firstFunction);
+		firstFunction.declareVariables();
+
+		int newValue = firstFunction.levelThreeLogics();
 
 		return newValue;
 	}
 
+	public int levelFour(){
+		FunctionComponent firstFunction = new FunctionComponent("foo",
+				difficulty, this);
+		childFunctions.add(firstFunction);
+		firstFunction.declareVariables();
+
+		int newValue = firstFunction.levelFourLogics();
+
+		return newValue;
+	}
+	
 	public String getName() {
 		return name;
 	}

@@ -18,11 +18,56 @@ public class Difficulty {
 	 * @return difficulty
 	 */
 	public void adjustDifficulty(boolean correct) {
-		if(correct){
-			weight += 1;
-		}else if(weight > 1){
-			weight -= 1;
+		// level one
+		if (level == 1) {
+			if (correct) {
+				weight += 1;
+			} else if (weight > 1) {
+				weight -= 1;
+			}
+
+			// check to see if need to level up
+			if (weight > 5) {
+				weight = 1;
+				level = 2;
+			}
+		} else if (level == 2) {
+			if (correct) {
+				weight += 1;
+			} else if (weight > 1) {
+				weight -= 1;
+			}
+
+			// increase at 4
+			if(weight == 4){
+				level = 3;
+				weight = 1;
+			}
+		} else if (level == 3){
+			if (correct) {
+				weight += 1;
+			} else if (weight > 1) {
+				weight -= 1;
+			}
+
+			// increase at 4
+			if(weight == 4){
+				level = 4;
+				weight = 1;
+			}
+		} else if (level == 4){
+			if (correct) {
+				weight += 1;
+			} else if (weight > 1) {
+				weight -= 1;
+			}
+			
+			//cap at 3
+			if (weight > 3){
+				weight = 3;
+			}
 		}
+
 	}
 
 	public Difficulty() {

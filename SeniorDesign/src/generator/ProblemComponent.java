@@ -27,34 +27,47 @@ public class ProblemComponent extends Component {
 
 		// now create the incorrect answers
 
-		incorrectAnswer1 = (int) (correctAnswer * rand.nextGaussian());
-		while (incorrectAnswer1 == correctAnswer) {
-			incorrectAnswer1 = (int) (correctAnswer * rand.nextGaussian());
+		incorrectAnswer1 = correctAnswer + 1;
+
+		incorrectAnswer2 = correctAnswer * 2;
+		if(incorrectAnswer2 == 0){
+			incorrectAnswer2 = -1;
 		}
 
-		incorrectAnswer2 = (int) (correctAnswer * rand.nextGaussian());
-		while (incorrectAnswer2 == correctAnswer) {
-			incorrectAnswer3 = (int) (correctAnswer * rand.nextGaussian());
-		}
-
-		incorrectAnswer3 = (int) (correctAnswer * rand.nextGaussian());
-		while (incorrectAnswer3 == correctAnswer) {
-			incorrectAnswer3 = (int) (correctAnswer * rand.nextGaussian());
+		incorrectAnswer3 = (rand.nextInt(100) - 50);
+		if(incorrectAnswer3 == correctAnswer){
+			incorrectAnswer3 = correctAnswer - 2;
 		}
 	}
 
 	// create classes
 	private void createClasses(Difficulty difficulty) {
-
 		switch (difficulty.getLevel()) {
 		case 1:
 			ClassComponent firstClass = new ClassComponent("one", difficulty,
 					this);
 			childClasses.add(firstClass);
-			correctAnswer = firstClass.createFunctions();
+			correctAnswer = firstClass.levelOne();
+			break;
+		case 2:
+			ClassComponent secondClass = new ClassComponent("two", difficulty,
+					this);
+			childClasses.add(secondClass);
+			correctAnswer = secondClass.levelTwo();
+			break;
+		case 3:
+			ClassComponent thirdClass = new ClassComponent("three", difficulty,
+					this);
+			childClasses.add(thirdClass);
+			correctAnswer = thirdClass.levelThree();
+			break;
+		case 4:
+			ClassComponent fourthClass = new ClassComponent("four", difficulty,
+					this);
+			childClasses.add(fourthClass);
+			correctAnswer = fourthClass.levelFour();
 			break;
 		}
-
 	}
 
 	public String getTestVariable() {

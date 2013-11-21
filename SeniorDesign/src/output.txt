@@ -1,14 +1,19 @@
-class one
+class four
 	function foo ( )
-		var u = 8 
+		var g = 2 
+		var r = 0 
+		var i = 2 
 
-		u = u + -7 
-
-		if ( u == -5 )
-			u = u + u 
+		i = i + -1 
+		if ( r == 0 )
+			for ( a = 0 ; a >= -2 ; a -- )
+				r = r + g 
+			endfor
 		endif
 		else
-			u = u + -4 
+			for ( a = 1 ; a < 4 ; a ++ )
+				g = g + r 
+			endfor
 		endelse
 	endfunction
 endclass

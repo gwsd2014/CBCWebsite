@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Random;
-import java.util.Set;
 
 public class ArithmeticComponent extends LogicComponent {
 	private Component parentComponent;
@@ -12,22 +11,31 @@ public class ArithmeticComponent extends LogicComponent {
 	private Random random;
 	private Difficulty difficulty;
 
+	private final int range;
+
 	public ArithmeticComponent(Difficulty diff, Component parent) {
 		parentComponent = parent;
 		difficulty = diff;
 		childLines = new LinkedList<Line>();
 		random = new Random();
+
+		if (difficulty.getLevel() == 1) {
+			range = 20;
+		} else {
+			range = 6;
+		}
 	}
 
 	public HashMap<String, Integer> createLines(
 			HashMap<String, Integer> parentMap, String testVariable) {
-
 		HashMap<String, Integer> currentMap = parentMap;
 
 		// create a random amount of arithmetic operations, depending on the
 		// difficulty weight, maximum 5
-		for (int i = 0; i < difficulty.getWeight() && i < 5; i++) {
 
+		int lines = determineAmountOfLines();
+
+		for (int i = 0; i < lines; i++) {
 			// if it is the final line, make sure to modify the test variable
 			// one more time, else randomly choose another variable to modify
 			String leftVariable = testVariable;
@@ -46,7 +54,7 @@ public class ArithmeticComponent extends LogicComponent {
 
 				int previousValue = currentMap.get(leftVariable);
 
-				int increment = random.nextInt(20) - 10;
+				int increment = random.nextInt(range) - range / 2;
 
 				Line additionLine = new Line(this, false);
 				childLines.add(additionLine);
@@ -80,6 +88,47 @@ public class ArithmeticComponent extends LogicComponent {
 
 		}
 		return currentMap;
+	}
+
+	public HashMap<String, Integer> runLines(HashMap<String, Integer> parentMap) {
+
+		HashMap<String, Integer> tempMap = parentMap;
+
+		// loop through child lines
+		for (int i = 0; i < childLines.size(); i++) {
+			// extract the variable being changed
+			HashMap<Integer, Object> lineVariables = childLines.get(i)
+					.getVarValMap();
+			String modifiedVariable = (String) lineVariables.get(0);
+
+			// determine the new values of the two right hand values/variables
+			Object firstValue = lineVariables.get(2);
+			if (firstValue instanceof String) {
+				firstValue = tempMap.get(firstValue);
+			}
+
+			Object secondValue = lineVariables.get(4);
+			if (secondValue instanceof String) {
+				secondValue = tempMap.get(secondValue);
+			}
+
+			// change the variable value
+			int currentValue = tempMap.get(modifiedVariable);
+			int newValue = (Integer) firstValue + (Integer) secondValue;
+
+			tempMap.put(modifiedVariable, newValue);
+		}
+		return tempMap;
+	}
+
+	private int determineAmountOfLines() {
+		int lines = difficulty.getWeight();
+
+		if (difficulty.getLevel() == 4) {
+			lines = 1;
+		}
+
+		return lines;
 	}
 
 	public Component getParent() {

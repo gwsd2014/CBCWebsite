@@ -23,7 +23,7 @@ public class Converter {
 				.hasNext();) {
 			convertClass(i.next());
 		}
-
+		
 		output.close();
 		return output;
 	}
@@ -81,7 +81,7 @@ public class Converter {
 		if (logic instanceof ConditionalComponent) {
 			// print test statement
 			ConditionalComponent conditional = (ConditionalComponent) logic;
-			output.println("\n" + indent + "if ( "
+			output.println(indent + "if ( "
 					+ conditional.getLeftVariable() + " "
 					+ tokenConversion(conditional.getComparator()) + " "
 					+ conditional.getRightValue() + " )");
@@ -95,7 +95,45 @@ public class Converter {
 
 			output.println(indent + "endelse");
 		}
+
 		// Loop
+		if (logic instanceof LoopComponent) {
+			LoopComponent loop = (LoopComponent) logic;
+			if (loop.isForLoop()) {
+				// print test statement
+				output.println(indent + "for ( "
+						+ loop.getLeftVariable() + " = " + loop.getRightValue()
+						+ " ; " + loop.getLeftVariable() + " "
+						+ tokenConversion(loop.getComparator()) + " "
+						+ loop.getForLoopTestValue() + " ; "
+						+ loop.getLeftVariable() + " "
+						+ tokenConversion(loop.getForLoopIncrementor()) + " )");
+				
+				// print the logic within the loop
+				for (Iterator<LogicComponent> i = loop.getChildLogics()
+						.iterator(); i.hasNext();) {
+					convertLogic(i.next(), indentation + 1);
+				}
+				
+				output.println(indent + "endfor");
+
+			} else {
+				// print test statement
+				output.println(indent + "while ( "
+						+ loop.getLeftVariable() + " "
+						+ tokenConversion(loop.getComparator()) + " "
+						+ loop.getRightValue() + " ) ");
+
+				// print the logic within the loop
+				for (Iterator<LogicComponent> i = loop.getChildLogics()
+						.iterator(); i.hasNext();) {
+					convertLogic(i.next(), indentation + 1);
+				}
+
+				output.println(indent + "endwhile");
+			}
+
+		}
 	}
 
 	public void convertLine(Line line, int indentation) {
@@ -147,6 +185,8 @@ public class Converter {
 			return "endfunction";
 		case ENDIF:
 			return "endif";
+		case ENDWHILE:
+			return "endwhile";
 		case EQUALS:
 			return "==";
 		case FUNCTION:
@@ -176,9 +216,29 @@ public class Converter {
 		case VARIABLE:
 			// TODO ERROR STATEMENT
 			break;
+		case WHILE:
+			return "while";
 		case WS:
 			// TODO ERROR STATEMENT
 			break;
+		case DECREASE:
+			return "--";
+		case ENDFOR:
+			return "endfor";
+		case FOR:
+			return "for";
+		case GT:
+			return ">";
+		case GTE:
+			return ">=";
+		case INCREASE:
+			return "++";
+		case LT:
+			return "<";
+		case LTE:
+			return "<=";
+		case SEMICOLON:
+			return ";";
 		}
 		// TODO ERROR STATEMENT
 		return "Token not found";

@@ -20,12 +20,10 @@ public class Control {
 		while (true) {
 			questionCounter++;
 			System.out.println("\nQuestion #" + questionCounter + "\n");
-
 			ProblemComponent problem = new ProblemComponent(DM);
-
 			Converter converter = new Converter();
 			converter.convertProblem(problem);
-
+			
 			String[] codeArr = { path };
 			try {
 				LanguageInterpreter.main(codeArr);

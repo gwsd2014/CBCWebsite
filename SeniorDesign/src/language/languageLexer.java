@@ -1,6 +1,6 @@
 package language;
 
-//$ANTLR 3.5 C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g 2013-11-10 20:00:53
+// $ANTLR 3.5 C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g 2013-12-09 22:41:07
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -34,14 +34,15 @@ public class LanguageLexer extends Lexer {
 	public static final int LTE=25;
 	public static final int MINUS=26;
 	public static final int PLUS=27;
-	public static final int RPAREN=28;
-	public static final int SEMICOLON=29;
-	public static final int SLASH=30;
-	public static final int STAR=31;
-	public static final int VALUE=32;
-	public static final int VAR=33;
-	public static final int WHILE=34;
-	public static final int WS=35;
+	public static final int RETURN=28;
+	public static final int RPAREN=29;
+	public static final int SEMICOLON=30;
+	public static final int SLASH=31;
+	public static final int STAR=32;
+	public static final int VALUE=33;
+	public static final int VAR=34;
+	public static final int WHILE=35;
+	public static final int WS=36;
 
 	// delegates
 	// delegators
@@ -534,13 +535,34 @@ public class LanguageLexer extends Lexer {
 	}
 	// $ANTLR end "PLUS"
 
+	// $ANTLR start "RETURN"
+	public final void mRETURN() throws RecognitionException {
+		try {
+			int _type = RETURN;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:25:8: ( 'return' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:25:10: 'return'
+			{
+			match("return"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "RETURN"
+
 	// $ANTLR start "RPAREN"
 	public final void mRPAREN() throws RecognitionException {
 		try {
 			int _type = RPAREN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:25:8: ( ')' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:25:10: ')'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:26:8: ( ')' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:26:10: ')'
 			{
 			match(')'); 
 			}
@@ -559,8 +581,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = SEMICOLON;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:26:11: ( ';' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:26:13: ';'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:27:11: ( ';' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:27:13: ';'
 			{
 			match(';'); 
 			}
@@ -579,8 +601,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = SLASH;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:27:7: ( '/' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:27:9: '/'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:28:7: ( '/' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:28:9: '/'
 			{
 			match('/'); 
 			}
@@ -599,8 +621,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = STAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:28:6: ( '*' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:28:8: '*'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:29:6: ( '*' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:29:8: '*'
 			{
 			match('*'); 
 			}
@@ -619,8 +641,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = VAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:29:5: ( 'var' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:29:7: 'var'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:30:5: ( 'var' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:30:7: 'var'
 			{
 			match("var"); 
 
@@ -640,8 +662,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = WHILE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:30:7: ( 'while' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:30:9: 'while'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:31:7: ( 'while' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:31:9: 'while'
 			{
 			match("while"); 
 
@@ -661,8 +683,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = ID;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:147:7: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' )* )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:147:9: ( 'a' .. 'z' | 'A' .. 'Z' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' )*
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:171:7: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' )* )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:171:9: ( 'a' .. 'z' | 'A' .. 'Z' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' )*
 			{
 			if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 				input.consume();
@@ -672,7 +694,7 @@ public class LanguageLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:147:30: ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' )*
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:171:30: ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' )*
 			loop1:
 			while (true) {
 				int alt1=2;
@@ -717,10 +739,10 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = VALUE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:148:10: ( ( '-' )? ( '0' .. '9' )+ )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:148:12: ( '-' )? ( '0' .. '9' )+
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:172:10: ( ( '-' )? ( '0' .. '9' )+ )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:172:12: ( '-' )? ( '0' .. '9' )+
 			{
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:148:12: ( '-' )?
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:172:12: ( '-' )?
 			int alt2=2;
 			int LA2_0 = input.LA(1);
 			if ( (LA2_0=='-') ) {
@@ -728,7 +750,7 @@ public class LanguageLexer extends Lexer {
 			}
 			switch (alt2) {
 				case 1 :
-					// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:148:12: '-'
+					// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:172:12: '-'
 					{
 					match('-'); 
 					}
@@ -736,7 +758,7 @@ public class LanguageLexer extends Lexer {
 
 			}
 
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:148:16: ( '0' .. '9' )+
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:172:16: ( '0' .. '9' )+
 			int cnt3=0;
 			loop3:
 			while (true) {
@@ -785,8 +807,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = WS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:149:8: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:149:10: ( ' ' | '\\t' | '\\r' | '\\n' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:173:8: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:173:10: ( ' ' | '\\t' | '\\r' | '\\n' )
 			{
 			if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
 				input.consume();
@@ -810,8 +832,8 @@ public class LanguageLexer extends Lexer {
 
 	@Override
 	public void mTokens() throws RecognitionException {
-		// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:8: ( ASSIGN | CLASS | COMMA | DECREASE | ELSE | ENDCLASS | ENDELSE | ENDFOR | ENDFUNCTION | ENDIF | ENDWHILE | EQUALS | FOR | FUNCTION | GT | GTE | IF | INCREASE | LPAREN | LT | LTE | MINUS | PLUS | RPAREN | SEMICOLON | SLASH | STAR | VAR | WHILE | ID | VALUE | WS )
-		int alt4=32;
+		// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:8: ( ASSIGN | CLASS | COMMA | DECREASE | ELSE | ENDCLASS | ENDELSE | ENDFOR | ENDFUNCTION | ENDIF | ENDWHILE | EQUALS | FOR | FUNCTION | GT | GTE | IF | INCREASE | LPAREN | LT | LTE | MINUS | PLUS | RETURN | RPAREN | SEMICOLON | SLASH | STAR | VAR | WHILE | ID | VALUE | WS )
+		int alt4=33;
 		alt4 = dfa4.predict(input);
 		switch (alt4) {
 			case 1 :
@@ -976,63 +998,70 @@ public class LanguageLexer extends Lexer {
 				}
 				break;
 			case 24 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:158: RPAREN
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:158: RETURN
+				{
+				mRETURN(); 
+
+				}
+				break;
+			case 25 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:165: RPAREN
 				{
 				mRPAREN(); 
 
 				}
 				break;
-			case 25 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:165: SEMICOLON
+			case 26 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:172: SEMICOLON
 				{
 				mSEMICOLON(); 
 
 				}
 				break;
-			case 26 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:175: SLASH
+			case 27 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:182: SLASH
 				{
 				mSLASH(); 
 
 				}
 				break;
-			case 27 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:181: STAR
+			case 28 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:188: STAR
 				{
 				mSTAR(); 
 
 				}
 				break;
-			case 28 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:186: VAR
+			case 29 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:193: VAR
 				{
 				mVAR(); 
 
 				}
 				break;
-			case 29 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:190: WHILE
+			case 30 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:197: WHILE
 				{
 				mWHILE(); 
 
 				}
 				break;
-			case 30 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:196: ID
+			case 31 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:203: ID
 				{
 				mID(); 
 
 				}
 				break;
-			case 31 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:199: VALUE
+			case 32 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:206: VALUE
 				{
 				mVALUE(); 
 
 				}
 				break;
-			case 32 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:205: WS
+			case 33 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:212: WS
 				{
 				mWS(); 
 
@@ -1045,136 +1074,144 @@ public class LanguageLexer extends Lexer {
 
 	protected DFA4 dfa4 = new DFA4(this);
 	static final String DFA4_eotS =
-		"\1\uffff\1\26\1\22\1\uffff\1\31\2\22\1\37\1\22\1\42\1\uffff\1\44\4\uffff"+
-		"\2\22\5\uffff\1\22\2\uffff\4\22\2\uffff\1\54\4\uffff\5\22\1\66\1\22\1"+
-		"\uffff\1\70\2\22\1\73\5\22\1\uffff\1\22\1\uffff\1\22\1\104\1\uffff\4\22"+
-		"\1\111\2\22\1\114\1\uffff\2\22\1\117\1\22\1\uffff\2\22\1\uffff\1\22\1"+
-		"\124\1\uffff\3\22\1\130\1\uffff\1\22\1\132\1\133\1\uffff\1\22\2\uffff"+
-		"\1\22\1\136\1\uffff";
+		"\1\uffff\1\27\1\23\1\uffff\1\32\2\23\1\40\1\23\1\43\1\uffff\1\45\1\23"+
+		"\4\uffff\2\23\5\uffff\1\23\2\uffff\4\23\2\uffff\1\56\4\uffff\6\23\1\71"+
+		"\1\23\1\uffff\1\23\1\74\2\23\1\77\5\23\1\uffff\2\23\1\uffff\1\23\1\111"+
+		"\1\uffff\4\23\1\116\3\23\1\122\1\uffff\2\23\1\125\1\23\1\uffff\2\23\1"+
+		"\131\1\uffff\1\23\1\133\1\uffff\3\23\1\uffff\1\137\1\uffff\1\23\1\141"+
+		"\1\142\1\uffff\1\23\2\uffff\1\23\1\145\1\uffff";
 	static final String DFA4_eofS =
-		"\137\uffff";
+		"\146\uffff";
 	static final String DFA4_minS =
 		"\1\11\1\75\1\154\1\uffff\1\55\1\154\1\157\1\75\1\146\1\53\1\uffff\1\75"+
-		"\4\uffff\1\141\1\150\5\uffff\1\141\2\uffff\1\163\1\144\1\162\1\156\2\uffff"+
-		"\1\60\4\uffff\1\162\1\151\1\163\1\145\1\143\1\60\1\143\1\uffff\1\60\1"+
-		"\154\1\163\1\60\2\154\1\157\1\146\1\150\1\uffff\1\164\1\uffff\1\145\1"+
-		"\60\1\uffff\1\141\1\163\1\162\1\156\1\60\2\151\1\60\1\uffff\1\163\1\145"+
-		"\1\60\1\143\1\uffff\1\154\1\157\1\uffff\1\163\1\60\1\uffff\1\164\1\145"+
-		"\1\156\1\60\1\uffff\1\151\2\60\1\uffff\1\157\2\uffff\1\156\1\60\1\uffff";
+		"\1\145\4\uffff\1\141\1\150\5\uffff\1\141\2\uffff\1\163\1\144\1\162\1\156"+
+		"\2\uffff\1\60\4\uffff\1\164\1\162\1\151\1\163\1\145\1\143\1\60\1\143\1"+
+		"\uffff\1\165\1\60\1\154\1\163\1\60\2\154\1\157\1\146\1\150\1\uffff\1\164"+
+		"\1\162\1\uffff\1\145\1\60\1\uffff\1\141\1\163\1\162\1\156\1\60\2\151\1"+
+		"\156\1\60\1\uffff\1\163\1\145\1\60\1\143\1\uffff\1\154\1\157\1\60\1\uffff"+
+		"\1\163\1\60\1\uffff\1\164\1\145\1\156\1\uffff\1\60\1\uffff\1\151\2\60"+
+		"\1\uffff\1\157\2\uffff\1\156\1\60\1\uffff";
 	static final String DFA4_maxS =
 		"\1\172\1\75\1\154\1\uffff\1\71\1\156\1\165\1\75\1\146\1\53\1\uffff\1\75"+
-		"\4\uffff\1\141\1\150\5\uffff\1\141\2\uffff\1\163\1\144\1\162\1\156\2\uffff"+
-		"\1\172\4\uffff\1\162\1\151\1\163\1\145\1\167\1\172\1\143\1\uffff\1\172"+
-		"\1\154\1\163\1\172\2\154\1\165\1\146\1\150\1\uffff\1\164\1\uffff\1\145"+
-		"\1\172\1\uffff\1\141\1\163\1\162\1\156\1\172\2\151\1\172\1\uffff\1\163"+
-		"\1\145\1\172\1\143\1\uffff\1\154\1\157\1\uffff\1\163\1\172\1\uffff\1\164"+
-		"\1\145\1\156\1\172\1\uffff\1\151\2\172\1\uffff\1\157\2\uffff\1\156\1\172"+
-		"\1\uffff";
+		"\1\145\4\uffff\1\141\1\150\5\uffff\1\141\2\uffff\1\163\1\144\1\162\1\156"+
+		"\2\uffff\1\172\4\uffff\1\164\1\162\1\151\1\163\1\145\1\167\1\172\1\143"+
+		"\1\uffff\1\165\1\172\1\154\1\163\1\172\2\154\1\165\1\146\1\150\1\uffff"+
+		"\1\164\1\162\1\uffff\1\145\1\172\1\uffff\1\141\1\163\1\162\1\156\1\172"+
+		"\2\151\1\156\1\172\1\uffff\1\163\1\145\1\172\1\143\1\uffff\1\154\1\157"+
+		"\1\172\1\uffff\1\163\1\172\1\uffff\1\164\1\145\1\156\1\uffff\1\172\1\uffff"+
+		"\1\151\2\172\1\uffff\1\157\2\uffff\1\156\1\172\1\uffff";
 	static final String DFA4_acceptS =
-		"\3\uffff\1\3\6\uffff\1\23\1\uffff\1\30\1\31\1\32\1\33\2\uffff\1\36\1\37"+
-		"\1\40\1\14\1\1\1\uffff\1\4\1\26\4\uffff\1\20\1\17\1\uffff\1\22\1\27\1"+
-		"\25\1\24\7\uffff\1\21\11\uffff\1\15\1\uffff\1\34\2\uffff\1\5\10\uffff"+
-		"\1\2\4\uffff\1\12\2\uffff\1\35\2\uffff\1\10\4\uffff\1\7\3\uffff\1\6\1"+
-		"\uffff\1\13\1\16\2\uffff\1\11";
+		"\3\uffff\1\3\6\uffff\1\23\2\uffff\1\31\1\32\1\33\1\34\2\uffff\1\37\1\40"+
+		"\1\41\1\14\1\1\1\uffff\1\4\1\26\4\uffff\1\20\1\17\1\uffff\1\22\1\27\1"+
+		"\25\1\24\10\uffff\1\21\12\uffff\1\15\2\uffff\1\35\2\uffff\1\5\11\uffff"+
+		"\1\2\4\uffff\1\12\3\uffff\1\36\2\uffff\1\10\3\uffff\1\30\1\uffff\1\7\3"+
+		"\uffff\1\6\1\uffff\1\13\1\16\2\uffff\1\11";
 	static final String DFA4_specialS =
-		"\137\uffff}>";
+		"\146\uffff}>";
 	static final String[] DFA4_transitionS = {
-			"\2\24\2\uffff\1\24\22\uffff\1\24\7\uffff\1\12\1\14\1\17\1\11\1\3\1\4"+
-			"\1\uffff\1\16\12\23\1\uffff\1\15\1\13\1\1\1\7\2\uffff\32\22\6\uffff\2"+
-			"\22\1\2\1\22\1\5\1\6\2\22\1\10\14\22\1\20\1\21\3\22",
-			"\1\25",
-			"\1\27",
+			"\2\25\2\uffff\1\25\22\uffff\1\25\7\uffff\1\12\1\15\1\20\1\11\1\3\1\4"+
+			"\1\uffff\1\17\12\24\1\uffff\1\16\1\13\1\1\1\7\2\uffff\32\23\6\uffff\2"+
+			"\23\1\2\1\23\1\5\1\6\2\23\1\10\10\23\1\14\3\23\1\21\1\22\3\23",
+			"\1\26",
+			"\1\30",
 			"",
-			"\1\30\2\uffff\12\23",
-			"\1\32\1\uffff\1\33",
-			"\1\34\5\uffff\1\35",
-			"\1\36",
-			"\1\40",
+			"\1\31\2\uffff\12\24",
+			"\1\33\1\uffff\1\34",
+			"\1\35\5\uffff\1\36",
+			"\1\37",
 			"\1\41",
+			"\1\42",
 			"",
-			"\1\43",
-			"",
-			"",
-			"",
-			"",
-			"\1\45",
+			"\1\44",
 			"\1\46",
 			"",
 			"",
 			"",
 			"",
-			"",
 			"\1\47",
-			"",
-			"",
 			"\1\50",
+			"",
+			"",
+			"",
+			"",
+			"",
 			"\1\51",
+			"",
+			"",
 			"\1\52",
 			"\1\53",
-			"",
-			"",
-			"\12\22\7\uffff\32\22\6\uffff\32\22",
-			"",
-			"",
-			"",
-			"",
+			"\1\54",
 			"\1\55",
-			"\1\56",
+			"",
+			"",
+			"\12\23\7\uffff\32\23\6\uffff\32\23",
+			"",
+			"",
+			"",
+			"",
 			"\1\57",
 			"\1\60",
-			"\1\61\1\uffff\1\62\1\63\2\uffff\1\64\15\uffff\1\65",
-			"\12\22\7\uffff\32\22\6\uffff\32\22",
-			"\1\67",
-			"",
-			"\12\22\7\uffff\32\22\6\uffff\32\22",
-			"\1\71",
+			"\1\61",
+			"\1\62",
+			"\1\63",
+			"\1\64\1\uffff\1\65\1\66\2\uffff\1\67\15\uffff\1\70",
+			"\12\23\7\uffff\32\23\6\uffff\32\23",
 			"\1\72",
-			"\12\22\7\uffff\32\22\6\uffff\32\22",
-			"\1\74",
+			"",
+			"\1\73",
+			"\12\23\7\uffff\32\23\6\uffff\32\23",
 			"\1\75",
-			"\1\76\5\uffff\1\77",
+			"\1\76",
+			"\12\23\7\uffff\32\23\6\uffff\32\23",
 			"\1\100",
 			"\1\101",
-			"",
-			"\1\102",
-			"",
-			"\1\103",
-			"\12\22\7\uffff\32\22\6\uffff\32\22",
-			"",
+			"\1\102\5\uffff\1\103",
+			"\1\104",
 			"\1\105",
+			"",
 			"\1\106",
 			"\1\107",
+			"",
 			"\1\110",
-			"\12\22\7\uffff\32\22\6\uffff\32\22",
+			"\12\23\7\uffff\32\23\6\uffff\32\23",
+			"",
 			"\1\112",
 			"\1\113",
-			"\12\22\7\uffff\32\22\6\uffff\32\22",
-			"",
+			"\1\114",
 			"\1\115",
-			"\1\116",
-			"\12\22\7\uffff\32\22\6\uffff\32\22",
+			"\12\23\7\uffff\32\23\6\uffff\32\23",
+			"\1\117",
 			"\1\120",
-			"",
 			"\1\121",
-			"\1\122",
+			"\12\23\7\uffff\32\23\6\uffff\32\23",
 			"",
 			"\1\123",
-			"\12\22\7\uffff\32\22\6\uffff\32\22",
-			"",
-			"\1\125",
+			"\1\124",
+			"\12\23\7\uffff\32\23\6\uffff\32\23",
 			"\1\126",
-			"\1\127",
-			"\12\22\7\uffff\32\22\6\uffff\32\22",
 			"",
-			"\1\131",
-			"\12\22\7\uffff\32\22\6\uffff\32\22",
-			"\12\22\7\uffff\32\22\6\uffff\32\22",
+			"\1\127",
+			"\1\130",
+			"\12\23\7\uffff\32\23\6\uffff\32\23",
+			"",
+			"\1\132",
+			"\12\23\7\uffff\32\23\6\uffff\32\23",
 			"",
 			"\1\134",
-			"",
-			"",
 			"\1\135",
-			"\12\22\7\uffff\32\22\6\uffff\32\22",
+			"\1\136",
+			"",
+			"\12\23\7\uffff\32\23\6\uffff\32\23",
+			"",
+			"\1\140",
+			"\12\23\7\uffff\32\23\6\uffff\32\23",
+			"\12\23\7\uffff\32\23\6\uffff\32\23",
+			"",
+			"\1\143",
+			"",
+			"",
+			"\1\144",
+			"\12\23\7\uffff\32\23\6\uffff\32\23",
 			""
 	};
 
@@ -1209,7 +1246,7 @@ public class LanguageLexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "1:1: Tokens : ( ASSIGN | CLASS | COMMA | DECREASE | ELSE | ENDCLASS | ENDELSE | ENDFOR | ENDFUNCTION | ENDIF | ENDWHILE | EQUALS | FOR | FUNCTION | GT | GTE | IF | INCREASE | LPAREN | LT | LTE | MINUS | PLUS | RPAREN | SEMICOLON | SLASH | STAR | VAR | WHILE | ID | VALUE | WS );";
+			return "1:1: Tokens : ( ASSIGN | CLASS | COMMA | DECREASE | ELSE | ENDCLASS | ENDELSE | ENDFOR | ENDFUNCTION | ENDIF | ENDWHILE | EQUALS | FOR | FUNCTION | GT | GTE | IF | INCREASE | LPAREN | LT | LTE | MINUS | PLUS | RETURN | RPAREN | SEMICOLON | SLASH | STAR | VAR | WHILE | ID | VALUE | WS );";
 		}
 	}
 

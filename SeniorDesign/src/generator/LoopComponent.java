@@ -157,6 +157,11 @@ public class LoopComponent extends LogicComponent {
 		return tempMap;
 	}
 
+	public void overrideChildren(Line overide) {
+		childLogics.clear();
+		childLogics.add(overide);
+	}
+
 	/**
 	 * 
 	 * @return true on for loop, false on while loop

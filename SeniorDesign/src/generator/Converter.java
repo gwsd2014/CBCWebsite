@@ -23,13 +23,19 @@ public class Converter {
 				.hasNext();) {
 			convertClass(i.next());
 		}
-		
+
 		output.close();
 		return output;
 	}
 
 	public void convertClass(ClassComponent classComp) {
 		output.println("class " + classComp.getName());
+
+		for (Iterator<Line> i = classComp.getLines().iterator(); i.hasNext();) {
+			convertLine(i.next(), 1);
+		}
+
+		output.println();
 
 		for (Iterator<FunctionComponent> i = classComp.getChildren().iterator(); i
 				.hasNext();) {
@@ -45,21 +51,33 @@ public class Converter {
 			indent += "\t";
 		}
 
-		output.println(indent + "function " + function.getName() + " ( )");
+		output.print(indent + "function " + function.getName() + " ( ");
 
-		// print the variable declarations at the top of the function
-		for (Iterator<Line> i = function.getChildLines().iterator(); i
-				.hasNext();) {
-			convertLine(i.next(), indentation + 1);
+		// print all the parameters
+		if (function.getParameterList().length > 0) {
+			String[] parameters = function.getParameterList();
+			for (int i = 0; i < parameters.length; i++) {
+				if (i > 0) {
+					output.print(", ");
+				}
+				output.print("var " + parameters[i] + " ");
+			}
 		}
 
-		// print the arithmetic
-		for (Iterator<LogicComponent> i = function.getChildLogics().iterator(); i
+		output.println(")");	
+
+		// print the children
+		for (Iterator<LogicComponent> i = function.getChildren().iterator(); i
 				.hasNext();) {
-			convertLogic(i.next(), indentation + 1);
+			Component comp = i.next();
+			if( comp instanceof LogicComponent){
+				convertLogic((LogicComponent)comp, indentation + 1);
+			}else{
+				convertLine((Line) comp, indentation + 1);
+			}
 		}
 
-		output.println(indent + "endfunction");
+		output.println(indent + "endfunction\n");
 	}
 
 	public void convertLogic(LogicComponent logic, int indentation) {
@@ -81,9 +99,8 @@ public class Converter {
 		if (logic instanceof ConditionalComponent) {
 			// print test statement
 			ConditionalComponent conditional = (ConditionalComponent) logic;
-			output.println(indent + "if ( "
-					+ conditional.getLeftVariable() + " "
-					+ tokenConversion(conditional.getComparator()) + " "
+			output.println(indent + "if ( " + conditional.getLeftVariable()
+					+ " " + tokenConversion(conditional.getComparator()) + " "
 					+ conditional.getRightValue() + " )");
 
 			convertLogic(conditional.getIfComponent(), indentation + 1);
@@ -101,27 +118,26 @@ public class Converter {
 			LoopComponent loop = (LoopComponent) logic;
 			if (loop.isForLoop()) {
 				// print test statement
-				output.println(indent + "for ( "
-						+ loop.getLeftVariable() + " = " + loop.getRightValue()
-						+ " ; " + loop.getLeftVariable() + " "
+				output.println(indent + "for ( " + loop.getLeftVariable()
+						+ " = " + loop.getRightValue() + " ; "
+						+ loop.getLeftVariable() + " "
 						+ tokenConversion(loop.getComparator()) + " "
 						+ loop.getForLoopTestValue() + " ; "
 						+ loop.getLeftVariable() + " "
 						+ tokenConversion(loop.getForLoopIncrementor()) + " )");
-				
+
 				// print the logic within the loop
 				for (Iterator<LogicComponent> i = loop.getChildLogics()
 						.iterator(); i.hasNext();) {
 					convertLogic(i.next(), indentation + 1);
 				}
-				
+
 				output.println(indent + "endfor");
 
 			} else {
 				// print test statement
-				output.println(indent + "while ( "
-						+ loop.getLeftVariable() + " "
-						+ tokenConversion(loop.getComparator()) + " "
+				output.println(indent + "while ( " + loop.getLeftVariable()
+						+ " " + tokenConversion(loop.getComparator()) + " "
 						+ loop.getRightValue() + " ) ");
 
 				// print the logic within the loop
@@ -133,6 +149,11 @@ public class Converter {
 				output.println(indent + "endwhile");
 			}
 
+		}
+		
+		//line
+		if(logic instanceof Line){
+			convertLine((Line) logic, indentation);
 		}
 	}
 
@@ -202,6 +223,8 @@ public class Converter {
 			return "-";
 		case PLUS:
 			return "+";
+		case RETURN:
+			return "return";
 		case RPAREN:
 			return ")";
 		case SLASH:

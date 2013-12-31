@@ -17,6 +17,10 @@ class test1
 		
 		for ( i = 2 ; i < 8 ; i ++ )
 			y = 7 + 7
+			two ( will, this, work )
 		endfor
+		
+		
+		
 	endfunction
 endclass

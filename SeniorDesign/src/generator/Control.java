@@ -48,7 +48,7 @@ public class Control {
 			}
 
 			System.out.println("What is the value of "
-					+ problem.getTestVariable());
+					+ problem.getTestVariable() + " after Main is run?");
 			System.out.println("A. " + problem.getCorrectAnswer());
 			System.out.println("B. " + problem.getIncorrect1());
 			System.out.println("C. " + problem.getIncorrect2());
@@ -57,7 +57,14 @@ public class Control {
 
 			char c = 'F';
 			try {
-				c = br.readLine().charAt(0);
+				String line = br.readLine();
+				//error check empty input
+				if(line.isEmpty()){
+					System.out.println("Incorrect!");
+					DM.adjustDifficulty(false);
+					continue;
+				}
+				c = line.charAt(0);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

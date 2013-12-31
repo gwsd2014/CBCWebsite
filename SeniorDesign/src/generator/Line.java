@@ -3,7 +3,7 @@ package generator;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Line {
+public class Line extends LogicComponent {
 	private Component parentComponent;
 	private HashMap<Integer, Object> varValMap;
 	private ArrayList<Tokens> tokenList;
@@ -45,6 +45,49 @@ public class Line {
 		tokenList.add(Tokens.PLUS);
 		tokenList.add(Tokens.VALUE);
 		varValMap.put(tokenList.size() - 1, name2);
+	}
+
+	public void callFunction(String variableName, String functionName,
+			String[] parameterList) {
+		tokenList.add(Tokens.VARIABLE);
+		varValMap.put(tokenList.size() - 1, variableName);
+		tokenList.add(Tokens.ASSIGN);
+		tokenList.add(Tokens.VARIABLE);
+		varValMap.put(tokenList.size() - 1, functionName);
+		tokenList.add(Tokens.LPAREN);
+		// add every parameter
+		for (int i = 0; i < parameterList.length; i++) {
+			if (i > 0) {
+				// add a comma for all parameters after the first
+				tokenList.add(Tokens.COMMA);
+			}
+
+			tokenList.add(Tokens.VARIABLE);
+			varValMap.put(tokenList.size() - 1, parameterList[i]);
+		}
+		tokenList.add(Tokens.RPAREN);
+	}
+
+	public void recursiveAddition(String additional, String functionName, String parameter, String decrementer){
+		tokenList.add(Tokens.RETURN);
+		tokenList.add(Tokens.VALUE);
+		varValMap.put(tokenList.size() - 1, additional);
+		tokenList.add(Tokens.PLUS);
+		tokenList.add(Tokens.VARIABLE);
+		varValMap.put(tokenList.size() - 1, functionName);
+		tokenList.add(Tokens.LPAREN);
+		tokenList.add(Tokens.VARIABLE);
+		varValMap.put(tokenList.size() - 1, parameter);
+		tokenList.add(Tokens.MINUS);
+		tokenList.add(Tokens.VARIABLE);
+		varValMap.put(tokenList.size() - 1, decrementer);
+		tokenList.add(Tokens.RPAREN);
+	}
+
+	public void returnStatement(String returnVariable) {
+		tokenList.add(Tokens.RETURN);
+		tokenList.add(Tokens.VARIABLE);
+		varValMap.put(tokenList.size() - 1, returnVariable);
 	}
 
 	public Component getParent() {

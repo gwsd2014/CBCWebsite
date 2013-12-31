@@ -30,13 +30,15 @@ public class ProblemComponent extends Component {
 		incorrectAnswer1 = correctAnswer + 1;
 
 		incorrectAnswer2 = correctAnswer * 2;
-		if(incorrectAnswer2 == 0){
+		if (incorrectAnswer2 == 0 || incorrectAnswer2 == incorrectAnswer1) {
 			incorrectAnswer2 = -1;
 		}
 
 		incorrectAnswer3 = (rand.nextInt(100) - 50);
-		if(incorrectAnswer3 == correctAnswer){
-			incorrectAnswer3 = correctAnswer - 2;
+		while (incorrectAnswer3 == correctAnswer
+				|| incorrectAnswer3 == incorrectAnswer1
+				|| incorrectAnswer3 == incorrectAnswer2) {
+			incorrectAnswer3 = (rand.nextInt(100) - 50);
 		}
 	}
 
@@ -67,6 +69,21 @@ public class ProblemComponent extends Component {
 			childClasses.add(fourthClass);
 			correctAnswer = fourthClass.levelFour();
 			break;
+		case 5:
+			ClassComponent fifthClass = new ClassComponent("five", difficulty,
+					this);
+			childClasses.add(fifthClass);
+			correctAnswer = fifthClass.levelFive();
+			break;
+		case 6:
+			ClassComponent sixthClass = new ClassComponent("six", difficulty, this);
+			childClasses.add(sixthClass);
+			correctAnswer = sixthClass.levelSix();
+			break;
+		case 7:
+			ClassComponent seventhClass = new ClassComponent("seven", difficulty, this);
+			childClasses.add(seventhClass);
+			correctAnswer = seventhClass.levelSeven();
 		}
 	}
 

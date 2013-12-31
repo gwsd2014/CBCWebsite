@@ -40,6 +40,10 @@ public class ConditionalComponent extends LogicComponent {
 		leftVariable = randomVariable;
 		comparator = Tokens.EQUALS;
 
+		if (difficulty.getLevel() == 4) {
+			leftVariable = testVariable;
+		}
+
 		// make if component
 		ifComponent = makeAComponent();
 		HashMap<String, Integer> ifMap = makeComponentLines(ifComponent,
@@ -68,6 +72,24 @@ public class ConditionalComponent extends LogicComponent {
 		}
 
 		return currentMap;
+	}
+
+	public void createRecursiveConditional(String additionValue,
+			String passedVariable, int passedValue, String functionName, String baseValue) {
+		//if component is base case
+		Line baseLine = new Line(this, false);
+		ifComponent = baseLine;
+		baseLine.returnStatement(baseValue);
+		
+		//else component is recursive case
+		Line recursiveLine = new Line(this, false);
+		elseComponent = recursiveLine;
+		recursiveLine.recursiveAddition(additionValue, functionName,
+				passedVariable, "1");
+		
+		comparator = Tokens.EQUALS;
+		leftVariable = passedVariable;
+		rightValue = passedValue;
 	}
 
 	private LogicComponent makeAComponent() {

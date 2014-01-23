@@ -21,6 +21,7 @@ public class LoopComponent extends LogicComponent {
 	private int nest;
 
 	private final int range;
+	private final int questionMarks = -1234567;
 
 	public LoopComponent(Difficulty diff, Component parent, int newNest) {
 		parentComponent = parent;
@@ -31,41 +32,6 @@ public class LoopComponent extends LogicComponent {
 
 		range = 6;
 	}
-
-	/*
-	 * public HashMap<String, Integer> createWhileLoop( HashMap<String, Integer>
-	 * parentMap, String testVariable) { forLoop = false;
-	 * 
-	 * // make test statement // randomly choose variable to test
-	 * Iterator<String> variablesIterator = parentMap.keySet().iterator();
-	 * String randomVariable = variablesIterator.next(); for (int j = 0; j <
-	 * random.nextInt(parentMap.size()); j++) { randomVariable =
-	 * variablesIterator.next(); } // TODO Randomization leftVariable =
-	 * randomVariable; int comparatorChooser = random.nextInt(4); switch
-	 * (comparatorChooser) { case 0: comparator = Tokens.LTE; break; case 1:
-	 * comparator = Tokens.LT; break; case 2: comparator = Tokens.GT; break;
-	 * case 3: comparator = Tokens.GTE; break; }
-	 * 
-	 * HashMap<String, Integer> currentMap = new HashMap<String, Integer>();
-	 * 
-	 * // determine what should go in the loop, only going beyond arithmetic if
-	 * // weight > 1, and if nesting hasn't expired boolean selectArithmetic =
-	 * true; if (difficulty.getWeight() >= 2 && nest > 1) { selectArithmetic =
-	 * random.nextBoolean(); } if (selectArithmetic) { LogicComponent nextArith
-	 * = new ArithmeticComponent(difficulty, this); childLogics.add(nextArith);
-	 * currentMap = nextArith.createLines(deepCopyHashMap(parentMap),
-	 * testVariable);
-	 * 
-	 * } else { // coin flip for conditional or another loop if
-	 * (random.nextBoolean()) { // loop LogicComponent nextLoop = new
-	 * LoopComponent(difficulty, this, nest - 1); childLogics.add(nextLoop);
-	 * currentMap = nextLoop.createLines(deepCopyHashMap(parentMap),
-	 * testVariable); } else { // conditional LogicComponent nextCond = new
-	 * ConditionalComponent(difficulty, this, nest - 1);
-	 * childLogics.add(nextCond); currentMap =
-	 * nextCond.createLines(deepCopyHashMap(parentMap), testVariable); } }
-	 * return currentMap; }
-	 */
 
 	public HashMap<String, Integer> createForLoop(
 			HashMap<String, Integer> parentMap, String testVariable) {
@@ -83,7 +49,7 @@ public class LoopComponent extends LogicComponent {
 
 		// set test condition
 		int comparatorChooser = random.nextInt(4);
-		runs = difficulty.getWeight();
+		runs = determineRuns();
 		switch (comparatorChooser) {
 		case 0:
 			comparator = Tokens.LTE;
@@ -162,6 +128,30 @@ public class LoopComponent extends LogicComponent {
 		childLogics.add(overide);
 	}
 
+	public void replacePiece() {
+		switch (difficulty.getWeight()) {
+		case 1:
+			System.out.println("Expected answer: " + rightValue);
+			rightValue = questionMarks;
+			return;
+		case 2:
+			System.out.println("Expected answer: " + forLoopTestValue);
+			forLoopTestValue = questionMarks;
+			return;
+		case 3:
+			System.out.println("Expected answer: " + forLoopIncrementor);
+			forLoopIncrementor = Tokens.QUESTIONS;
+			return;
+		}
+	}
+
+	private int determineRuns() {
+		if (difficulty.getProblemType() == ProblemType.FILL_BLANK)
+			return random.nextInt(5);
+		else
+			return difficulty.getWeight();
+	}
+
 	/**
 	 * 
 	 * @return true on for loop, false on while loop
@@ -170,8 +160,11 @@ public class LoopComponent extends LogicComponent {
 		return forLoop;
 	}
 
-	public int getForLoopTestValue() {
-		return forLoopTestValue;
+	public String getForLoopTestValue() {
+		if (forLoopTestValue == questionMarks) {
+			return "???";
+		}
+		return Integer.toString(forLoopTestValue);
 	}
 
 	/**
@@ -190,8 +183,11 @@ public class LoopComponent extends LogicComponent {
 		return comparator;
 	}
 
-	public int getRightValue() {
-		return rightValue;
+	public String getRightValue() {
+		if (rightValue == questionMarks) {
+			return "???";
+		}
+		return Integer.toString(rightValue);
 	}
 
 	public LinkedList<LogicComponent> getChildLogics() {

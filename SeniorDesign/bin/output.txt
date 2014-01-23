@@ -1,15 +1,15 @@
-class one
-	function foo ( )
-		var f = 4 
-		var a = 8 
-		var i = -5 
-		var k = 1 
-		var r = -6 
+class three
 
-		r = r + r 
-		r = r + k 
-		a = a + 2 
-		a = a + 9 
-		k = k + 4 
+	function Main ( )
+		var k = 0 
+		var h = -1 
+
+		k = k + h 
+		for ( x = ??? ; x > -5 ; x -- )
+			k = k + -1 
+		endfor
+
+		return k 
 	endfunction
+
 endclass

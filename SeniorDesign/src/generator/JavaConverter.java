@@ -4,16 +4,16 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Iterator;
 
-public class Converter {
+public class JavaConverter {
 
 	PrintWriter output;
 	ComponentTypes removedComponent;
+	String userReplacement;
 	boolean hasRemoved;
-	int weight;
 
-	public Converter() {
+	public JavaConverter() {
 		try {
-			output = new PrintWriter("src/output.txt");
+			output = new PrintWriter("src/language/javaOutput.java");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Failed");
@@ -22,10 +22,11 @@ public class Converter {
 	}
 
 	public PrintWriter convertProblem(ProblemComponent problem,
-			ComponentTypes removed, int problemWeight) {
+			ComponentTypes removed, String replacement) {
+
 		removedComponent = removed;
+		userReplacement = replacement;
 		hasRemoved = false;
-		weight = problemWeight;
 
 		for (Iterator<ClassComponent> i = problem.getChildren().iterator(); i
 				.hasNext();) {
@@ -37,7 +38,9 @@ public class Converter {
 	}
 
 	public void convertClass(ClassComponent classComp) {
-		output.println("class " + classComp.getName());
+		output.println("package language; \n");
+
+		output.println("public class javaOutput implements simpleInterface {");
 
 		for (Iterator<Line> i = classComp.getLines().iterator(); i.hasNext();) {
 			convertLine(i.next(), 1);
@@ -49,7 +52,7 @@ public class Converter {
 				.hasNext();) {
 			convertFunction(i.next(), 1);
 		}
-		output.println("endclass");
+		output.println("}");
 	}
 
 	public void convertFunction(FunctionComponent function, int indentation) {
@@ -59,7 +62,7 @@ public class Converter {
 			indent += "\t";
 		}
 
-		output.print(indent + "function " + function.getName() + " ( ");
+		output.print(indent + "public int " + function.getName() + " ( ");
 
 		// print all the parameters
 		if (function.getParameterList().length > 0) {
@@ -68,11 +71,11 @@ public class Converter {
 				if (i > 0) {
 					output.print(", ");
 				}
-				output.print("var " + parameters[i] + " ");
+				output.print("int " + parameters[i] + " ");
 			}
 		}
 
-		output.println(")");
+		output.println(") {");
 
 		// print the children
 		for (Iterator<LogicComponent> i = function.getChildren().iterator(); i
@@ -85,7 +88,7 @@ public class Converter {
 			}
 		}
 
-		output.println(indent + "endfunction\n");
+		output.println(indent + "}\n");
 	}
 
 	public void convertLogic(LogicComponent logic, int indentation) {
@@ -107,46 +110,47 @@ public class Converter {
 		if (logic instanceof ConditionalComponent) {
 			// print test statement
 			ConditionalComponent conditional = (ConditionalComponent) logic;
+
+			// test to see if conditional must be removed
 			if (!hasRemoved && removedComponent == ComponentTypes.Conditional) {
-				output.println(indent + "if ( ??? )");
+				output.println(indent + "if ( " + userReplacement + " ) {");
 				hasRemoved = true;
-				System.out.println("Expected answer: "
-						+ conditional.getLeftVariable() + " "
-						+ tokenConversion(conditional.getComparator()) + " "
-						+ conditional.getRightValue());
 			} else {
 				output.println(indent + "if ( " + conditional.getLeftVariable()
 						+ " " + tokenConversion(conditional.getComparator())
-						+ " " + conditional.getRightValue() + " )");
+						+ " " + conditional.getRightValue() + " ) {");
 			}
 			convertLogic(conditional.getIfComponent(), indentation + 1);
 
-			output.println(indent + "endif");
-			output.println(indent + "else");
+			output.println(indent + "}");
+			output.println(indent + "else {");
 
 			convertLogic(conditional.getElseComponent(), indentation + 1);
 
-			output.println(indent + "endelse");
+			output.println(indent + "}");
 		}
 
 		// Loop
 		if (logic instanceof LoopComponent) {
 			LoopComponent loop = (LoopComponent) logic;
 			if (loop.isForLoop()) {
-				// insert ??? if needed
-				if (!hasRemoved && removedComponent == ComponentTypes.Loop) {
-					// remove different components based on weight
-					loop.replacePiece();
-					hasRemoved = true;
-				}
+
 				// print test statement
-				output.println(indent + "for ( " + loop.getLeftVariable()
-						+ " = " + loop.getRightValue() + " ; "
-						+ loop.getLeftVariable() + " "
+				String loopStatement = indent + "for ( int "
+						+ loop.getLeftVariable() + " = " + loop.getRightValue()
+						+ " ; " + loop.getLeftVariable() + " "
 						+ tokenConversion(loop.getComparator()) + " "
 						+ loop.getForLoopTestValue() + " ; "
 						+ loop.getLeftVariable() + " "
-						+ tokenConversion(loop.getForLoopIncrementor()) + " )");
+						+ tokenConversion(loop.getForLoopIncrementor())
+						+ " ) {";
+				if (!hasRemoved && removedComponent == ComponentTypes.Loop) {
+					loopStatement = loopStatement.replaceFirst("\\?\\?\\?",
+							userReplacement);
+					hasRemoved = true;
+				}
+
+				output.println(loopStatement);
 
 				// print the logic within the loop
 				for (Iterator<LogicComponent> i = loop.getChildLogics()
@@ -154,13 +158,13 @@ public class Converter {
 					convertLogic(i.next(), indentation + 1);
 				}
 
-				output.println(indent + "endfor");
+				output.println(indent + "}");
 
 			} else {
 				// print test statement
 				output.println(indent + "while ( " + loop.getLeftVariable()
 						+ " " + tokenConversion(loop.getComparator()) + " "
-						+ loop.getRightValue() + " ) ");
+						+ loop.getRightValue() + " ) {");
 
 				// print the logic within the loop
 				for (Iterator<LogicComponent> i = loop.getChildLogics()
@@ -168,7 +172,7 @@ public class Converter {
 					convertLogic(i.next(), indentation + 1);
 				}
 
-				output.println(indent + "endwhile");
+				output.println(indent + "}");
 			}
 
 		}
@@ -198,29 +202,41 @@ public class Converter {
 			counter++;
 
 			Tokens token = i.next();
+
 			if (token.toString().compareTo("VARIABLE") == 0
 					|| token.toString().compareTo("VALUE") == 0) {
 				if (line.getIsFunctionCall()
 						&& removedComponent == ComponentTypes.Function
 						&& !hasRemoved && counter > 3) {
 					// remove the variable and replace with ???
-					output.print("??? ");
+					output.print(userReplacement);
 					hasRemoved = true;
-					System.out.println("Expected answer: "
-							+ line.getVarValMap().get(counter));
+				} else if (line.getIsArrayDeclaration()) {
+					// make exception for array declaration
+					if (line.getIsArrayDeclaration()) {
+						String array = (String) line.getVarValMap()
+								.get(counter);
+						output.print(array.charAt(0) + " = new int["
+								+ array.charAt(2) + "]");
+					}
 				} else {
-					output.print(line.getVarValMap().get(counter) + " ");
+					output.print(line.getVarValMap().get(counter));
 				}
 			} else
-				output.print(tokenConversion(token) + " ");
+				output.print(tokenConversion(token));
+
+			if (i.hasNext()) {
+				output.print(" ");
+			}
 		}
+		output.print(";");
 		output.println();
 	}
 
 	private String tokenConversion(Tokens token) {
 		switch (token) {
 		case ARR:
-			return "arr";
+			return "int[]";
 		case ASSIGN:
 			return "=";
 		case CLASS:
@@ -275,7 +291,7 @@ public class Converter {
 			// TODO ERROR STATEMENT
 			break;
 		case VAR:
-			return "var";
+			return "int";
 		case VARIABLE:
 			// TODO ERROR STATEMENT
 			break;

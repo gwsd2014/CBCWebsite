@@ -48,10 +48,11 @@ public class ArithmeticComponent extends LogicComponent {
 				}
 			}
 
-			if(parentComponent instanceof LoopComponent && difficulty.getLevel() == 4){
+			if (parentComponent instanceof LoopComponent
+					&& difficulty.getLevel() == 4) {
 				leftVariable = testVariable;
 			}
-			
+
 			// randomly decide whether to add by value or by variable
 			if (random.nextGaussian() < 0) {
 				// adding by value
@@ -93,7 +94,7 @@ public class ArithmeticComponent extends LogicComponent {
 		}
 		return currentMap;
 	}
-	
+
 	public HashMap<String, Integer> runLines(HashMap<String, Integer> parentMap) {
 
 		HashMap<String, Integer> tempMap = parentMap;
@@ -126,20 +127,25 @@ public class ArithmeticComponent extends LogicComponent {
 	}
 
 	private int determineAmountOfLines() {
+		// cap fill in the blanks at 1
+		if (difficulty.getProblemType() == ProblemType.FILL_BLANK) {
+			return 1;
+		}
+
 		int lines = difficulty.getWeight();
 
 		if (difficulty.getLevel() == 4) {
 			lines = 1;
 		}
 
-		if(difficulty.getLevel() == 5){
+		if (difficulty.getLevel() == 5) {
 			lines = 2;
 		}
-		
-		if(difficulty.getLevel() == 6){
+
+		if (difficulty.getLevel() == 6) {
 			lines = 2;
 		}
-		
+
 		return lines;
 	}
 

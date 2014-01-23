@@ -1,6 +1,6 @@
 package language;
 
-// $ANTLR 3.5 C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g 2013-12-09 22:41:07
+// $ANTLR 3.5 C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g 2014-01-02 18:28:27
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -10,39 +10,40 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class LanguageLexer extends Lexer {
 	public static final int EOF=-1;
-	public static final int ASSIGN=4;
-	public static final int CLASS=5;
-	public static final int COMMA=6;
-	public static final int DECREASE=7;
-	public static final int ELSE=8;
-	public static final int ENDCLASS=9;
-	public static final int ENDELSE=10;
-	public static final int ENDFOR=11;
-	public static final int ENDFUNCTION=12;
-	public static final int ENDIF=13;
-	public static final int ENDWHILE=14;
-	public static final int EQUALS=15;
-	public static final int FOR=16;
-	public static final int FUNCTION=17;
-	public static final int GT=18;
-	public static final int GTE=19;
-	public static final int ID=20;
-	public static final int IF=21;
-	public static final int INCREASE=22;
-	public static final int LPAREN=23;
-	public static final int LT=24;
-	public static final int LTE=25;
-	public static final int MINUS=26;
-	public static final int PLUS=27;
-	public static final int RETURN=28;
-	public static final int RPAREN=29;
-	public static final int SEMICOLON=30;
-	public static final int SLASH=31;
-	public static final int STAR=32;
-	public static final int VALUE=33;
-	public static final int VAR=34;
-	public static final int WHILE=35;
-	public static final int WS=36;
+	public static final int ARR=4;
+	public static final int ASSIGN=5;
+	public static final int CLASS=6;
+	public static final int COMMA=7;
+	public static final int DECREASE=8;
+	public static final int ELSE=9;
+	public static final int ENDCLASS=10;
+	public static final int ENDELSE=11;
+	public static final int ENDFOR=12;
+	public static final int ENDFUNCTION=13;
+	public static final int ENDIF=14;
+	public static final int ENDWHILE=15;
+	public static final int EQUALS=16;
+	public static final int FOR=17;
+	public static final int FUNCTION=18;
+	public static final int GT=19;
+	public static final int GTE=20;
+	public static final int ID=21;
+	public static final int IF=22;
+	public static final int INCREASE=23;
+	public static final int LPAREN=24;
+	public static final int LT=25;
+	public static final int LTE=26;
+	public static final int MINUS=27;
+	public static final int PLUS=28;
+	public static final int RETURN=29;
+	public static final int RPAREN=30;
+	public static final int SEMICOLON=31;
+	public static final int SLASH=32;
+	public static final int STAR=33;
+	public static final int VALUE=34;
+	public static final int VAR=35;
+	public static final int WHILE=36;
+	public static final int WS=37;
 
 	// delegates
 	// delegators
@@ -59,13 +60,34 @@ public class LanguageLexer extends Lexer {
 	}
 	@Override public String getGrammarFileName() { return "C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g"; }
 
+	// $ANTLR start "ARR"
+	public final void mARR() throws RecognitionException {
+		try {
+			int _type = ARR;
+			int _channel = DEFAULT_TOKEN_CHANNEL;
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:2:5: ( 'arr' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:2:7: 'arr'
+			{
+			match("arr"); 
+
+			}
+
+			state.type = _type;
+			state.channel = _channel;
+		}
+		finally {
+			// do for sure before leaving
+		}
+	}
+	// $ANTLR end "ARR"
+
 	// $ANTLR start "ASSIGN"
 	public final void mASSIGN() throws RecognitionException {
 		try {
 			int _type = ASSIGN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:2:8: ( '=' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:2:10: '='
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:3:8: ( '=' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:3:10: '='
 			{
 			match('='); 
 			}
@@ -84,8 +106,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = CLASS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:3:7: ( 'class' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:3:9: 'class'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:4:7: ( 'class' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:4:9: 'class'
 			{
 			match("class"); 
 
@@ -105,8 +127,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = COMMA;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:4:7: ( ',' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:4:9: ','
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:5:7: ( ',' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:5:9: ','
 			{
 			match(','); 
 			}
@@ -125,8 +147,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = DECREASE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:5:10: ( '--' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:5:12: '--'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:6:10: ( '--' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:6:12: '--'
 			{
 			match("--"); 
 
@@ -146,8 +168,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = ELSE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:6:6: ( 'else' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:6:8: 'else'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:7:6: ( 'else' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:7:8: 'else'
 			{
 			match("else"); 
 
@@ -167,8 +189,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = ENDCLASS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:7:10: ( 'endclass' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:7:12: 'endclass'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:8:10: ( 'endclass' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:8:12: 'endclass'
 			{
 			match("endclass"); 
 
@@ -188,8 +210,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = ENDELSE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:8:9: ( 'endelse' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:8:11: 'endelse'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:9:9: ( 'endelse' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:9:11: 'endelse'
 			{
 			match("endelse"); 
 
@@ -209,8 +231,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = ENDFOR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:9:8: ( 'endfor' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:9:10: 'endfor'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:10:8: ( 'endfor' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:10:10: 'endfor'
 			{
 			match("endfor"); 
 
@@ -230,8 +252,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = ENDFUNCTION;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:10:13: ( 'endfunction' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:10:15: 'endfunction'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:11:13: ( 'endfunction' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:11:15: 'endfunction'
 			{
 			match("endfunction"); 
 
@@ -251,8 +273,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = ENDIF;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:11:7: ( 'endif' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:11:9: 'endif'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:12:7: ( 'endif' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:12:9: 'endif'
 			{
 			match("endif"); 
 
@@ -272,8 +294,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = ENDWHILE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:12:10: ( 'endwhile' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:12:12: 'endwhile'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:13:10: ( 'endwhile' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:13:12: 'endwhile'
 			{
 			match("endwhile"); 
 
@@ -293,8 +315,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = EQUALS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:13:8: ( '==' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:13:10: '=='
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:14:8: ( '==' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:14:10: '=='
 			{
 			match("=="); 
 
@@ -314,8 +336,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = FOR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:14:5: ( 'for' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:14:7: 'for'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:15:5: ( 'for' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:15:7: 'for'
 			{
 			match("for"); 
 
@@ -335,8 +357,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = FUNCTION;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:15:10: ( 'function' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:15:12: 'function'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:16:10: ( 'function' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:16:12: 'function'
 			{
 			match("function"); 
 
@@ -356,8 +378,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = GT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:16:4: ( '>' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:16:6: '>'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:17:4: ( '>' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:17:6: '>'
 			{
 			match('>'); 
 			}
@@ -376,8 +398,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = GTE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:17:5: ( '>=' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:17:7: '>='
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:18:5: ( '>=' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:18:7: '>='
 			{
 			match(">="); 
 
@@ -397,8 +419,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = IF;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:18:4: ( 'if' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:18:6: 'if'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:19:4: ( 'if' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:19:6: 'if'
 			{
 			match("if"); 
 
@@ -418,8 +440,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = INCREASE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:19:10: ( '++' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:19:12: '++'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:20:10: ( '++' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:20:12: '++'
 			{
 			match("++"); 
 
@@ -439,8 +461,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = LPAREN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:20:8: ( '(' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:20:10: '('
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:21:8: ( '(' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:21:10: '('
 			{
 			match('('); 
 			}
@@ -459,8 +481,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = LT;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:21:4: ( '<' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:21:6: '<'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:22:4: ( '<' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:22:6: '<'
 			{
 			match('<'); 
 			}
@@ -479,8 +501,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = LTE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:22:5: ( '<=' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:22:7: '<='
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:23:5: ( '<=' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:23:7: '<='
 			{
 			match("<="); 
 
@@ -500,8 +522,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = MINUS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:23:7: ( '-' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:23:9: '-'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:24:7: ( '-' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:24:9: '-'
 			{
 			match('-'); 
 			}
@@ -520,8 +542,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = PLUS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:24:6: ( '+' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:24:8: '+'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:25:6: ( '+' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:25:8: '+'
 			{
 			match('+'); 
 			}
@@ -540,8 +562,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = RETURN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:25:8: ( 'return' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:25:10: 'return'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:26:8: ( 'return' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:26:10: 'return'
 			{
 			match("return"); 
 
@@ -561,8 +583,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = RPAREN;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:26:8: ( ')' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:26:10: ')'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:27:8: ( ')' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:27:10: ')'
 			{
 			match(')'); 
 			}
@@ -581,8 +603,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = SEMICOLON;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:27:11: ( ';' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:27:13: ';'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:28:11: ( ';' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:28:13: ';'
 			{
 			match(';'); 
 			}
@@ -601,8 +623,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = SLASH;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:28:7: ( '/' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:28:9: '/'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:29:7: ( '/' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:29:9: '/'
 			{
 			match('/'); 
 			}
@@ -621,8 +643,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = STAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:29:6: ( '*' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:29:8: '*'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:30:6: ( '*' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:30:8: '*'
 			{
 			match('*'); 
 			}
@@ -641,8 +663,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = VAR;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:30:5: ( 'var' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:30:7: 'var'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:31:5: ( 'var' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:31:7: 'var'
 			{
 			match("var"); 
 
@@ -662,8 +684,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = WHILE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:31:7: ( 'while' )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:31:9: 'while'
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:32:7: ( 'while' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:32:9: 'while'
 			{
 			match("while"); 
 
@@ -683,8 +705,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = ID;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:171:7: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' )* )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:171:9: ( 'a' .. 'z' | 'A' .. 'Z' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' )*
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:178:7: ( ( 'a' .. 'z' | 'A' .. 'Z' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '[' | ']' )* )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:178:9: ( 'a' .. 'z' | 'A' .. 'Z' ) ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '[' | ']' )*
 			{
 			if ( (input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 				input.consume();
@@ -694,12 +716,12 @@ public class LanguageLexer extends Lexer {
 				recover(mse);
 				throw mse;
 			}
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:171:30: ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' )*
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:178:30: ( '0' .. '9' | 'a' .. 'z' | 'A' .. 'Z' | '[' | ']' )*
 			loop1:
 			while (true) {
 				int alt1=2;
 				int LA1_0 = input.LA(1);
-				if ( ((LA1_0 >= '0' && LA1_0 <= '9')||(LA1_0 >= 'A' && LA1_0 <= 'Z')||(LA1_0 >= 'a' && LA1_0 <= 'z')) ) {
+				if ( ((LA1_0 >= '0' && LA1_0 <= '9')||(LA1_0 >= 'A' && LA1_0 <= '[')||LA1_0==']'||(LA1_0 >= 'a' && LA1_0 <= 'z')) ) {
 					alt1=1;
 				}
 
@@ -707,7 +729,7 @@ public class LanguageLexer extends Lexer {
 				case 1 :
 					// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:
 					{
-					if ( (input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'A' && input.LA(1) <= 'Z')||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
+					if ( (input.LA(1) >= '0' && input.LA(1) <= '9')||(input.LA(1) >= 'A' && input.LA(1) <= '[')||input.LA(1)==']'||(input.LA(1) >= 'a' && input.LA(1) <= 'z') ) {
 						input.consume();
 					}
 					else {
@@ -739,10 +761,10 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = VALUE;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:172:10: ( ( '-' )? ( '0' .. '9' )+ )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:172:12: ( '-' )? ( '0' .. '9' )+
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:179:10: ( ( '-' )? ( '0' .. '9' )+ )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:179:12: ( '-' )? ( '0' .. '9' )+
 			{
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:172:12: ( '-' )?
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:179:12: ( '-' )?
 			int alt2=2;
 			int LA2_0 = input.LA(1);
 			if ( (LA2_0=='-') ) {
@@ -750,7 +772,7 @@ public class LanguageLexer extends Lexer {
 			}
 			switch (alt2) {
 				case 1 :
-					// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:172:12: '-'
+					// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:179:12: '-'
 					{
 					match('-'); 
 					}
@@ -758,7 +780,7 @@ public class LanguageLexer extends Lexer {
 
 			}
 
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:172:16: ( '0' .. '9' )+
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:179:16: ( '0' .. '9' )+
 			int cnt3=0;
 			loop3:
 			while (true) {
@@ -807,8 +829,8 @@ public class LanguageLexer extends Lexer {
 		try {
 			int _type = WS;
 			int _channel = DEFAULT_TOKEN_CHANNEL;
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:173:8: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
-			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:173:10: ( ' ' | '\\t' | '\\r' | '\\n' )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:180:8: ( ( ' ' | '\\t' | '\\r' | '\\n' ) )
+			// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:180:10: ( ' ' | '\\t' | '\\r' | '\\n' )
 			{
 			if ( (input.LA(1) >= '\t' && input.LA(1) <= '\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
 				input.consume();
@@ -832,236 +854,243 @@ public class LanguageLexer extends Lexer {
 
 	@Override
 	public void mTokens() throws RecognitionException {
-		// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:8: ( ASSIGN | CLASS | COMMA | DECREASE | ELSE | ENDCLASS | ENDELSE | ENDFOR | ENDFUNCTION | ENDIF | ENDWHILE | EQUALS | FOR | FUNCTION | GT | GTE | IF | INCREASE | LPAREN | LT | LTE | MINUS | PLUS | RETURN | RPAREN | SEMICOLON | SLASH | STAR | VAR | WHILE | ID | VALUE | WS )
-		int alt4=33;
+		// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:8: ( ARR | ASSIGN | CLASS | COMMA | DECREASE | ELSE | ENDCLASS | ENDELSE | ENDFOR | ENDFUNCTION | ENDIF | ENDWHILE | EQUALS | FOR | FUNCTION | GT | GTE | IF | INCREASE | LPAREN | LT | LTE | MINUS | PLUS | RETURN | RPAREN | SEMICOLON | SLASH | STAR | VAR | WHILE | ID | VALUE | WS )
+		int alt4=34;
 		alt4 = dfa4.predict(input);
 		switch (alt4) {
 			case 1 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:10: ASSIGN
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:10: ARR
+				{
+				mARR(); 
+
+				}
+				break;
+			case 2 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:14: ASSIGN
 				{
 				mASSIGN(); 
 
 				}
 				break;
-			case 2 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:17: CLASS
+			case 3 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:21: CLASS
 				{
 				mCLASS(); 
 
 				}
 				break;
-			case 3 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:23: COMMA
+			case 4 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:27: COMMA
 				{
 				mCOMMA(); 
 
 				}
 				break;
-			case 4 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:29: DECREASE
+			case 5 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:33: DECREASE
 				{
 				mDECREASE(); 
 
 				}
 				break;
-			case 5 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:38: ELSE
+			case 6 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:42: ELSE
 				{
 				mELSE(); 
 
 				}
 				break;
-			case 6 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:43: ENDCLASS
+			case 7 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:47: ENDCLASS
 				{
 				mENDCLASS(); 
 
 				}
 				break;
-			case 7 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:52: ENDELSE
+			case 8 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:56: ENDELSE
 				{
 				mENDELSE(); 
 
 				}
 				break;
-			case 8 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:60: ENDFOR
+			case 9 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:64: ENDFOR
 				{
 				mENDFOR(); 
 
 				}
 				break;
-			case 9 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:67: ENDFUNCTION
+			case 10 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:71: ENDFUNCTION
 				{
 				mENDFUNCTION(); 
 
 				}
 				break;
-			case 10 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:79: ENDIF
+			case 11 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:83: ENDIF
 				{
 				mENDIF(); 
 
 				}
 				break;
-			case 11 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:85: ENDWHILE
+			case 12 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:89: ENDWHILE
 				{
 				mENDWHILE(); 
 
 				}
 				break;
-			case 12 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:94: EQUALS
+			case 13 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:98: EQUALS
 				{
 				mEQUALS(); 
 
 				}
 				break;
-			case 13 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:101: FOR
+			case 14 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:105: FOR
 				{
 				mFOR(); 
 
 				}
 				break;
-			case 14 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:105: FUNCTION
+			case 15 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:109: FUNCTION
 				{
 				mFUNCTION(); 
 
 				}
 				break;
-			case 15 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:114: GT
+			case 16 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:118: GT
 				{
 				mGT(); 
 
 				}
 				break;
-			case 16 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:117: GTE
+			case 17 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:121: GTE
 				{
 				mGTE(); 
 
 				}
 				break;
-			case 17 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:121: IF
+			case 18 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:125: IF
 				{
 				mIF(); 
 
 				}
 				break;
-			case 18 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:124: INCREASE
+			case 19 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:128: INCREASE
 				{
 				mINCREASE(); 
 
 				}
 				break;
-			case 19 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:133: LPAREN
+			case 20 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:137: LPAREN
 				{
 				mLPAREN(); 
 
 				}
 				break;
-			case 20 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:140: LT
+			case 21 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:144: LT
 				{
 				mLT(); 
 
 				}
 				break;
-			case 21 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:143: LTE
+			case 22 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:147: LTE
 				{
 				mLTE(); 
 
 				}
 				break;
-			case 22 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:147: MINUS
+			case 23 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:151: MINUS
 				{
 				mMINUS(); 
 
 				}
 				break;
-			case 23 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:153: PLUS
+			case 24 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:157: PLUS
 				{
 				mPLUS(); 
 
 				}
 				break;
-			case 24 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:158: RETURN
+			case 25 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:162: RETURN
 				{
 				mRETURN(); 
 
 				}
 				break;
-			case 25 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:165: RPAREN
+			case 26 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:169: RPAREN
 				{
 				mRPAREN(); 
 
 				}
 				break;
-			case 26 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:172: SEMICOLON
+			case 27 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:176: SEMICOLON
 				{
 				mSEMICOLON(); 
 
 				}
 				break;
-			case 27 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:182: SLASH
+			case 28 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:186: SLASH
 				{
 				mSLASH(); 
 
 				}
 				break;
-			case 28 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:188: STAR
+			case 29 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:192: STAR
 				{
 				mSTAR(); 
 
 				}
 				break;
-			case 29 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:193: VAR
+			case 30 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:197: VAR
 				{
 				mVAR(); 
 
 				}
 				break;
-			case 30 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:197: WHILE
+			case 31 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:201: WHILE
 				{
 				mWHILE(); 
 
 				}
 				break;
-			case 31 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:203: ID
+			case 32 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:207: ID
 				{
 				mID(); 
 
 				}
 				break;
-			case 32 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:206: VALUE
+			case 33 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:210: VALUE
 				{
 				mVALUE(); 
 
 				}
 				break;
-			case 33 :
-				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:212: WS
+			case 34 :
+				// C:\\Users\\Michael\\Documents\\Senior Design\\pseudoLanguage\\Language.g:1:216: WS
 				{
 				mWS(); 
 
@@ -1074,144 +1103,151 @@ public class LanguageLexer extends Lexer {
 
 	protected DFA4 dfa4 = new DFA4(this);
 	static final String DFA4_eotS =
-		"\1\uffff\1\27\1\23\1\uffff\1\32\2\23\1\40\1\23\1\43\1\uffff\1\45\1\23"+
-		"\4\uffff\2\23\5\uffff\1\23\2\uffff\4\23\2\uffff\1\56\4\uffff\6\23\1\71"+
-		"\1\23\1\uffff\1\23\1\74\2\23\1\77\5\23\1\uffff\2\23\1\uffff\1\23\1\111"+
-		"\1\uffff\4\23\1\116\3\23\1\122\1\uffff\2\23\1\125\1\23\1\uffff\2\23\1"+
-		"\131\1\uffff\1\23\1\133\1\uffff\3\23\1\uffff\1\137\1\uffff\1\23\1\141"+
-		"\1\142\1\uffff\1\23\2\uffff\1\23\1\145\1\uffff";
+		"\1\uffff\1\24\1\31\1\24\1\uffff\1\34\2\24\1\42\1\24\1\45\1\uffff\1\47"+
+		"\1\24\4\uffff\2\24\3\uffff\1\24\2\uffff\1\24\2\uffff\4\24\2\uffff\1\61"+
+		"\4\uffff\3\24\1\65\3\24\1\75\1\24\1\uffff\1\24\1\100\1\24\1\uffff\1\24"+
+		"\1\103\5\24\1\uffff\2\24\1\uffff\1\24\1\115\1\uffff\4\24\1\122\3\24\1"+
+		"\126\1\uffff\2\24\1\131\1\24\1\uffff\2\24\1\135\1\uffff\1\24\1\137\1\uffff"+
+		"\3\24\1\uffff\1\143\1\uffff\1\24\1\145\1\146\1\uffff\1\24\2\uffff\1\24"+
+		"\1\151\1\uffff";
 	static final String DFA4_eofS =
-		"\146\uffff";
+		"\152\uffff";
 	static final String DFA4_minS =
-		"\1\11\1\75\1\154\1\uffff\1\55\1\154\1\157\1\75\1\146\1\53\1\uffff\1\75"+
-		"\1\145\4\uffff\1\141\1\150\5\uffff\1\141\2\uffff\1\163\1\144\1\162\1\156"+
-		"\2\uffff\1\60\4\uffff\1\164\1\162\1\151\1\163\1\145\1\143\1\60\1\143\1"+
-		"\uffff\1\165\1\60\1\154\1\163\1\60\2\154\1\157\1\146\1\150\1\uffff\1\164"+
-		"\1\162\1\uffff\1\145\1\60\1\uffff\1\141\1\163\1\162\1\156\1\60\2\151\1"+
-		"\156\1\60\1\uffff\1\163\1\145\1\60\1\143\1\uffff\1\154\1\157\1\60\1\uffff"+
-		"\1\163\1\60\1\uffff\1\164\1\145\1\156\1\uffff\1\60\1\uffff\1\151\2\60"+
-		"\1\uffff\1\157\2\uffff\1\156\1\60\1\uffff";
+		"\1\11\1\162\1\75\1\154\1\uffff\1\55\1\154\1\157\1\75\1\146\1\53\1\uffff"+
+		"\1\75\1\145\4\uffff\1\141\1\150\3\uffff\1\162\2\uffff\1\141\2\uffff\1"+
+		"\163\1\144\1\162\1\156\2\uffff\1\60\4\uffff\1\164\1\162\1\151\1\60\1\163"+
+		"\1\145\1\143\1\60\1\143\1\uffff\1\165\1\60\1\154\1\uffff\1\163\1\60\2"+
+		"\154\1\157\1\146\1\150\1\uffff\1\164\1\162\1\uffff\1\145\1\60\1\uffff"+
+		"\1\141\1\163\1\162\1\156\1\60\2\151\1\156\1\60\1\uffff\1\163\1\145\1\60"+
+		"\1\143\1\uffff\1\154\1\157\1\60\1\uffff\1\163\1\60\1\uffff\1\164\1\145"+
+		"\1\156\1\uffff\1\60\1\uffff\1\151\2\60\1\uffff\1\157\2\uffff\1\156\1\60"+
+		"\1\uffff";
 	static final String DFA4_maxS =
-		"\1\172\1\75\1\154\1\uffff\1\71\1\156\1\165\1\75\1\146\1\53\1\uffff\1\75"+
-		"\1\145\4\uffff\1\141\1\150\5\uffff\1\141\2\uffff\1\163\1\144\1\162\1\156"+
-		"\2\uffff\1\172\4\uffff\1\164\1\162\1\151\1\163\1\145\1\167\1\172\1\143"+
-		"\1\uffff\1\165\1\172\1\154\1\163\1\172\2\154\1\165\1\146\1\150\1\uffff"+
-		"\1\164\1\162\1\uffff\1\145\1\172\1\uffff\1\141\1\163\1\162\1\156\1\172"+
-		"\2\151\1\156\1\172\1\uffff\1\163\1\145\1\172\1\143\1\uffff\1\154\1\157"+
-		"\1\172\1\uffff\1\163\1\172\1\uffff\1\164\1\145\1\156\1\uffff\1\172\1\uffff"+
-		"\1\151\2\172\1\uffff\1\157\2\uffff\1\156\1\172\1\uffff";
+		"\1\172\1\162\1\75\1\154\1\uffff\1\71\1\156\1\165\1\75\1\146\1\53\1\uffff"+
+		"\1\75\1\145\4\uffff\1\141\1\150\3\uffff\1\162\2\uffff\1\141\2\uffff\1"+
+		"\163\1\144\1\162\1\156\2\uffff\1\172\4\uffff\1\164\1\162\1\151\1\172\1"+
+		"\163\1\145\1\167\1\172\1\143\1\uffff\1\165\1\172\1\154\1\uffff\1\163\1"+
+		"\172\2\154\1\165\1\146\1\150\1\uffff\1\164\1\162\1\uffff\1\145\1\172\1"+
+		"\uffff\1\141\1\163\1\162\1\156\1\172\2\151\1\156\1\172\1\uffff\1\163\1"+
+		"\145\1\172\1\143\1\uffff\1\154\1\157\1\172\1\uffff\1\163\1\172\1\uffff"+
+		"\1\164\1\145\1\156\1\uffff\1\172\1\uffff\1\151\2\172\1\uffff\1\157\2\uffff"+
+		"\1\156\1\172\1\uffff";
 	static final String DFA4_acceptS =
-		"\3\uffff\1\3\6\uffff\1\23\2\uffff\1\31\1\32\1\33\1\34\2\uffff\1\37\1\40"+
-		"\1\41\1\14\1\1\1\uffff\1\4\1\26\4\uffff\1\20\1\17\1\uffff\1\22\1\27\1"+
-		"\25\1\24\10\uffff\1\21\12\uffff\1\15\2\uffff\1\35\2\uffff\1\5\11\uffff"+
-		"\1\2\4\uffff\1\12\3\uffff\1\36\2\uffff\1\10\3\uffff\1\30\1\uffff\1\7\3"+
-		"\uffff\1\6\1\uffff\1\13\1\16\2\uffff\1\11";
+		"\4\uffff\1\4\6\uffff\1\24\2\uffff\1\32\1\33\1\34\1\35\2\uffff\1\40\1\41"+
+		"\1\42\1\uffff\1\15\1\2\1\uffff\1\5\1\27\4\uffff\1\21\1\20\1\uffff\1\23"+
+		"\1\30\1\26\1\25\11\uffff\1\22\3\uffff\1\1\7\uffff\1\16\2\uffff\1\36\2"+
+		"\uffff\1\6\11\uffff\1\3\4\uffff\1\13\3\uffff\1\37\2\uffff\1\11\3\uffff"+
+		"\1\31\1\uffff\1\10\3\uffff\1\7\1\uffff\1\14\1\17\2\uffff\1\12";
 	static final String DFA4_specialS =
-		"\146\uffff}>";
+		"\152\uffff}>";
 	static final String[] DFA4_transitionS = {
-			"\2\25\2\uffff\1\25\22\uffff\1\25\7\uffff\1\12\1\15\1\20\1\11\1\3\1\4"+
-			"\1\uffff\1\17\12\24\1\uffff\1\16\1\13\1\1\1\7\2\uffff\32\23\6\uffff\2"+
-			"\23\1\2\1\23\1\5\1\6\2\23\1\10\10\23\1\14\3\23\1\21\1\22\3\23",
-			"\1\26",
+			"\2\26\2\uffff\1\26\22\uffff\1\26\7\uffff\1\13\1\16\1\21\1\12\1\4\1\5"+
+			"\1\uffff\1\20\12\25\1\uffff\1\17\1\14\1\2\1\10\2\uffff\32\24\6\uffff"+
+			"\1\1\1\24\1\3\1\24\1\6\1\7\2\24\1\11\10\24\1\15\3\24\1\22\1\23\3\24",
+			"\1\27",
 			"\1\30",
+			"\1\32",
 			"",
-			"\1\31\2\uffff\12\24",
-			"\1\33\1\uffff\1\34",
-			"\1\35\5\uffff\1\36",
-			"\1\37",
+			"\1\33\2\uffff\12\25",
+			"\1\35\1\uffff\1\36",
+			"\1\37\5\uffff\1\40",
 			"\1\41",
-			"\1\42",
-			"",
+			"\1\43",
 			"\1\44",
+			"",
 			"\1\46",
-			"",
-			"",
-			"",
-			"",
-			"\1\47",
 			"\1\50",
 			"",
 			"",
 			"",
 			"",
-			"",
 			"\1\51",
-			"",
-			"",
 			"\1\52",
+			"",
+			"",
+			"",
 			"\1\53",
+			"",
+			"",
 			"\1\54",
+			"",
+			"",
 			"\1\55",
-			"",
-			"",
-			"\12\23\7\uffff\32\23\6\uffff\32\23",
-			"",
-			"",
-			"",
-			"",
+			"\1\56",
 			"\1\57",
 			"\1\60",
-			"\1\61",
+			"",
+			"",
+			"\12\24\7\uffff\33\24\1\uffff\1\24\3\uffff\32\24",
+			"",
+			"",
+			"",
+			"",
 			"\1\62",
 			"\1\63",
-			"\1\64\1\uffff\1\65\1\66\2\uffff\1\67\15\uffff\1\70",
-			"\12\23\7\uffff\32\23\6\uffff\32\23",
-			"\1\72",
-			"",
-			"\1\73",
-			"\12\23\7\uffff\32\23\6\uffff\32\23",
-			"\1\75",
+			"\1\64",
+			"\12\24\7\uffff\33\24\1\uffff\1\24\3\uffff\32\24",
+			"\1\66",
+			"\1\67",
+			"\1\70\1\uffff\1\71\1\72\2\uffff\1\73\15\uffff\1\74",
+			"\12\24\7\uffff\33\24\1\uffff\1\24\3\uffff\32\24",
 			"\1\76",
-			"\12\23\7\uffff\32\23\6\uffff\32\23",
-			"\1\100",
+			"",
+			"\1\77",
+			"\12\24\7\uffff\33\24\1\uffff\1\24\3\uffff\32\24",
 			"\1\101",
-			"\1\102\5\uffff\1\103",
+			"",
+			"\1\102",
+			"\12\24\7\uffff\33\24\1\uffff\1\24\3\uffff\32\24",
 			"\1\104",
 			"\1\105",
-			"",
-			"\1\106",
-			"\1\107",
-			"",
+			"\1\106\5\uffff\1\107",
 			"\1\110",
-			"\12\23\7\uffff\32\23\6\uffff\32\23",
+			"\1\111",
 			"",
 			"\1\112",
 			"\1\113",
+			"",
 			"\1\114",
-			"\1\115",
-			"\12\23\7\uffff\32\23\6\uffff\32\23",
+			"\12\24\7\uffff\33\24\1\uffff\1\24\3\uffff\32\24",
+			"",
+			"\1\116",
 			"\1\117",
 			"\1\120",
 			"\1\121",
-			"\12\23\7\uffff\32\23\6\uffff\32\23",
-			"",
+			"\12\24\7\uffff\33\24\1\uffff\1\24\3\uffff\32\24",
 			"\1\123",
 			"\1\124",
-			"\12\23\7\uffff\32\23\6\uffff\32\23",
-			"\1\126",
+			"\1\125",
+			"\12\24\7\uffff\33\24\1\uffff\1\24\3\uffff\32\24",
 			"",
 			"\1\127",
 			"\1\130",
-			"\12\23\7\uffff\32\23\6\uffff\32\23",
-			"",
+			"\12\24\7\uffff\33\24\1\uffff\1\24\3\uffff\32\24",
 			"\1\132",
-			"\12\23\7\uffff\32\23\6\uffff\32\23",
 			"",
+			"\1\133",
 			"\1\134",
-			"\1\135",
-			"\1\136",
+			"\12\24\7\uffff\33\24\1\uffff\1\24\3\uffff\32\24",
 			"",
-			"\12\23\7\uffff\32\23\6\uffff\32\23",
+			"\1\136",
+			"\12\24\7\uffff\33\24\1\uffff\1\24\3\uffff\32\24",
 			"",
 			"\1\140",
-			"\12\23\7\uffff\32\23\6\uffff\32\23",
-			"\12\23\7\uffff\32\23\6\uffff\32\23",
+			"\1\141",
+			"\1\142",
 			"",
-			"\1\143",
-			"",
+			"\12\24\7\uffff\33\24\1\uffff\1\24\3\uffff\32\24",
 			"",
 			"\1\144",
-			"\12\23\7\uffff\32\23\6\uffff\32\23",
+			"\12\24\7\uffff\33\24\1\uffff\1\24\3\uffff\32\24",
+			"\12\24\7\uffff\33\24\1\uffff\1\24\3\uffff\32\24",
+			"",
+			"\1\147",
+			"",
+			"",
+			"\1\150",
+			"\12\24\7\uffff\33\24\1\uffff\1\24\3\uffff\32\24",
 			""
 	};
 
@@ -1246,7 +1282,7 @@ public class LanguageLexer extends Lexer {
 		}
 		@Override
 		public String getDescription() {
-			return "1:1: Tokens : ( ASSIGN | CLASS | COMMA | DECREASE | ELSE | ENDCLASS | ENDELSE | ENDFOR | ENDFUNCTION | ENDIF | ENDWHILE | EQUALS | FOR | FUNCTION | GT | GTE | IF | INCREASE | LPAREN | LT | LTE | MINUS | PLUS | RETURN | RPAREN | SEMICOLON | SLASH | STAR | VAR | WHILE | ID | VALUE | WS );";
+			return "1:1: Tokens : ( ARR | ASSIGN | CLASS | COMMA | DECREASE | ELSE | ENDCLASS | ENDELSE | ENDFOR | ENDFUNCTION | ENDIF | ENDWHILE | EQUALS | FOR | FUNCTION | GT | GTE | IF | INCREASE | LPAREN | LT | LTE | MINUS | PLUS | RETURN | RPAREN | SEMICOLON | SLASH | STAR | VAR | WHILE | ID | VALUE | WS );";
 		}
 	}
 

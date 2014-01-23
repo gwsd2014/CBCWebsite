@@ -31,11 +31,23 @@ public class ClassComponent extends Component {
 		range = 3;
 	}
 
+	public int levelZero(){
+		FunctionComponent zeroFunction = new FunctionComponent("Main",
+				difficulty, this);
+		childFunctions.add(zeroFunction);
+		zeroFunction.declareVariables(0);
+
+		int newValue = zeroFunction.levelZeroLogics();
+
+		return newValue;
+	}
+	
 	public int levelOne() {
 		FunctionComponent firstFunction = new FunctionComponent("Main",
 				difficulty, this);
 		childFunctions.add(firstFunction);
 		firstFunction.declareVariables(0);
+		firstFunction.declareArray();
 
 		int newValue = firstFunction.levelOneLogics();
 
@@ -96,7 +108,8 @@ public class ClassComponent extends Component {
 			for (int j = 0; j < functionParameters.length; j++) {
 				String letter = chooseVariable();
 				while (variables.containsKey(letter)
-						|| takenLetters.contains(letter)) {
+						|| takenLetters.contains(letter)
+						|| functionArray[i].getVariables().containsKey(letter)) {
 					letter = chooseVariable();
 				}
 				functionParameters[j] = letter;
@@ -179,7 +192,7 @@ public class ClassComponent extends Component {
 		FunctionComponent recursiveMain = new FunctionComponent("Main",
 				difficulty, this);
 		childFunctions.add(recursiveMain);
-		recursiveMain.declareVariables(1);
+		recursiveMain.declareVariables(0);
 		functionMap.put(recursiveMain.getName(), new String[0]);
 
 		// run

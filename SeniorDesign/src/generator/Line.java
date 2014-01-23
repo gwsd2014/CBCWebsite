@@ -8,16 +8,36 @@ public class Line extends LogicComponent {
 	private HashMap<Integer, Object> varValMap;
 	private ArrayList<Tokens> tokenList;
 	private Boolean isBlank;
+	private Boolean isFunctionCall;
+	private Boolean isArrayDeclaration;
 
 	public Line(Component parent, Boolean blank) {
 		parentComponent = parent;
 		isBlank = blank;
 		varValMap = new HashMap<Integer, Object>();
 		tokenList = new ArrayList<Tokens>();
+		isFunctionCall = false;
+		isArrayDeclaration = false;
 	}
 
 	public void declareVariable(String name, int value) {
 		tokenList.add(Tokens.VAR);
+		tokenList.add(Tokens.VARIABLE);
+		varValMap.put(tokenList.size() - 1, name);
+		tokenList.add(Tokens.ASSIGN);
+		tokenList.add(Tokens.VALUE);
+		varValMap.put(tokenList.size() - 1, value);
+	}
+
+	public void declareArray(String name) {
+		isArrayDeclaration = true;
+		
+		tokenList.add(Tokens.ARR);
+		tokenList.add(Tokens.VARIABLE);
+		varValMap.put(tokenList.size() - 1, name);
+	}
+
+	public void declareArrayVariable(String name, int value) {
 		tokenList.add(Tokens.VARIABLE);
 		varValMap.put(tokenList.size() - 1, name);
 		tokenList.add(Tokens.ASSIGN);
@@ -49,6 +69,8 @@ public class Line extends LogicComponent {
 
 	public void callFunction(String variableName, String functionName,
 			String[] parameterList) {
+		isFunctionCall = true;
+		
 		tokenList.add(Tokens.VARIABLE);
 		varValMap.put(tokenList.size() - 1, variableName);
 		tokenList.add(Tokens.ASSIGN);
@@ -68,7 +90,8 @@ public class Line extends LogicComponent {
 		tokenList.add(Tokens.RPAREN);
 	}
 
-	public void recursiveAddition(String additional, String functionName, String parameter, String decrementer){
+	public void recursiveAddition(String additional, String functionName,
+			String parameter, String decrementer) {
 		tokenList.add(Tokens.RETURN);
 		tokenList.add(Tokens.VALUE);
 		varValMap.put(tokenList.size() - 1, additional);
@@ -104,5 +127,13 @@ public class Line extends LogicComponent {
 
 	public Boolean getIsBlank() {
 		return isBlank;
+	}
+	
+	public Boolean getIsFunctionCall(){
+		return isFunctionCall;
+	}
+	
+	public Boolean getIsArrayDeclaration(){
+		return isArrayDeclaration;
 	}
 }

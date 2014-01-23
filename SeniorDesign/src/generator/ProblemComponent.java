@@ -45,6 +45,12 @@ public class ProblemComponent extends Component {
 	// create classes
 	private void createClasses(Difficulty difficulty) {
 		switch (difficulty.getLevel()) {
+		case 0:
+			ClassComponent zeroClass = new ClassComponent("zero", difficulty,
+					this);
+			childClasses.add(zeroClass);
+			correctAnswer = zeroClass.levelZero();
+			break;
 		case 1:
 			ClassComponent firstClass = new ClassComponent("one", difficulty,
 					this);
@@ -76,12 +82,14 @@ public class ProblemComponent extends Component {
 			correctAnswer = fifthClass.levelFive();
 			break;
 		case 6:
-			ClassComponent sixthClass = new ClassComponent("six", difficulty, this);
+			ClassComponent sixthClass = new ClassComponent("six", difficulty,
+					this);
 			childClasses.add(sixthClass);
 			correctAnswer = sixthClass.levelSix();
 			break;
 		case 7:
-			ClassComponent seventhClass = new ClassComponent("seven", difficulty, this);
+			ClassComponent seventhClass = new ClassComponent("seven",
+					difficulty, this);
 			childClasses.add(seventhClass);
 			correctAnswer = seventhClass.levelSeven();
 		}

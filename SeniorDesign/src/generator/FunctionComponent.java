@@ -83,7 +83,50 @@ public class FunctionComponent extends Component {
 		children.add(blank);
 	}
 
+	public void declareArray() {
+		// choose array name
+		String letterVariable = chooseVariable();
+		while (variables.containsKey(letterVariable)) {
+			letterVariable = chooseVariable();
+		}
+
+		// determine array size
+		int arraySize = determineArraySize();
+		// declare array
+		Line arrayDeclaration = new Line(this, false);
+		children.add(arrayDeclaration);
+		arrayDeclaration.declareArray(letterVariable + "[" + arraySize + "]");
+
+		// declare all array indices
+		for (int i = 0; i < arraySize; i++) {
+			Line indexDeclaration = new Line(this, false);
+			children.add(indexDeclaration);
+			int initialValue = rand.nextInt(range) - range / 2;
+			indexDeclaration.declareArrayVariable(letterVariable + "[" + i
+					+ "]", initialValue);
+			variables.put(letterVariable + "[" + i + "]", initialValue);
+		}
+
+		// add a blank line at the end of indentation
+		Line blank = new Line(this, true);
+		children.add(blank);
+
+	}
+
+	private int determineArraySize() {
+		int size = difficulty.getWeight();
+		if (size > 3) {
+			size = 3;
+		}
+		return size;
+	}
+
 	private int determineAmountOfLines() {
+		// cap lines at 1 for fill in the blank
+		if (difficulty.getProblemType() == ProblemType.FILL_BLANK) {
+			return 1;
+		}
+
 		int lines = difficulty.getWeight() - 1;
 
 		if (difficulty.getLevel() == 2) {
@@ -98,16 +141,37 @@ public class FunctionComponent extends Component {
 				lines = 3;
 			}
 		}
-		
+
 		return lines;
 	}
 
-	
-	
 	/**
 	 * Simple arithmetic
 	 * 
 	 * @return testVariable new value
+	 */
+	public int levelZeroLogics() {
+		ArithmeticComponent firstArith = new ArithmeticComponent(difficulty,
+				this);
+		children.add(firstArith);
+
+		variables = firstArith.createLines(variables, testVariable);
+
+		// add blank line and return statement
+		Line blankLine = new Line(this, true);
+		children.add(blankLine);
+
+		Line returnLine = new Line(this, false);
+		children.add(returnLine);
+		returnLine.returnStatement(testVariable);
+
+		return variables.get(testVariable);
+	}
+
+	/**
+	 * Array Tests
+	 * 
+	 * @return test variable value
 	 */
 	public int levelOneLogics() {
 		ArithmeticComponent firstArith = new ArithmeticComponent(difficulty,
@@ -425,7 +489,7 @@ public class FunctionComponent extends Component {
 		String[] parameterStrings = new String[1];
 		parameterStrings[0] = selectVariable(variables);
 		int parameterValue = variables.get(parameterStrings[0]);
-		
+
 		functionCall.callFunction(testVariable, calleeName, parameterStrings);
 		children.add(functionCall);
 
@@ -456,10 +520,11 @@ public class FunctionComponent extends Component {
 		int baseValue = rand.nextInt(6) - 3;
 		int finalValue = initialValue - recursions;
 		int returnValue = (additionValue * recursions) + baseValue;
-		
-		recursiveConditional.createRecursiveConditional(Integer.toString(additionValue),
-				parameterList[0], finalValue, name, Integer.toString(baseValue));
-		
+
+		recursiveConditional.createRecursiveConditional(
+				Integer.toString(additionValue), parameterList[0], finalValue,
+				name, Integer.toString(baseValue));
+
 		return returnValue;
 	}
 

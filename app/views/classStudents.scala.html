@@ -1,0 +1,114 @@
+@(course: models.Class)
+
+@main("Class Students", true) {
+
+    <div>
+        @if(flash.containsKey("success")) {
+            <div class="alert alert-success">
+                <strong>Done!</strong> @flash.get("success")
+            </div>
+        }
+    </div>
+
+    <div class="box" style="float:left; width:130px">
+            <div class="box-header">
+                <i class="icon-group icon-large"></i>
+                <h5>View...</h5>
+            </div>
+            <div class="box-content">
+                <div class="btn-group-box">
+                <center>
+                    <button class="btn" style="margin-bottom:10px" onclick="toggle_visibility($('#box_info'))"><i class="icon-user icon-large"></i><br>Info</button>
+                    <button class="btn" onclick="toggle_visibility($('#box_classes'))"><i class="icon-book icon-large"></i><i class="icon-pencil icon-large"></i><br>Classes</button>
+                    <button class="btn" style="margin-bottom:10px" onclick="toggle_visibility($('#box_progress'))"><i class="icon-bar-chart icon-large"></i><br>Progress</button>
+                </center>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+        <!-- </div> -->
+
+        <div id="box_info" class="box" style="display: inline-block; width:80%; margin-left:10px">
+            <div class="box-header">
+                <i class="icon-user icon-large"></i>
+                <h5>Student Details</h5>
+            </div>
+            <div class="box-content box-table" style="padding: 10px;">
+            <div>
+                <a class="btn btn-primary" id="add" href="@routes.ClassController.enrollStudents(course.id)" style="margin-bottom: 20px;">
+                    <i class="btn-icon-only icon-group"></i>
+                    Add/Remove Students
+                </a>
+            </div>
+
+
+        <div id="students" class="box" style="float:left; width:25%; min-height:124px">
+            <!-- <div class="row">
+                <div class="span4"> -->
+                    <!-- <div class="blockoff-right"> -->
+                        <ul id="person-list" class="nav nav-list">
+                            <li class="nav-header">Current Students</li>
+                            <!-- <li class="active">
+                            </li> -->
+                            @for((student, index) <- course.students.toSeq.sortBy(_.lastName).zipWithIndex) {
+                                @if(index == 0) {
+                                    <li class="active" id="first_student">
+                                } else {
+                                    <li>
+                                }
+                                    <a href="#Person-@student.id">
+                                        <i class="icon-chevron-right pull-right"></i>
+                                        @student.lastName, @student.firstName
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                <!-- </div> -->
+                <div class="span9" style="display:inline-block; width:73%; margin-left:10px">
+                    @for((student, index) <- course.students.toSeq.sortBy(_.lastName).zipWithIndex) {
+                        <div id="Person-@student.id" class="box" style="padding-left:8px; padding-top:3px">
+
+                            <p><strong><a href="@routes.UserController.view(student.id)">@student.firstName @student.lastName</a></strong></p>
+                            <p>
+                                <strong>Email:</strong> @student.email
+                            </p>
+                            <p>
+                                <strong>Username:</strong> @student.username
+                            </p>
+                            <p>
+                                <strong>Grade:</strong> @student.grade
+                            </p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function() {
+            $('#person-list.nav > li > a').click(function(e){
+                // if($(this).attr('id') == "view-all"){
+                //     $('div[id*="Person-"]').fadeIn('fast');
+                // }else{
+                    var aRef = $(this);
+                    var tablesToHide = $('div[id*="Person-"]:visible').length > 1
+                            ? $('div[id*="Person-"]:visible') : $($('#person-list > li[class="active"] > a').attr('href'));
+
+                    tablesToHide.hide();
+                    $(aRef.attr('href')).fadeIn('fast');
+                // }
+                $('#person-list > li[class="active"]').removeClass('active');
+                $(this).parent().addClass('active');
+                e.preventDefault();
+            });
+
+            $(function(){
+                $('table').tablesorter();
+                $("[rel=tooltip]").tooltip();
+            });
+        });
+    </script>
+
+}

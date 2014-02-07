@@ -1,0 +1,216 @@
+@(classList: List[models.Class], studentClassList: List[models.Class], student: models.User)
+
+@main("Student Profile", true) {
+
+	<!-- <h1>View an Existing Class</h1> -->
+
+	<div>
+	    @if(flash.containsKey("success")) {
+	    	<div class="alert alert-success">
+		        <strong>Done!</strong> @flash.get("success")
+		    </div>
+	    }
+
+
+	    <!-- <div> -->
+	    <h3 style="margin-top:-8px">@student.firstName @student.lastName <span class="grade-circle">@student.grade</span><br>
+	    <a class="btn btn-primary" id="add" data-toggle="modal" href="#modal" style="margin-bottom: 20px; display:inline">
+	    	<i class="btn-icon-only icon-plus"></i> Add to Class
+		</a></h3>
+
+
+		<!-- TODO: Get this working -->
+		<div id="modal" class="modal hide fade">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h2>Add @student.firstName @student.lastName to a Class</h2>
+			</div>	
+			<div class="modal-body">
+			@if(classList.size == 0) {
+			        <div class="well">
+			            <strong><em>You don't have any deployed classes yet!</em></strong>
+<!-- 			            <br>
+			            <em>Use the button below to create one.</em> -->
+			        </div>
+			} else {
+				@for(course <- classList) {
+			        <table class="table table-hover tablesorter">
+			            <thead>
+			                <tr>
+			                    <th>Name</th>
+			                    <th>Description</th>
+			                    <th>Grades</th>
+			                    <th>Actions</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                @for(course <- classList) {
+			                    <tr>
+			                        <td style="width: 250px;">
+			                        	<a href="@routes.ClassController.view(course.id)">
+				                        	<div class="thumbnail" style="width: 25px; height: 25px; float: left; margin-right: 10px; background-color: #EEEEEE">
+										    	<img src='@routes.Assets.at("images/classes/" + course.id + ".png")'>
+										    </div>
+				                        	@course.name
+			                        	</a>
+			                        </td>
+			                        <td>
+			                            @if(course.description == null) {
+			                                <em>-</em>
+			                            } else {
+			                                @course.description
+			                            }
+			                        </td>
+			                        <td style="width: 100px;">
+			                        	@if(course.gradeLow == course.gradeHigh) {
+			                        		@course.gradeLow
+			                        	} else {
+			                        		@course.gradeLow to @course.gradeHigh
+			                        	}
+			                        </td>
+			                        <td style="width: 100px;">
+			                        	@if(course.hasStudent(student.id)) {
+				                        	<button style="padding-right: 12px;" type="button" class="btn btn-small btn-danger has-spinner" id="enroll" name="@student.id">
+									            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+									            <span id="label">Unenroll</span>
+									        </button>
+								        } else {
+								        	<button style="padding-right: 12px;" type="button" class="btn btn-small btn-info has-spinner" id="enroll" name="@student.id">
+									            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+									            <span id="label">Enroll</span>
+									        </button>
+								        }
+			                        </td>
+			                    </tr>
+			                }
+			            </tbody>
+			        </table>
+				}
+			</div>
+			}
+		</div>
+		</div>
+
+	    <!-- <h5 style="margin-top:-12px; margin-bottom:25px; letter-spacing:1px"><i>@student.username</i></h5> -->
+	    <!-- </div> -->
+
+		<!-- <div style="clear:left;"> -->
+
+		<div class="box" style="float:left; width:130px">
+			<div class="box-header">
+		        <i class="icon-group icon-large"></i>
+		        <h5>View...</h5>
+		    </div>
+			<div class="box-content">
+            	<div class="btn-group-box">
+            	<center>
+            		<button class="btn" style="margin-bottom:10px" onclick="toggle_visibility($('#box_info'))"><i class="icon-user icon-large"></i><br>Info</button>
+					<button class="btn" onclick="toggle_visibility($('#box_classes'))"><i class="icon-book icon-large"></i><i class="icon-pencil icon-large"></i><br>Classes</button>
+					<button class="btn" style="margin-bottom:10px" onclick="toggle_visibility($('#box_progress'))"><i class="icon-bar-chart icon-large"></i><br>Progress</button>
+				</center>
+				</div>
+			</div>
+		</div>
+		<!-- </div> -->
+		</div>
+		<div id="box_info" class="box" style="margin-left:145px">
+		    <div class="box-header">
+		        <i class="icon-user icon-large"></i>
+		        <h5>Student Details</h5>
+		    </div>
+		    <div class="box-content box-table" style="padding: 10px;">
+		    	<!-- TODO: Only visible if instructor created student -->
+			    <a class="btn btn-primary" id="edit" href="@routes.UserController.editStudent(student.id)" style="margin-bottom:14px">
+		    		<i class="btn-icon-only icon-pencil"></i> Edit Info
+				</a>
+				<p>
+					<strong>Username:</strong> @student.username
+				</p>
+				<p>
+					<strong>Email:</strong> @student.email
+				</p>
+				<p>
+					<strong>Member Since:</strong> @student.createdTime
+				</p>
+				<p>
+					<strong>Added By:</strong> James Pizzurro
+				</p>
+		    </div>
+		</div>
+
+		<div id="box_classes" class="box" style="margin-left:145px; display:none">
+		    <div class="box-header">
+		        <i class="icon-book icon-large"></i>
+		        <h5>Classes Enrolled</h5>
+		    </div>
+		    <div class="box-content box-table" style="padding: 10px;">
+	    			@if(studentClassList.size == 0) {
+				        <div class="well">
+				            <strong><em>This student is not in any of your classes.</em></strong>
+				        </div>
+				    } else {
+				        <table class="table table-hover tablesorter">
+				            <thead>
+				                <tr>
+				                    <th>Name</th>
+				                    <th>Description</th>
+				                    <th>Grades</th>
+				                </tr>
+				            </thead>
+				            <tbody>
+				                @for(studentClass <- studentClassList) {
+				                    <tr>
+				                        <td style="width: 250px;">
+				                        	<a href="@routes.ClassController.view(studentClass.id)">
+					                        	<div class="thumbnail" style="width: 25px; height: 25px; float: left; margin-right: 10px; background-color: #EEEEEE">
+											    	<img src='@routes.Assets.at("images/classes/" + studentClass.id + ".png")'>
+											    </div>
+					                        	@studentClass.name
+				                        	</a>
+				                        </td>
+				                        <td>
+				                            @if(studentClass.description == null) {
+				                                <em>-</em>
+				                            } else {
+				                                @studentClass.description
+				                            }
+				                        </td>
+				                        <td style="width: 100px;">
+				                        	@if(studentClass.gradeLow == studentClass.gradeHigh) {
+				                        		@studentClass.gradeLow
+				                        	} else {
+				                        		@studentClass.gradeLow to @studentClass.gradeHigh
+				                        	}
+				                        </td>
+				                    </tr>
+				                }
+				            </tbody>
+				        </table>
+					}
+			</div>
+		</div>
+
+		<div id="box_progress" class="box" style="margin-left:145px; display:none">
+		    <div class="box-header">
+		        <i class="icon-bar-chart icon-large"></i>
+		        <h5>Progress</h5>
+		    </div>
+		    <div class="box-content box-table" style="padding: 10px;">
+		    	<p>(Charts)
+				</p>
+		    </div>
+		</div>
+	</div>
+
+
+
+
+	<script>
+	function toggle_visibility(id) {
+		$('[id^="box_"]').hide();		
+		$(id).show();
+		console.log(id);
+	}
+	</script>
+
+}

@@ -1,0 +1,19 @@
+@main("Dashboard", true) {
+
+	<div>
+		@if(flash.containsKey("success")) {
+	    	<div class="alert alert-success">
+		        <strong>Done!</strong> @flash.get("success")
+		    </div>
+	    }
+        <!-- --- SD WEBSITE TEMPLATE --- -->
+        <!-- Your project name, tagline and description goes here -->
+        <div class="jumbotron">
+          <h1>Welcome to {placeholder project name}!</h1>
+          <p><em>{placeholder project tagline}</em></p>
+          <hr style="border-color: rgb(51, 51, 51);">
+          <p>{placeholder project description}</p>
+        </div>
+    </div>
+
+}

@@ -1,0 +1,120 @@
+@(studentsList: List[models.User], classs: models.Class, restrictByGrade: Boolean)
+
+@main("Student Enrollment", true) {
+
+	<link rel="stylesheet" type="text/css" href='@routes.Assets.at("css/jquery.dataTables.css")'>
+	<script type="text/javascript" src='@routes.Assets.at("js/jquery.dataTables.js")'></script>
+
+    <div>
+	    @if(flash.containsKey("success")) {
+	    	<div class="alert alert-success">
+		        <strong>Done!</strong> @flash.get("success")
+		    </div>
+	    }
+	    <div id="students" class="box">
+	        <div class="box-header">
+	            <i class="icon-group icon-large"></i>
+	            <h5>Student Enrollment</h5>
+	        </div>
+	        <div class="box-content box-table" style="padding: 10px;">
+	        	<p>
+					<input type="checkbox" id="restrictByGrade" @if(restrictByGrade) {checked}> Only display students in class' grade range (@classs.gradeLow to @classs.gradeHigh)
+				</p>
+	        	@if(studentsList.size == 0) {
+			    	<div class="well">
+			            <strong><em>There are no students to enroll!</em></strong>
+			        </div>
+				} else {
+			        <table class="table table-hover">
+			            <thead>
+			                <tr>
+			                    <th>Name</th>
+			                    <th>Username</th>
+			                    <th>Email</th>
+			                    <th>Grade</th>
+			                    <th>Actions</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                @for(student <- studentsList) {
+			                    <tr>
+			                    	<!-- TODO: Link to student-specific profile page -->
+			                        <td><a href="">@student.lastName, @student.firstName</a></td>
+			                        <td>@student.username</td>
+			                        <td>@student.email</td>
+			                        <td>@student.grade</td>
+			                        <td style="width: 100px;">
+			                        	@if(classs.hasStudent(student.id)) {
+				                        	<button style="padding-right: 12px;" type="button" class="btn btn-small btn-danger has-spinner" id="enroll" name="@student.id">
+									            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+									            <span id="label">Unenroll</span>
+									        </button>
+								        } else {
+								        	<button style="padding-right: 12px;" type="button" class="btn btn-small btn-info has-spinner" id="enroll" name="@student.id">
+									            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+									            <span id="label">Enroll</span>
+									        </button>
+								        }
+			                        </td>
+			                    </tr>
+			                }
+			            </tbody>
+			        </table>
+				}
+				<br>
+        		<p>
+					<a href="@routes.ClassController.classStudents(classs.id)" class="btn btn-success">
+		                <i class="btn-icon-only icon-check"></i> Done
+		            </a>
+				</p>
+	        </div>
+	    </div>
+    </div>
+
+    <script type="text/javascript">
+        // $(function() {
+        // 	$('table')
+        // 	.tablesorter()
+        // 	.tablesorterPager({container: $("#pagination")}); 
+        // });
+		$('table').dataTable();
+		$('#DataTables_Table_0_wrapper').css("clear", "none");
+    </script>
+    <script>
+        $('button#enroll').click(function() {
+        	var button = $(this);
+        	button.prop("disabled", true);
+        	button.toggleClass('active');
+
+        	var studentId = button.attr('name');
+
+        	if (button.hasClass("btn-info")) {
+	        	jsRoutes.controllers.ClassController.enroll(@classs.id, studentId).ajax({
+				    success : function(data) {
+				    	button.find('span#label').html("Unenroll");
+				    	button.toggleClass('btn-info btn-danger');
+						button.prop("disabled", false);
+						button.toggleClass('active');
+				    }
+				});
+			} else {
+				jsRoutes.controllers.ClassController.unenroll(@classs.id, studentId).ajax({
+				    success : function(data) {
+				    	button.find('span#label').html("Enroll");
+				    	button.toggleClass('btn-danger btn-info');
+						button.prop("disabled", false);
+						button.toggleClass('active');
+				    }
+				});
+			}
+        });
+        $('#restrictByGrade').click(function() {
+        	if (@restrictByGrade) {
+        		window.location = "@routes.ClassController.enrollStudents(classs.id, false)";
+        	} else {
+        		window.location = "@routes.ClassController.enrollStudents(classs.id, true)";
+        	}
+        });
+    </script>
+
+}

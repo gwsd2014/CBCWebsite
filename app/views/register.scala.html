@@ -1,0 +1,85 @@
+@(form: Form[formdata.RegistrationData], userType: String)
+
+@main("Register") {
+
+	<div style="padding-left: 20px;">
+		<div class="box">
+		    <div class="box-header">
+		    	<i class="icon-plus"></i>
+		        <i class="icon-user icon-large"></i>
+		        <h5>Register</h5>
+		    </div>
+		    <div class="box-content box-table" style="padding: 10px;">
+			    @if(form.hasGlobalErrors) {
+				    <div class="alert alert-danger">
+				        @form.globalError.message
+				    </div>
+				}
+				@if(flash.containsKey("error")) {
+			    	<div class="alert alert-danger">
+				        @flash.get("error")
+				    </div>
+			    }
+			    <form action="@routes.UserController.createInstructor_submit" method="post" enctype="multipart/form-data">
+					<center>
+						<p>
+						<!-- <h4>Full Name</h4> -->
+							<input type="text" name="firstName" placeholder="First Name" value="@form("firstName").value">
+						</p>
+						<p>
+							<input type="text" name="lastName" placeholder="Last Name" value="@form("lastName").value">
+						</p>
+						<p>
+						<!-- <h4>Email Address</h4> -->
+							<input type="text" name="email" placeholder="Email Address" value="@form("email").value">
+						</p>
+						<p>
+						<!-- <h4>Create a Username</h4> -->
+							<input type="text" name="username" placeholder="Username" value="@form("username").value">
+						</p>
+						<p>
+							<!-- <h4>Create a Password</h4> -->
+							<input type="password" name="password" placeholder="Password" value="@form("password").value">
+						</p>
+						<p>
+							<input type="password" name="passwordRepeat" placeholder="Retype Password" value="@form("passwordRepeat").value">
+						</p>
+						<p>
+							<h4>Image</h4>
+						    <div id="upload-preview" class="thumbnail" style="width: 100px; height: 100px; margin: 10px; background-color: #EEEEEE; cursor: pointer;" onclick="document.getElementById('uploadInput').click();">
+						    	<img id="upload-preview-preview" src='http://placehold.it/100/eeeeee'/>
+						    </div>
+						    Supported file types: jpeg, jpg, png<br />
+		                	Maximum file size: 500kb<br />
+						    <input type="file" name="picture" id="uploadInput" style="display: none;">
+						</p>
+						<p>
+							<button type="submit" class="btn btn-success">
+								<i class="btn-icon-only icon-check"></i> Submit
+							</button>
+						</p>
+					</center>
+				</form>
+		    </div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var preview = $("#upload-preview");
+
+			$("#uploadInput").change(function(event) {
+				var input = $(event.currentTarget);
+				var file = input[0].files[0];
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$("#upload-preview-preview").remove();
+					image_base64 = e.target.result;
+					preview.html("<img src='" + image_base64 + "'/>");
+				};
+				reader.readAsDataURL(file);
+			});
+		});
+    </script>
+
+}

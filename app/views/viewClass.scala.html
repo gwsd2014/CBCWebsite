@@ -1,0 +1,249 @@
+@(course: models.Class)
+
+@main("View an Existing Class", true) {
+
+
+
+	<!-- <h1>View an Existing Class</h1> -->
+
+	<div>
+	    @if(flash.containsKey("success")) {
+	    	<div class="alert alert-success">
+		        <strong>Done!</strong> @flash.get("success")
+		    </div>
+	    }
+	    @if(course.deployed) {
+		    <div class="alert alert-info">
+		        <strong>NOTE:</strong> This class has already been deployed and thus cannot be edited.
+		    </div>
+	    }
+
+		<h3 style="margin-top:-8px">@course.name</h3><br>
+
+		<div class="box" style="float:left; width:130px">
+		    <div class="box-header">
+		    	<i class="icon-search icon-large"></i>
+		        <h5>View...</h5>
+		    </div>
+		    <div class="box-content">
+		        <div class="btn-group-box">
+		            <center>
+		                <button class="btn" style="margin-bottom:10px" onclick="toggle_visibility($('#box_details'))"><i class="icon-book icon-large"></i><br>Info</button>
+		                <button class="btn" style="margin-bottom:10px" onclick="toggle_visibility($('#box_students'))"><i class="icon-group icon-large"></i><br>Students</button>
+		            </center>
+		        </div>
+		    </div>
+		</div>
+
+		<div style="display: inline-block; width:80%; margin-left:10px">
+			<div class="box" id="box_details" style="display: inline-block; width:100%">
+			    <div class="box-header">
+			        <i class="icon-book icon-large"></i>
+			        <h5>Class Details</h5>
+			    </div>
+			    <div class="box-content box-table" style="padding: 10px;">
+			    	<p>
+			    		<div class="thumbnail" style="width: 100px; height: 100px; margin: 10px; background-color: #EEEEEE">
+					    	<img src='@routes.Assets.at("images/classes/" + course.id + ".png")'>
+					    </div>
+			    	</p>
+					<p>
+						<strong>Name:</strong> @course.name
+					</p>
+					<p>
+						<strong>Description:</strong> @course.description
+					</p>
+					<p>
+						<strong>Grade Range:</strong> @course.gradeLow to @course.gradeHigh
+					</p>
+					<p>
+						@if(!course.deployed) {
+							<button type="button" class="btn btn-small btn-info has-spinner" id="deployClass" name="@course.id:|:@course.name">
+					            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+					            <i class="btn-icon-only icon-share"></i> Deploy
+					        </button>
+	    					<a href="@routes.ClassController.edit(course.id)" class="btn btn-small btn-info" style="width: 50px;">
+					            <i class="btn-icon-only icon-edit"></i> Edit
+					        </a>
+				        }
+				    	<button type="button" class="btn btn-small btn-danger has-spinner" id="deleteClass" name="@course.id:|:@course.name">
+				            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+				            <i class="btn-icon-only icon-trash"></i> Delete
+				        </button>
+					</p>
+			    </div>
+			</div>
+			<div id="box_students" class="box" style="display: none; width:100%">
+			    <div class="box-header">
+			        <i class="icon-group icon-large"></i>
+			        <h5>Class Students</h5>
+			    </div>
+			    <div class="box-content box-table" style="padding: 10px;">
+			        <div>
+			            <a class="btn btn-primary" id="add" href="@routes.ClassController.enrollStudents(course.id)" style="margin-bottom: 20px;">
+			                <i class="btn-icon-only icon-group"></i>
+			                Add/Remove Students
+			            </a>
+			        </div>
+
+					@if(course.students.size == 0) {
+						<div class="well">
+				        	<strong><em>There are no students currently enrolled in this class.</em></strong>
+				        	<br>
+				        	<em>Click on the button above to add or remove students.</em>
+						</div>
+					} else {
+				        <div id="students" class="box" style="float:left; width:25%; min-height:124px">
+				            <!-- <div class="row">
+				            <div class="span4"> -->
+				                <!-- <div class="blockoff-right"> -->
+			                <ul id="person-list" class="nav nav-list">
+				                    <li class="nav-header">Current Students</li>
+				                            <!-- <li class="active">
+				                        </li> -->
+			                        @for((student, index) <- course.students.toSeq.sortBy(_.lastName).zipWithIndex) {
+				                        @if(index == 0) {
+				                        	<li class="active" id="first_student">
+				                        } else {
+				                        	<li>
+				                        }
+				                        <a href="#Person-@student.id">
+			                            	<i class="icon-chevron-right pull-right"></i>
+			                            	@student.lastName, @student.firstName
+				                        </a>
+				                    	</li>
+					                }
+				            </ul>
+				        </div>
+				    }
+			        <!-- </div> -->
+			        <div class="span9" style="display:inline-block; width:73%; margin-left:10px">
+			            @for((student, index) <- course.students.toSeq.sortBy(_.lastName).zipWithIndex) {
+				            <div id="Person-@student.id" class="box" style="padding-left:8px; padding-top:3px">
+				                <p>
+				                	<strong><a href="@routes.UserController.view(student.id)">@student.firstName @student.lastName</a></strong>
+				                </p>
+				                <p>
+				                    <strong>Email:</strong> @student.email
+				                </p>
+				                <p>
+				                    <strong>Username:</strong> @student.username
+				                </p>
+				                <p>
+				                    <strong>Grade:</strong> @student.grade
+				                </p>
+				            </div>
+				        }
+			    </div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+	    $(function() {
+	        $('#person-list.nav > li > a').click(function(e){
+	                // if($(this).attr('id') == "view-all"){
+	                //     $('div[id*="Person-"]').fadeIn('fast');
+	                // }else{
+	                    var aRef = $(this);
+	                    var tablesToHide = $('div[id*="Person-"]:visible').length > 1
+	                    ? $('div[id*="Person-"]:visible') : $($('#person-list > li[class="active"] > a').attr('href'));
+
+	                    tablesToHide.hide();
+	                    $(aRef.attr('href')).fadeIn('fast');
+	                // }
+	                $('#person-list > li[class="active"]').removeClass('active');
+	                $(this).parent().addClass('active');
+	                e.preventDefault();
+	            });
+
+	        $(function(){
+	            $('table').tablesorter();
+	            $("[rel=tooltip]").tooltip();
+	        });
+	    });
+	</script>
+
+    <script type="text/javascript">
+		$('button#deployClass').click(function() {
+        	var button = $(this);
+        	button.toggleClass('active');
+
+        	var classData = $(this).attr('name').split(":|:");
+        	var classId = classData[0];
+        	var className = classData[1];
+
+            bootbox.confirm("Are you sure you want to deploy this class? This cannot be undone, and you will not be able to edit this class once it is deployed.", function(result) {
+            	if (result) {
+		            button.prop("disabled", true);
+		            jsRoutes.controllers.ClassController.deploy(classId).ajax({
+					    success : function(data) {
+					    	window.location.reload();
+					    },
+					    error : function(err) {
+					    	window.location = "http://thebest404pageever.com/";	// TODO: Redirect to generic error page
+					    }
+					});
+		        } else {
+		        	button.toggleClass('active');
+		        }
+            });
+        });
+        $('button#deleteClass').click(function() {
+        	var button = $(this);
+        	button.toggleClass('active');
+
+        	var classData = $(this).attr('name').split(":|:");
+        	var classId = classData[0];
+        	var className = classData[1];
+
+            bootbox.confirm("Are you sure you want to delete this class? This cannot be undone.", function(result) {
+            	if (result) {
+		            button.prop("disabled", true);
+		            jsRoutes.controllers.ClassController.delete(classId).ajax({
+		            	success : function(data) {
+					    	window.location = "@routes.ClassController.browse()";
+					    },
+					    error : function(err) {
+					    	window.location = "http://thebest404pageever.com/";	// TODO: Redirect to generic error page
+					    }
+					});
+		        } else {
+		        	button.toggleClass('active');
+		        }
+            });
+        });
+    </script>
+
+	<style>
+		#sortable {
+			list-style-type: none;
+			display: inline-block;
+			margin: 0;
+			padding: 0;
+			/*width: 450px;*/
+			-moz-user-select: -moz-none;
+			-khtml-user-select: none;
+			-webkit-user-select: none;
+			user-select: none;
+		}
+		#sortable li {
+			margin: 3px 3px 3px 0;
+			padding: 1px;
+			float: left;
+			width: 175px;
+			height: 90px;
+			font-size: 1em;
+			text-align: center;
+		}
+	</style>
+
+   	<script>
+	function toggle_visibility(id) {
+		$('[id^="box_"]').hide();		
+		$(id).css("display", "inline-block");
+		console.log(id);
+	}
+	</script>
+
+}

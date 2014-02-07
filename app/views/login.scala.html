@@ -1,0 +1,66 @@
+@(form: Form[formdata.AuthenticationData], returnUrl: String = "none")
+
+@main("Login") {
+
+    <div class='container'>
+        @if(returnUrl != "none") {
+            <div class="alert alert-warning">
+                You have been redirected. Please log in to continue.
+            </div>
+        }
+        @if(flash.containsKey("success")) {
+            <div class="alert alert-success">
+                <strong>Registration success!</strong> @flash.get("success")
+            </div>
+        }
+        <div class="signin-row row">
+            <div class="span4"></div>
+            <div class="span8">
+                <div class="container-signin">
+                    <legend>Please Login</legend>
+                    @helper.form(routes.UserController.login) {
+                        @if(form.hasGlobalErrors) {
+                            <div class="alert alert-danger">
+                                @form.globalError.message
+                            </div>
+                        }
+                        <div class="form-inner">
+                            <div class="input-prepend">
+                                
+                                <span class="add-on" rel="tooltip" title="Username or Email Address" data-placement="top"><i class="icon-envelope"></i></span>
+                                <input type='text' class='span4' id='usernameOrEmail' name='usernameOrEmail' placeholder="Username or Email Address" value='@form("usernameOrEmail").value' />
+                            </div>
+
+                            <div class="input-prepend">
+                                
+                                <span class="add-on"><i class="icon-key"></i></span>
+                                <input type='password' class='span4' id='password' name='password' placeholder="Password" />
+                            </div>
+<!--                             <label class="checkbox" for='remember_me'>Remember me
+                                <input type='checkbox' id='remember_me'
+                                       />
+                            </label> -->
+                        </div>
+                        <footer class="signin-actions">
+                            <input class="btn btn-primary" type='submit' id="submit" value='Login'/>
+                        </footer>
+                    }
+                </div>
+            </div>
+            <div class="span3"></div>
+        </div>
+        <div class="signin-row row">
+            <div class="span4"></div>
+            <div class="span8" style="padding-bottom: 20px;">
+                <div class="well well-small well-shadow">
+                    <!-- --- SD WEBSITE TEMPLATE --- -->
+                    <!-- Your project name goes here -->
+                    <legend class="lead">New to {placeholder project name}?</legend>
+                    <!-- --------------------------- -->
+                    Click <a href="@routes.UserController.createInstructor()">here</a> to register for an instructor account.
+                </div>
+            </div>
+        <div class="span8"></div>
+    </div>
+
+}

@@ -1,0 +1,138 @@
+@(form: Form[formdata.ClassData])
+
+@main("Create a New Class", true) {
+
+	<div>
+		<div class="box">
+		    <div class="box-header">
+		    	<i class="icon-plus"></i>
+		        <i class="icon-group icon-large"></i>
+		        <h5>Create a New Class</h5>
+		    </div>
+		    <div class="box-content box-table" style="padding: 10px;">
+			    @if(form.hasGlobalErrors) {
+				    <div class="alert alert-danger">
+				        @form.globalError.message
+				    </div>
+				}
+				@if(flash.containsKey("error")) {
+			    	<div class="alert alert-danger">
+				        @flash.get("error")
+				    </div>
+			    }
+				<form action="@routes.ClassController.create_submit" method="post" enctype="multipart/form-data">
+					<!-- <input type="hidden" name="classId" value="@form("classId").value"> -->
+					<p>
+						<input type="text" name="name" placeholder="Name" value="@form("name").value">
+					</p>
+					<p>
+						<input type="text" name="description" placeholder="Description" value="@form("description").value">
+					</p>
+					<p>
+						<script type="text/javascript">
+							$(function() {
+								$('button[name="gradeLow"]').click(function() {
+									var grade = $(this).text();
+									$('input[name="gradeLow"]').val(grade);
+
+									$("button[name='gradeHigh']").each(function(index) {
+										index += 1;
+										if (index < grade) {
+											$(this).prop("disabled", true);
+
+											if ($(this).hasClass('active')) {
+												$(this).removeClass('active');
+												$('input[name="gradeHigh"]').val("");
+											}
+										} else {
+											$(this).prop("disabled", false);
+										}
+									});
+								});
+
+								$('button[name="gradeHigh"]').click(function() {
+									var grade = $(this).text();
+									$('input[name="gradeHigh"]').val(grade);
+								});
+
+								@if(form("gradeLow").value){$('button#gradeLow' + @form("gradeLow").value).click();}
+								@if(form("gradeHigh").value){$('button#gradeHigh' + @form("gradeHigh").value).click();}
+						    });
+						</script>
+						<h4>Grade Range</h4>
+						<input type="hidden" name="gradeLow" value="@form("gradeLow").value">
+						<input type="hidden" name="gradeHigh" value="@form("gradeHigh").value">
+						<div style="width: 75px; float: left; padding-right: 10px">
+							beginning: 
+						</div>
+						<div class="btn-group" data-toggle="buttons-radio">
+							<button class="btn btn-primary" type="button" name="gradeLow" id="gradeLow1">1</button>
+							<button class="btn btn-primary" type="button" name="gradeLow" id="gradeLow2">2</button>
+							<button class="btn btn-primary" type="button" name="gradeLow" id="gradeLow3">3</button>
+							<button class="btn btn-primary" type="button" name="gradeLow" id="gradeLow4">4</button>
+							<button class="btn btn-primary" type="button" name="gradeLow" id="gradeLow5">5</button>
+							<button class="btn btn-primary" type="button" name="gradeLow" id="gradeLow6">6</button>
+							<button class="btn btn-primary" type="button" name="gradeLow" id="gradeLow7">7</button>
+							<button class="btn btn-primary" type="button" name="gradeLow" id="gradeLow8">8</button>
+							<button class="btn btn-primary" type="button" name="gradeLow" id="gradeLow9">9</button>
+							<button class="btn btn-primary" type="button" name="gradeLow" id="gradeLow10">10</button>
+							<button class="btn btn-primary" type="button" name="gradeLow" id="gradeLow11">11</button>
+							<button class="btn btn-primary" type="button" name="gradeLow" id="gradeLow12">12</button>
+						</div>
+						<div style="width: 75px; float: left; padding-right: 10px">
+							end: 
+						</div>
+						<div class="btn-group" data-toggle="buttons-radio">
+							<button class="btn btn-primary" type="button" name="gradeHigh" id="gradeHigh1">1</button>
+							<button class="btn btn-primary" type="button" name="gradeHigh" id="gradeHigh2">2</button>
+							<button class="btn btn-primary" type="button" name="gradeHigh" id="gradeHigh3">3</button>
+							<button class="btn btn-primary" type="button" name="gradeHigh" id="gradeHigh4">4</button>
+							<button class="btn btn-primary" type="button" name="gradeHigh" id="gradeHigh5">5</button>
+							<button class="btn btn-primary" type="button" name="gradeHigh" id="gradeHigh6">6</button>
+							<button class="btn btn-primary" type="button" name="gradeHigh" id="gradeHigh7">7</button>
+							<button class="btn btn-primary" type="button" name="gradeHigh" id="gradeHigh8">8</button>
+							<button class="btn btn-primary" type="button" name="gradeHigh" id="gradeHigh9">9</button>
+							<button class="btn btn-primary" type="button" name="gradeHigh" id="gradeHigh10">10</button>
+							<button class="btn btn-primary" type="button" name="gradeHigh" id="gradeHigh11">11</button>
+							<button class="btn btn-primary" type="button" name="gradeHigh" id="gradeHigh12">12</button>
+						</div>
+					</p>
+					<p>
+						<h4>Image</h4>
+					    <div id="upload-preview" class="thumbnail" style="width: 100px; height: 100px; margin: 10px; background-color: #EEEEEE; cursor: pointer;" onclick="document.getElementById('uploadInput').click();">
+					    	<img id="upload-preview-preview" src='http://placehold.it/100/eeeeee'/>
+					    </div>
+					    Supported file types: jpeg, jpg, png<br />
+	                	Maximum file size: 500kb<br />
+					    <input type="file" name="picture" id="uploadInput" style="display: none;">
+					    <br>
+						<p>
+							<button type="submit" class="btn btn-success">
+								<i class="btn-icon-only icon-check"></i> Submit
+							</button>
+						</p>
+					</p>
+				</form>
+		    </div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var preview = $("#upload-preview");
+
+			$("#uploadInput").change(function(event) {
+				var input = $(event.currentTarget);
+				var file = input[0].files[0];
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$("#upload-preview-preview").remove();
+					image_base64 = e.target.result;
+					preview.html("<img src='" + image_base64 + "'/>");
+				};
+				reader.readAsDataURL(file);
+			});
+		});
+    </script>
+
+}

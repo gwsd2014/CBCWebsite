@@ -1,0 +1,222 @@
+@(classList: List[models.Class], currentPage2: com.avaje.ebean.Page[models.Class], currentSortBy: String, currentOrder: String, currentFilter: String)
+
+@****************************************
+* Helper generating navigation links    *
+****************************************@
+@link(newPage:Int, newSortBy:String) = @{
+    
+    var sortBy = currentSortBy
+    var order = currentOrder
+    
+    if(newSortBy != null) {
+        sortBy = newSortBy
+        if(currentSortBy == newSortBy) {
+            if(currentOrder == "asc") {
+                order = "desc"
+            } else {
+                order = "asc"
+            }
+        } else {
+            order = "asc"
+        }
+    }
+    
+    // Generate the link
+    routes.ClassController.browse(newPage, sortBy, order, currentFilter)
+    
+}
+
+@main("Browse Classes", true) {
+
+    <div>
+	    @if(flash.containsKey("success")) {
+	    	<div class="alert alert-success">
+		        <strong>Done!</strong> @flash.get("success")
+		    </div>
+	    }
+	    <a class="btn btn-primary" id="add" href="@routes.ClassController.create()" style="margin-bottom: 20px;">
+	    	<i class="btn-icon-only icon-plus"></i><i class="btn-icon-only icon-group"></i> Create a New Class
+		</a>
+	    @if(classList.size != 0) {
+		    <div id="undeployedClasses" class="box" style="border: 10px solid #bce8f1;">
+		        <div class="box-header">
+		            <i class="icon-warning-sign icon-large"></i>
+		            <h5>My Undeployed Classes</h5>
+		        </div>
+		        <div class="box-content box-table" style="padding: 10px;">
+		        	<div class="alert alert-info">
+				        <strong>NOTE:</strong> The following classes must be deployed before students can see them.
+				    </div>
+			        <table class="table table-hover tablesorter">
+			            <thead>
+			                <tr>
+			                    <th>Name</th>
+			                    <th>Description</th>
+			                    <th>Grades</th>
+			                    <th>Actions</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                @for(classs <- classList) {
+			                    <tr>
+			                        <td style="width: 240px;">
+			                        	<a href="@routes.ClassController.view(classs.id)">
+				                        	<div class="thumbnail" style="width: 25px; height: 25px; float: left; margin-right: 10px; background-color: #EEEEEE">
+										    	<img src='@routes.Assets.at("images/classes/" + classs.id + ".png")'>
+										    </div>
+				                        	@classs.name
+			                        	</a>
+			                        </td>
+			                        <td>
+			                            @if(classs.description == null) {
+			                                <em>-</em>
+			                            } else {
+			                                @classs.description
+			                            }
+			                        </td>
+			                        <td style="width: 100px;">
+			                        	@if(classs.gradeLow == classs.gradeHigh) {
+			                        		@classs.gradeLow
+			                        	} else {
+			                        		@classs.gradeLow to @classs.gradeHigh
+			                        	}
+			                        </td>
+			                        <td style="width: 175px;">
+	                                    <a href="@routes.ClassController.edit(classs.id)" class="btn btn-small btn-info" style="width: 50px;">
+	                                        <i class="btn-icon-only icon-edit"></i> Edit
+	                                    </a>
+			                        	<button type="button" class="btn btn-small btn-danger has-spinner" id="deleteClass" name="@classs.id:|:@classs.name">
+								            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+								            <i class="btn-icon-only icon-trash"></i> Delete
+								        </button>
+			                        </td>
+			                    </tr>
+			                }
+			            </tbody>
+			        </table>
+		        </div>
+		    </div>
+		}
+	    <div id="deployedClasses" class="box">
+	        <div class="box-header">
+	            <i class="icon-group icon-large"></i>
+	            <h5>My Deployed Classes</h5>
+	        </div>
+	        <div class="box-content box-table" style="padding: 10px;">
+			    @if(currentPage2.getTotalRowCount == 0) {
+			        <div class="well">
+			            <strong><em>You don't have any deployed classes (yet)!</em></strong>
+<!-- 			            <br>
+			            <em>Use the button below to create one.</em> -->
+			        </div>
+			    } else {
+			        <table class="table table-hover tablesorter">
+			            <thead>
+			                <tr>
+			                    <th>Name</th>
+			                    <th>Description</th>
+			                    <th>Grades</th>
+			                    <th>Actions</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                @for(classs <- currentPage2.getList) {
+			                    <tr>
+			                        <td style="width: 250px;">
+			                        	<a href="@routes.ClassController.view(classs.id)">
+				                        	<div class="thumbnail" style="width: 25px; height: 25px; float: left; margin-right: 10px; background-color: #EEEEEE">
+										    	<img src='@routes.Assets.at("images/classes/" + classs.id + ".png")'>
+										    </div>
+				                        	@classs.name
+			                        	</a>
+			                        </td>
+			                        <td>
+			                            @if(classs.description == null) {
+			                                <em>-</em>
+			                            } else {
+			                                @classs.description
+			                            }
+			                        </td>
+			                        <td style="width: 100px;">
+			                        	@if(classs.gradeLow == classs.gradeHigh) {
+			                        		@classs.gradeLow
+			                        	} else {
+			                        		@classs.gradeLow to @classs.gradeHigh
+			                        	}
+			                        </td>
+			                        <td style="width: 185px;">
+			                        	<button type="button" class="btn btn-small btn-danger has-spinner" id="deleteClass" name="@classs.id:|:@classs.name">
+								            <span class="spinner"><i class="icon-spin icon-refresh"></i></span>
+								            <i class="btn-icon-only icon-trash"></i> Delete
+								        </button>
+			                        </td>
+			                    </tr>
+			                }
+			            </tbody>
+			        </table>
+
+			        <div id="pagination" class="pagination">
+			            <ul>
+			                @if(currentPage2.hasPrev) {
+			                    <li class="prev">
+			                        <a href="@link(currentPage2.getPageIndex - 1, null)">&larr; Previous</a>
+			                    </li>
+			                } else {
+			                    <li class="prev disabled">
+			                        <a>&larr; Previous</a>
+			                    </li>
+			                }
+			                <li class="current">
+			                    <a>Displaying @currentPage2.getDisplayXtoYofZ(" to "," of ")</a>
+			                </li>
+			                @if(currentPage2.hasNext) {
+			                    <li class="next">
+			                        <a href="@link(currentPage2.getPageIndex + 1, null)">Next &rarr;</a>
+			                    </li>
+			                } else {
+			                    <li class="next disabled">
+			                        <a>Next &rarr;</a>
+			                    </li>
+			                }
+			            </ul>
+			        </div>
+			    }
+	        </div>
+	    </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function() {
+        	$('table')
+        	.tablesorter();
+        	// .tablesorterPager({container: $("#pagination")}); 
+        });
+    </script>
+    <script>
+        $('button#deleteClass').click(function() {
+        	var button = $(this);
+        	button.toggleClass('active');
+
+        	var classData = $(this).attr('name').split(":|:");
+        	var classId = classData[0];
+        	var className = classData[1];
+
+            bootbox.confirm("Are you sure you want to delete class '" + className + "'? This cannot be undone.", function(result) {
+            	if (result) {
+		            button.prop("disabled", true);
+		            jsRoutes.controllers.ClassController.delete(classId).ajax({
+					    success : function(data) {
+					    	window.location.reload();
+					    },
+					    error : function(err) {
+					    	window.location = "http://thebest404pageever.com/";	// TODO: Redirect to generic error page
+					    }
+					});
+		        } else {
+		        	button.toggleClass('active');
+		        }
+            });
+        });
+    </script>
+
+}

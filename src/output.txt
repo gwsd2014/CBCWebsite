@@ -1,0 +1,25 @@
+class four
+
+	function Main ( )
+		var q = 1 
+		var t = 2 
+
+		q = q + 0 
+		if ( q == 0 )
+			if ( q == -2 )
+				q = q + q 
+			endif
+			else
+				q = q + 0 
+			endelse
+		endif
+		else
+			for ( v = 1 ; v > -1 ; v -- )
+				q = q + 0 
+			endfor
+		endelse
+
+		return q 
+	endfunction
+
+endclass

@@ -12,11 +12,12 @@ public class AuthenticationData {
 		if (user == null) {
 			return "Invalid username/email and/or password! Please try again.";
 		}
-		
+    
+        /*
 		if (user.type != User.UserType.INSTRUCTOR) {
 			return "Invalid username/email and/or password! Please try again.";
 		}
-		
+		*/
 		return null;
 	}
 

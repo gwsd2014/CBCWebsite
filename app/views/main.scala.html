@@ -6,7 +6,7 @@
 
     <!-- --- SD WEBSITE TEMPLATE --- -->
     <!-- Your project name abbreviation goes here -->
-    <title>{placeholder project name abbreviation} &raquo; @title</title>
+    <title>Coding Boot Camp &raquo; @title</title>
     <!-- --------------------------- -->
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -56,8 +56,8 @@
                                 <header class="page-header">
                                     <!-- --- SD WEBSITE TEMPLATE --- -->
                                     <!-- Your project name and tagline goes here -->
-                                    <h2 style="padding-top: 22px; line-height: 25px;">{placeholder project name}<br/>
-                                        <small>{placeholder project tagline}</small>
+                                    <h2 style="padding-top: 22px; line-height: 25px;">Coding Boot Camp<br/>
+                                        <small>Practise Coding, Logically</small>
                                     </h2>
                                     <!-- --------------------------- -->
                                 </header>
@@ -69,12 +69,7 @@
                                         <a href="@routes.UserController.logout()">Log Out</a>
                                         <!-- <a href="">{user type}</a> </li> -->
                                     </div>
-                                    <div style="float: right;">
-                                        <a href="@routes.UserController.editInstructor()">
-                                            <img class="thumbnail" style="width: 64px; height: 64px; margin: 10px; background-color: #EEEEEE" src='@routes.Assets.at("images/users/" + session.get("userId") + ".png")'>
-                                            <!-- <span class="label label-danger user-label">16</span> -->
-                                        </a>
-                                    </div>
+                                   
                                 </div>
                             }
                         </div>
@@ -92,13 +87,8 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="@routes.ClassController.browse()">
-                                        <i class="icon-group icon-large"></i> My Classes
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@routes.UserController.createStudent()">
-                                        <i class="icon-plus icon-large"></i> New Student
+                                    <a href="@routes.GeneratorController.execute("fromMain")">
+                                        <i class="icon-group icon-large"></i> Complete Problems
                                     </a>
                                 </li>
                             </ul>

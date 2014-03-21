@@ -34,7 +34,8 @@
 		        <strong>Done!</strong> @flash.get("success")
 		    </div>
 	    }
-	    <a class="btn btn-primary" id="add" href="@routes.ClassController.create()" style="margin-bottom: 20px;">
+	    <!-- <a class="btn btn-primary" id="add" href="@routes.ClassController.create()" style="margin-bottom: 20px;"> -->
+            <a class="btn btn-primary" id="add" href="@routes.GeneratorController.execute("no")" style="margin-bottom: 20px;">
 	    	<i class="btn-icon-only icon-plus"></i><i class="btn-icon-only icon-group"></i> Create a New Class
 		</a>
 	    @if(classList.size != 0) {

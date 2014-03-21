@@ -1,14 +1,17 @@
 package models;
 
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-import play.db.ebean.*;
-import play.data.validation.Constraints.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
-import javax.persistence.*;
-
-import models.User.UserType;
+import play.data.validation.Constraints.Required;
+import play.db.ebean.Model;
 
 import com.avaje.ebean.Page;
 import com.avaje.ebean.annotation.CreatedTimestamp;
@@ -18,7 +21,7 @@ import formdata.ClassData;
 
 @Entity
 public class Class extends Model {
-	
+    
 	private static final long serialVersionUID = 1L;
 
 	// Fields

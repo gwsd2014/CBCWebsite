@@ -1,0 +1,58 @@
+@(question: List[String], spaces: List[Integer], answers: Array[Integer], spot: Integer)
+
+@main("Dashboard", true) {
+
+    <div>
+        @if(flash.containsKey("success")) {
+	    	<div class="alert alert-success">
+		        <strong>Done!</strong> @flash.get("success")
+		    </div>
+	    }
+        <!-- --- SD WEBSITE TEMPLATE --- -->
+        <!-- Your project name, tagline and description goes here -->
+        <div class="jumbotron">
+          <h1>Problem:</h1>
+          <hr style="border-color: rgb(51, 51, 51);">
+         <div><p>
+            @for((line, index) <- question.zipWithIndex){
+                @for( i <- 1 to spaces.get(index)){
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                }
+                @line </br>
+            }</p>
+         </div>
+            @helper.form(action = routes.GeneratorController.execute("value")){
+                <input type="radio" name="group1"
+                   @if(spot == 0){
+                        value="1"
+                    }else{
+                        value="0"
+                    }
+                > @answers.apply(0)<br>
+                <input type="radio" name="group1"
+                    @if(spot == 1){
+                        value="1"
+                    }else{
+                        value="0"
+                    }
+                > @answers.apply(1)<br>
+                <input type="radio" name="group1"
+                    @if(spot == 2){
+                        value="1"
+                    }else{
+                        value="0"
+                    }
+                > @answers.apply(2)<br>
+                <input type="radio" name="group1"
+                    @if(spot == 3){
+                        value="1"
+                    }else{
+                        value="0"
+                    }
+                > @answers.apply(3)<br> 
+                <input type="submit" value="Submit">
+            }
+        </div>
+    </div>
+
+}

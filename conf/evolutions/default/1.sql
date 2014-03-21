@@ -36,6 +36,7 @@ create table user (
   first_name                varchar(255),
   last_name                 varchar(255),
   grade                     integer,
+  weight                    integer,
   type                      integer,
   disavowed                 tinyint(1) default 0,
   created_time              datetime not null,

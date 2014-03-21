@@ -3,21 +3,22 @@
 # ~~~~
 
 GET     /                           controllers.MainController.index()
-GET     /javascriptRoutes     		controllers.MainController.javascriptRoutes
+GET     /javascriptRoutes             controllers.MainController.javascriptRoutes
 
 # UserController
 GET     /login                      controllers.UserController.index(returnUrl: String ?= "none")
 POST    /login                      controllers.UserController.login()
 GET		/logout						controllers.UserController.logout()
-GET		/createStudent				controllers.UserController.createStudent()
-POST	/createStudent				controllers.UserController.createStudent_submit()
-GET		/register					controllers.UserController.createInstructor()
-POST	/register					controllers.UserController.createInstructor_submit()
+GET		/register					controllers.UserController.createStudent()
+POST	/register					controllers.UserController.createStudent_submit()
 GET		/editRegistration			controllers.UserController.editInstructor()
 POST	/editRegistration			controllers.UserController.editInstructor_submit()
 GET		/viewStudent				controllers.UserController.view(userId: Long)
 GET		/editStudent				controllers.UserController.editStudent(userId: Long)
 POST	/editStudent				controllers.UserController.editStudent_submit(userId: Long)
+
+# GeneratorController
+GET     /viewCode                   controllers.GeneratorController.execute(group1: String)
 
 # ClassController
 GET		/viewClass					controllers.ClassController.view(classId: Long)
@@ -32,6 +33,7 @@ GET		/enrollStudents				controllers.ClassController.enrollStudents(classId: Long
 POST	/enrollStudents				controllers.ClassController.enroll(classId: Long, studentId: Long)
 POST	/unenrollStudents			controllers.ClassController.unenroll(classId: Long, studentId: Long)
 GET		/classStudents				controllers.ClassController.classStudents(classId: Long)
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

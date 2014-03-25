@@ -1,0 +1,15 @@
+class three
+
+	function Main ( )
+		var k = 0 
+		var h = -1 
+
+		k = k + h 
+		for ( x = ??? ; x > -5 ; x -- )
+			k = k + -1 
+		endfor
+
+		return k 
+	endfunction
+
+endclass

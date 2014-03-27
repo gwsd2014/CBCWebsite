@@ -75,7 +75,7 @@ public class Control {
 
 		String clss = Control.class.getProtectionDomain().getCodeSource()
 				.getLocation().getPath();
-		System.out.println("Control: " + clss);
+		System.err.println("Control: " + clss);
 
 		JavaConverter javaConverter = new JavaConverter();
 		javaConverter.convertProblem(problem,
@@ -99,7 +99,7 @@ public class Control {
 			cls = Class.forName("generator.javaOutput", true, classLoader);
 			instance = (simpleInterface) cls.newInstance();
 		} catch (ClassNotFoundException e) { // TODO
-			System.out.println("CLASS NOT FOUND EXCEPTION IN CONTROL " + e);
+			System.err.println("CLASS NOT FOUND EXCEPTION IN CONTROL " + e);
 			e.printStackTrace();
 		} catch (InstantiationException e) { // TODO
 			System.out.println("INSTANTIATION EXCEPTION" + e);

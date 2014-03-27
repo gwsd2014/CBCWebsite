@@ -52,9 +52,9 @@ public class JavaConverter {
 			System.out.println(url.getFile());
 		}
 		output.println("package generator; \n");
-		//output.println("import app.generator.simpleInterface; \n");
+		output.println("import app.generator.simpleInterface; \n");
 
-		output.println("public class javaOutput{");
+		output.println("public class javaOutput implements simpleInterface{");
 
 		for (Iterator<Line> i = classComp.getLines().iterator(); i.hasNext();) {
 			convertLine(i.next(), 1);

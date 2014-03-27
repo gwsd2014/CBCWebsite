@@ -96,10 +96,8 @@ public class Control {
 		Class<?> cls;
 		simpleInterface instance = null;
 		try {
-			URL destURL = destinationFile.getAbsoluteFile().toURI().toURL();
-			System.out.println("DestURL: " + destURL.toString());
-			URL[] URLS = { destURL };
-			classLoader = new URLClassLoader(URLS);
+			classLoader = URLClassLoader.newInstance(new URL[] { root.toURI()
+					.toURL() });
 			cls = Class.forName("generator.javaOutput", true, classLoader);
 			instance = (simpleInterface) cls.newInstance();
 		} catch (ClassNotFoundException e) { // TODO

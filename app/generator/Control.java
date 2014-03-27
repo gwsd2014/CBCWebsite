@@ -89,9 +89,7 @@ public class Control {
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
 		compiler.run(null, null, null, fileToCompile);
-
-		File destinationFile = new File(root, "/generator/");
-		System.out.println("destSTring " + destinationFile.getPath());
+		
 		URLClassLoader classLoader;
 		Class<?> cls;
 		simpleInterface instance = null;

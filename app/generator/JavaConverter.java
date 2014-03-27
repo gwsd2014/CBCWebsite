@@ -52,7 +52,7 @@ public class JavaConverter {
 			System.out.println(url.getFile());
 		}
 		output.println("package generator; \n");
-		output.println("import app.generator.simpleInterface; \n");
+		output.println("import generator.simpleInterface; \n");
 
 		output.println("public class javaOutput implements simpleInterface{");
 

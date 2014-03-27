@@ -2,6 +2,8 @@ package generator;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Iterator;
 
 public class JavaConverter {
@@ -13,10 +15,13 @@ public class JavaConverter {
 
 	public JavaConverter() {
 		try {
-			output = new PrintWriter("src/language/javaOutput.java");
+			String clss = JavaConverter.class.getProtectionDomain()
+					.getCodeSource().getLocation().getPath();
+			//System.out.println("JavaConverter: " + clss);
+
+			output = new PrintWriter("app/generator/javaOutput.java");
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Failed");
+			System.out.println("FILE NOT FOUND EXCEPTION IN JAVA CONVERTER " + e);
 			e.printStackTrace();
 		}
 	}
@@ -38,9 +43,18 @@ public class JavaConverter {
 	}
 
 	public void convertClass(ClassComponent classComp) {
-		output.println("package language; \n");
 
-		output.println("public class javaOutput implements simpleInterface {");
+		ClassLoader cl = ClassLoader.getSystemClassLoader();
+
+		URL[] urls = ((URLClassLoader) cl).getURLs();
+
+		for (URL url : urls) {
+			System.out.println(url.getFile());
+		}
+		output.println("package generator; \n");
+		//output.println("import app.generator.simpleInterface; \n");
+
+		output.println("public class javaOutput{");
 
 		for (Iterator<Line> i = classComp.getLines().iterator(); i.hasNext();) {
 			convertLine(i.next(), 1);

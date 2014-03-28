@@ -54,8 +54,7 @@ public class JavaConverter {
 			System.out.println(url.getFile());
 		}
 		output.println("package generator; \n");
-		output.println("import generator.simpleInterface;");
-		output.println("public class javaOutput implements simpleInterface{");
+		output.println("public class javaOutput{");
 
 		for (Iterator<Line> i = classComp.getLines().iterator(); i.hasNext();) {
 			convertLine(i.next(), 1);

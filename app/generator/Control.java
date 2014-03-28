@@ -57,12 +57,14 @@ public class Control {
 			returnQuestion = new Question(lines, spaces, answers);
 		} else { // else do fill in the blank
 			String userInput = readReplacement(problem);
-			int returnedAnswer = runCompilerWithReplacement("2 == 2", problem);
+			int returnedAnswer = 1;
+			//int returnedAnswer = runCompilerWithReplacement("2 == 2", problem);
+			System.out.println("We be here");
 			if (returnedAnswer == problem.getCorrectAnswer()) {
-				int[] yes = { 1, 1, 1, 1 };
+				int[] yes = { 0, 1, 2, 3 };
 				returnQuestion = new Question(lines, spaces, yes);
 			} else {
-				int[] no = { 0, 0, 0, 0 };
+				int[] no = { 3, 2, 1, 0 };
 				returnQuestion = new Question(lines, spaces, no);
 			}
 		}

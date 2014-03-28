@@ -87,13 +87,13 @@ public class Control {
 
 		File root = new File(
 				"/export/home/mgoddard/CBCWebsite/target/scala-2.10/classes");
-		File sourceFile = new File(root, "/generator/javaOutput.java");
+		File sourceFile = new File(root, "generator/javaOutput.java");
 
 		String fileToCompile = sourceFile.getPath();
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-
+		System.out.println("compiling");
 		compiler.run(null, null, null, fileToCompile);
-
+		System.out.println("finished");
 		URLClassLoader classLoader;
 		Class<?> cls;
 		simpleInterface instance = null;

@@ -75,7 +75,6 @@ public class Control {
 
 		String clss = Control.class.getProtectionDomain().getCodeSource()
 				.getLocation().getPath();
-		System.out.println("Control: " + clss);
 
 		JavaConverter javaConverter = new JavaConverter();
 		javaConverter.convertProblem(problem,

@@ -17,7 +17,7 @@ public class JavaConverter {
 		try {
 			String clss = JavaConverter.class.getProtectionDomain()
 					.getCodeSource().getLocation().getPath();
-			// System.out.println("JavaConverter: " + clss);
+			System.out.println("JavaConverter: " + clss);
 
 			output = new PrintWriter("app/generator/javaOutput.java");
 		} catch (FileNotFoundException e) {

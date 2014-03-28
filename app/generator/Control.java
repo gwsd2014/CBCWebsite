@@ -61,10 +61,10 @@ public class Control {
 			int returnedAnswer = runCompilerWithReplacement("2 == 2", problem);
 			
 			if (returnedAnswer == problem.getCorrectAnswer()) {
-				int[] yes = { 0, 1, 2, 3 };
+				int[] yes = { 1, 1, 1, 1};
 				returnQuestion = new Question(lines, spaces, yes);
 			} else {
-				int[] no = { 3, 2, 1, 0 };
+				int[] no = { 0, 0, 0, 0 };
 				returnQuestion = new Question(lines, spaces, no);
 			}
 		}

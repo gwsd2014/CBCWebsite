@@ -8,7 +8,7 @@ import java.util.Iterator;
 
 public class JavaConverter {
 
-    PrintWriter output;
+	PrintWriter output;
 	ComponentTypes removedComponent;
 	String userReplacement;
 	boolean hasRemoved;
@@ -17,11 +17,12 @@ public class JavaConverter {
 		try {
 			String clss = JavaConverter.class.getProtectionDomain()
 					.getCodeSource().getLocation().getPath();
-			//System.out.println("JavaConverter: " + clss);
+			// System.out.println("JavaConverter: " + clss);
 
 			output = new PrintWriter("app/generator/javaOutput.java");
 		} catch (FileNotFoundException e) {
-			System.out.println("FILE NOT FOUND EXCEPTION IN JAVA CONVERTER " + e);
+			System.out.println("FILE NOT FOUND EXCEPTION IN JAVA CONVERTER "
+					+ e);
 			e.printStackTrace();
 		}
 	}
@@ -52,9 +53,8 @@ public class JavaConverter {
 			System.out.println(url.getFile());
 		}
 		output.println("package generator; \n");
-		output.println("import generator.simpleInterface; \n");
 
-		output.println("public class javaOutput implements simpleInterface{");
+		output.println("public class javaOutput{");
 
 		for (Iterator<Line> i = classComp.getLines().iterator(); i.hasNext();) {
 			convertLine(i.next(), 1);

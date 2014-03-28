@@ -83,7 +83,7 @@ public class Control {
 				Difficulty.getProblemComponent(ProblemType.FILL_BLANK, 2),
 				replacement);
 
-		File root = new File("/export/home/mgoddard/CBCWebsite/app");
+		File root = new File("/export/home/mgoddard/CBCWebsite/target/scala-2.10/classes");
 		File sourceFile = new File(root, "/generator/javaOutput.java");
 
 		String fileToCompile = sourceFile.getPath();

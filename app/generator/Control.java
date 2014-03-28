@@ -14,7 +14,7 @@ import javax.tools.ToolProvider;
 
 public class Control {
 
-    public static Question run(int level, int weight, ProblemType pt) {
+	public static Question run(int level, int weight, ProblemType pt) {
 
 		if (weight < 1) {
 			weight = 1;
@@ -59,9 +59,9 @@ public class Control {
 			String userInput = readReplacement(problem);
 			System.out.println("We be here");
 			int returnedAnswer = runCompilerWithReplacement("2 == 2", problem);
-			
+
 			if (returnedAnswer == problem.getCorrectAnswer()) {
-				int[] yes = { 1, 1, 1, 1};
+				int[] yes = { 1, 1, 1, 1 };
 				returnQuestion = new Question(lines, spaces, yes);
 			} else {
 				int[] no = { 0, 0, 0, 0 };
@@ -90,11 +90,14 @@ public class Control {
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
 		compiler.run(null, null, null, fileToCompile);
-		
+
 		URLClassLoader classLoader;
 		Class<?> cls;
 		simpleInterface instance = null;
 		try {
+			System.out.println("root: " + root.toURI().toURL().toString());
+			System.out.println("sourceFile: "
+					+ sourceFile.toURI().toURL().toString());
 			classLoader = URLClassLoader.newInstance(new URL[] { root.toURI()
 					.toURL() });
 			cls = Class.forName("generator.javaOutput", true, classLoader);

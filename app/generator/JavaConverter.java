@@ -54,7 +54,7 @@ public class JavaConverter {
 			System.out.println(url.getFile());
 		}
 		output.println("package generator; \n");
-		output.println("import target.scala-2.10.classes.generator.simpleInterface;");
+		output.println("import generator.simpleInterface;");
 		output.println("public class javaOutput implements simpleInterface{");
 
 		for (Iterator<Line> i = classComp.getLines().iterator(); i.hasNext();) {

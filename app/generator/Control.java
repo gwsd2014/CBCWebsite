@@ -78,12 +78,15 @@ public class Control {
 		String clss = Control.class.getProtectionDomain().getCodeSource()
 				.getLocation().getPath();
 
+		System.out.println("control path: " + clss);
+
 		JavaConverter javaConverter = new JavaConverter();
 		javaConverter.convertProblem(problem,
 				Difficulty.getProblemComponent(ProblemType.FILL_BLANK, 2),
 				replacement);
 
-		File root = new File("/export/home/mgoddard/CBCWebsite/target/scala-2.10/classes");
+		File root = new File(
+				"/export/home/mgoddard/CBCWebsite/target/scala-2.10/classes");
 		File sourceFile = new File(root, "/generator/javaOutput.java");
 
 		String fileToCompile = sourceFile.getPath();
@@ -93,7 +96,7 @@ public class Control {
 
 		URLClassLoader classLoader;
 		Class<?> cls;
-		javaOutput instance = null;
+		simpleInterface instance = null;
 		try {
 			System.out.println("root: " + root.toURI().toURL().toString());
 			System.out.println("sourceFile: "
@@ -101,7 +104,7 @@ public class Control {
 			classLoader = URLClassLoader.newInstance(new URL[] { root.toURI()
 					.toURL() });
 			cls = Class.forName("generator.javaOutput", true, classLoader);
-			instance = (javaOutput) cls.newInstance();
+			instance = (simpleInterface) cls.newInstance();
 		} catch (ClassNotFoundException e) { // TODO
 			System.out.println("CLASS NOT FOUND EXCEPTION IN CONTROL " + e);
 			e.printStackTrace();
@@ -116,7 +119,7 @@ public class Control {
 			e.printStackTrace();
 		}
 
-		int returnedAnswer =  instance.Main();
+		int returnedAnswer = instance.Main();
 		System.out.println("With the inputed answer, the function returns "
 				+ returnedAnswer);
 

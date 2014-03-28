@@ -83,8 +83,8 @@ public class Control {
 				Difficulty.getProblemComponent(ProblemType.FILL_BLANK, 2),
 				replacement);
 
-		File root = new File("/app");
-		File sourceFile = new File("app/generator/javaOutput.java");
+		File root = new File("/export/home/mgoddard/CBCWebsite/app");
+		File sourceFile = new File(root, "/generator/javaOutput.java");
 
 		String fileToCompile = sourceFile.getPath();
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();

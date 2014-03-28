@@ -19,7 +19,8 @@ public class JavaConverter {
 					.getCodeSource().getLocation().getPath();
 			System.out.println("JavaConverter: " + clss);
 
-			output = new PrintWriter("target/scala-2.10/classes/generator/javaOutput.java");
+			output = new PrintWriter(
+					"target/scala-2.10/classes/generator/javaOutput.java");
 		} catch (FileNotFoundException e) {
 			System.out.println("FILE NOT FOUND EXCEPTION IN JAVA CONVERTER "
 					+ e);
@@ -53,7 +54,7 @@ public class JavaConverter {
 			System.out.println(url.getFile());
 		}
 		output.println("package generator; \n");
-
+		output.println("import generator.simpleInterface");
 		output.println("public class javaOutput implements simpleInterface{");
 
 		for (Iterator<Line> i = classComp.getLines().iterator(); i.hasNext();) {

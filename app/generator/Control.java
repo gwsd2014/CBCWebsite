@@ -12,6 +12,8 @@ import java.util.NoSuchElementException;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 
+import generator.simpleInterface;;
+
 public class Control {
 
 	public static Question run(int level, int weight, ProblemType pt) {

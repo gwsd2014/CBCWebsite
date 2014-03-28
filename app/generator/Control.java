@@ -116,7 +116,7 @@ public class Control {
 			e.printStackTrace();
 		}
 
-		int returnedAnswer = ((javaOutput) instance).Main();
+		int returnedAnswer =  instance.Main();
 		System.out.println("With the inputed answer, the function returns "
 				+ returnedAnswer);
 

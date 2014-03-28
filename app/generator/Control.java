@@ -57,9 +57,9 @@ public class Control {
 			returnQuestion = new Question(lines, spaces, answers);
 		} else { // else do fill in the blank
 			String userInput = readReplacement(problem);
-			int returnedAnswer = 1;
-			//int returnedAnswer = runCompilerWithReplacement("2 == 2", problem);
 			System.out.println("We be here");
+			int returnedAnswer = runCompilerWithReplacement("2 == 2", problem);
+			
 			if (returnedAnswer == problem.getCorrectAnswer()) {
 				int[] yes = { 0, 1, 2, 3 };
 				returnQuestion = new Question(lines, spaces, yes);
@@ -113,7 +113,7 @@ public class Control {
 			e.printStackTrace();
 		}
 
-		int returnedAnswer = instance.Main();
+		int returnedAnswer = 2;
 		System.out.println("With the inputed answer, the function returns "
 				+ returnedAnswer);
 

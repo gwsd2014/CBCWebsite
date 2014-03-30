@@ -98,7 +98,7 @@ public class Control {
 		System.out.println("finished");
 		URLClassLoader classLoader;
 		Class<?> cls;
-		simpleInterface instance = null;
+		javaOutput instance = null;
 		try {
 			System.out.println("root: " + root.toURI().toURL().toString());
 			System.out.println("sourceFile: "
@@ -106,7 +106,7 @@ public class Control {
 			classLoader = URLClassLoader.newInstance(new URL[] { root.toURI()
 					.toURL() });
 			cls = Class.forName("generator.javaOutput", true, classLoader);
-			instance = (simpleInterface) cls.newInstance();
+			instance = (javaOutput) cls.newInstance();
 		} catch (ClassNotFoundException e) { // TODO
 			System.out.println("CLASS NOT FOUND EXCEPTION IN CONTROL " + e);
 			e.printStackTrace();

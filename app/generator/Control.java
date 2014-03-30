@@ -91,6 +91,9 @@ public class Control {
 	private static int runCompilerWithReplacement(String replacement,
 			ProblemComponent problem, File temp) {
 
+		System.out.println(((URLClassLoader) (Thread.currentThread()
+				.getContextClassLoader())).getURLs().toString());
+
 		System.out.println("control path: " + temp.getPath());
 		System.out.println("name: " + temp.getName());
 

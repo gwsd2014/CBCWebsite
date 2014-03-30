@@ -3,6 +3,7 @@ package generator;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
@@ -91,8 +92,15 @@ public class Control {
 	private static int runCompilerWithReplacement(String replacement,
 			ProblemComponent problem, File temp) {
 
-		System.out.println(((URLClassLoader) (Thread.currentThread()
-				.getContextClassLoader())).getURLs().toString());
+		URL Url = ((URLClassLoader) (Thread.currentThread()
+				.getContextClassLoader())).getURLs()[0];
+
+		try {
+			System.out.println("path: " + Url.toURI().toString());
+		} catch (URISyntaxException e1) {
+			System.out.println("e in conversion: " + e1);
+			e1.printStackTrace();
+		}
 
 		System.out.println("control path: " + temp.getPath());
 		System.out.println("name: " + temp.getName());

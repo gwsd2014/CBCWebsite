@@ -30,7 +30,7 @@ public class JavaConverter {
 					+ e);
 			e.printStackTrace();
 		}
-		name = temp.getName().split("/.")[0];
+		name = temp.getName().replaceAll(".java", "");
 		removedComponent = removed;
 		userReplacement = replacement;
 		hasRemoved = false;

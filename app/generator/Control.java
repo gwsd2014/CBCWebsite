@@ -97,7 +97,7 @@ public class Control {
 		compiler.run(null, null, null, fileToCompile);
 		System.out.println("finished");
 		URLClassLoader classLoader;
-		Class<javaOutput> cls = javaOutput.class;
+		Class<? extends javaOutput> cls;
 		javaOutput instance = null;
 		try {
 			System.out.println("root: " + root.toURI().toURL().toString());
@@ -105,7 +105,7 @@ public class Control {
 					+ sourceFile.toURI().toURL().toString());
 			classLoader = URLClassLoader.newInstance(new URL[] { root.toURI()
 					.toURL() });
-			//cls = Class.forName("generator.javaOutput", true, classLoader);
+			cls = (Class<? extends javaOutput>) Class.forName("generator.javaOutput", true, classLoader);
 			instance = cls.newInstance();
 		} catch (InstantiationException e) { // TODO
 			System.out.println("INSTANTIATION EXCEPTION" + e);
@@ -115,6 +115,9 @@ public class Control {
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
 			System.out.println("MALFORMED URL EXCPETION " + e);
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			System.out.println("CLASS NOT FOUND EXCEPTION " + e);
 			e.printStackTrace();
 		}
 

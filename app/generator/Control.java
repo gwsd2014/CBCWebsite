@@ -129,7 +129,7 @@ public class Control {
 			System.out.println("MALFORMED URL EXCPETION " + e);
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			System.out.println("Class Not Found EXCEPTION  " + e);
+			System.out.println("CLASS NOT FOUND EXCEPTION " + e);
 			e.printStackTrace();
 		}
 

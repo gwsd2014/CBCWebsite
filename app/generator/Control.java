@@ -119,10 +119,10 @@ public class Control {
 			cls = Class.forName(className, true, classLoader);
 
 			instance = (simpleInterface) cls.newInstance();
-		} catch (InstantiationException e) { // TODO
+		} catch (InstantiationException e) {
 			System.out.println("INSTANTIATION EXCEPTION" + e);
 			e.printStackTrace();
-		} catch (IllegalAccessException e) { // TODO
+		} catch (IllegalAccessException e) {
 			System.out.println("ILLEGAL ACCESS EXCEPTION" + e);
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
@@ -132,8 +132,8 @@ public class Control {
 			System.out.println("CLASS NOT FOUND EXCEPTION " + e);
 			e.printStackTrace();
 		}
-
-		int returnedAnswer = instance.Main();
+		int returnedAnswer = 2;
+		// int returnedAnswer = instance.Main();
 		System.out.println("With the inputed answer, the function returns "
 				+ returnedAnswer);
 		/*

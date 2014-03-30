@@ -65,7 +65,7 @@ public class Control {
 			// create random file name
 			try {
 				File root = new File("/export/home/mgoddard/CBCWebsite/temp");
-				tmp = File.createTempFile("j", "c", root);
+				tmp = File.createTempFile("FIB", ".java", root);
 			} catch (IOException e) {
 				System.out.println("IOEXCPETION " + e);
 				e.printStackTrace();

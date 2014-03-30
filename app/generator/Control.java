@@ -121,14 +121,14 @@ public class Control {
 		int returnedAnswer = instance.Main();
 		System.out.println("With the inputed answer, the function returns "
 				+ returnedAnswer);
-
+		/*
 		try {
 			Files.delete(sourceFile.toPath());
 		} catch (IOException e1) { // TODO
 			// Auto-generated catch block
 			e1.printStackTrace();
 		}
-
+*/
 		return returnedAnswer;
 	}
 	

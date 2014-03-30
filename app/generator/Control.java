@@ -97,8 +97,7 @@ public class Control {
 		compiler.run(null, null, null, fileToCompile);
 		System.out.println("finished");
 		URLClassLoader classLoader;
-		Class<?> cls;
-		Object objInstance = null;
+		Class<javaOutput> cls = javaOutput.class;
 		javaOutput instance = null;
 		try {
 			System.out.println("root: " + root.toURI().toURL().toString());
@@ -106,12 +105,8 @@ public class Control {
 					+ sourceFile.toURI().toURL().toString());
 			classLoader = URLClassLoader.newInstance(new URL[] { root.toURI()
 					.toURL() });
-			cls = Class.forName("generator.javaOutput", true, classLoader);
-			objInstance = cls.newInstance();
-			instance = (generator.javaOutput) objInstance;
-		} catch (ClassNotFoundException e) { // TODO
-			System.out.println("CLASS NOT FOUND EXCEPTION IN CONTROL " + e);
-			e.printStackTrace();
+			//cls = Class.forName("generator.javaOutput", true, classLoader);
+			instance = cls.newInstance();
 		} catch (InstantiationException e) { // TODO
 			System.out.println("INSTANTIATION EXCEPTION" + e);
 			e.printStackTrace();
@@ -135,6 +130,10 @@ public class Control {
 		}
 
 		return returnedAnswer;
+	}
+	
+	private static javaOutput runHelper(Object input){
+		return (javaOutput) input;
 	}
 
 	private static String readReplacement(ProblemComponent problem) {

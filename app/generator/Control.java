@@ -12,7 +12,9 @@ import java.util.NoSuchElementException;
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 
-import generator.simpleInterface;;
+import generator.simpleInterface;
+
+;
 
 public class Control {
 
@@ -58,9 +60,21 @@ public class Control {
 			int[] answers = multipleChoiceAnswers(problem);
 			returnQuestion = new Question(lines, spaces, answers);
 		} else { // else do fill in the blank
+
+			File tmp = null;
+			// create random file name
+			try {
+				File root = new File("/export/home/mgoddard/CBCWebsite/temp");
+				tmp = File.createTempFile("j", "c", root);
+			} catch (IOException e) {
+				System.out.println("IOEXCPETION " + e);
+				e.printStackTrace();
+			}
+
 			String userInput = readReplacement(problem);
 			System.out.println("We be here");
-			int returnedAnswer = runCompilerWithReplacement("2 == 2", problem);
+			int returnedAnswer = runCompilerWithReplacement("2 == 2", problem,
+					tmp);
 
 			if (returnedAnswer == problem.getCorrectAnswer()) {
 				int[] yes = { 1, 1, 1, 1 };
@@ -75,38 +89,36 @@ public class Control {
 	}
 
 	private static int runCompilerWithReplacement(String replacement,
-			ProblemComponent problem) {
+			ProblemComponent problem, File temp) {
 
-		String clss = Control.class.getProtectionDomain().getCodeSource()
-				.getLocation().getPath();
-
-		System.out.println("control path: " + clss);
+		System.out.println("control path: " + temp.getPath());
+		System.out.println("name: " + temp.getName());
 
 		JavaConverter javaConverter = new JavaConverter();
 		javaConverter.convertProblem(problem,
 				Difficulty.getProblemComponent(ProblemType.FILL_BLANK, 2),
-				replacement);
+				replacement, temp);
 
-		File root = new File(
-				"/export/home/mgoddard/CBCWebsite/target/scala-2.10/classes");
-		File sourceFile = new File(root, "generator/javaOutput.java");
+		File root = new File("/export/home/mgoddard/CBCWebsite/temp");
+		File sourceFile = new File(root, "javaOutput.java");
 
-		String fileToCompile = sourceFile.getPath();
+		String fileToCompile = temp.getPath();
+		String className = temp.getName();
+
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		System.out.println("compiling");
 		compiler.run(null, null, null, fileToCompile);
 		System.out.println("finished");
 		URLClassLoader classLoader;
-		Class<? extends javaOutput> cls;
-		javaOutput instance = null;
+
+		Class<?> cls = null;
+		simpleInterface instance = null;
 		try {
-			System.out.println("root: " + root.toURI().toURL().toString());
-			System.out.println("sourceFile: "
-					+ sourceFile.toURI().toURL().toString());
 			classLoader = URLClassLoader.newInstance(new URL[] { root.toURI()
 					.toURL() });
-			cls = (Class<? extends javaOutput>) Class.forName("generator.javaOutput", true, classLoader);
-			instance = cls.newInstance();
+			cls = Class.forName(className, true, classLoader);
+
+			instance = (simpleInterface) cls.newInstance();
 		} catch (InstantiationException e) { // TODO
 			System.out.println("INSTANTIATION EXCEPTION" + e);
 			e.printStackTrace();
@@ -117,7 +129,7 @@ public class Control {
 			System.out.println("MALFORMED URL EXCPETION " + e);
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			System.out.println("CLASS NOT FOUND EXCEPTION " + e);
+			System.out.println("Class Not Found EXCEPTION  " + e);
 			e.printStackTrace();
 		}
 
@@ -125,17 +137,13 @@ public class Control {
 		System.out.println("With the inputed answer, the function returns "
 				+ returnedAnswer);
 		/*
-		try {
-			Files.delete(sourceFile.toPath());
-		} catch (IOException e1) { // TODO
-			// Auto-generated catch block
-			e1.printStackTrace();
-		}
-*/
+		 * try { Files.delete(sourceFile.toPath()); } catch (IOException e1) {
+		 * // TODO // Auto-generated catch block e1.printStackTrace(); }
+		 */
 		return returnedAnswer;
 	}
-	
-	private static javaOutput runHelper(Object input){
+
+	private static javaOutput runHelper(Object input) {
 		return (javaOutput) input;
 	}
 

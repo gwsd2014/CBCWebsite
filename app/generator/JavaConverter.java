@@ -1,5 +1,6 @@
 package generator;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.net.URL;
@@ -11,26 +12,26 @@ public class JavaConverter {
 	PrintWriter output;
 	ComponentTypes removedComponent;
 	String userReplacement;
+	String name;
 	boolean hasRemoved;
 
 	public JavaConverter() {
-		try {
-			String clss = JavaConverter.class.getProtectionDomain()
-					.getCodeSource().getLocation().getPath();
-			System.out.println("JavaConverter: " + clss);
 
-			output = new PrintWriter(
-					"target/scala-2.10/classes/generator/javaOutput.java");
+	}
+
+	public PrintWriter convertProblem(ProblemComponent problem,
+			ComponentTypes removed, String replacement, File temp) {
+
+		try {
+			System.out.println("JC input path: " + temp.getPath());
+			output = new PrintWriter(temp.getPath());
 		} catch (FileNotFoundException e) {
 			System.out.println("FILE NOT FOUND EXCEPTION IN JAVA CONVERTER "
 					+ e);
 			e.printStackTrace();
 		}
-	}
 
-	public PrintWriter convertProblem(ProblemComponent problem,
-			ComponentTypes removed, String replacement) {
-
+		name = temp.getName();
 		removedComponent = removed;
 		userReplacement = replacement;
 		hasRemoved = false;
@@ -46,16 +47,10 @@ public class JavaConverter {
 
 	public void convertClass(ClassComponent classComp) {
 
-		ClassLoader cl = ClassLoader.getSystemClassLoader();
-
-		URL[] urls = ((URLClassLoader) cl).getURLs();
-
-		for (URL url : urls) {
-			System.out.println(url.getFile());
-		}
-		output.println("package generator; \n");
-		//output.println("import generator.simpleInterface;");
-		output.println("public class javaOutput {");
+		// output.println("package generator; \n");
+		// output.println("import generator.simpleInterface;");
+		output.println("public class " + name + " implements simpleInterface "
+				+ "{");
 
 		for (Iterator<Line> i = classComp.getLines().iterator(); i.hasNext();) {
 			convertLine(i.next(), 1);

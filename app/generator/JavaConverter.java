@@ -31,7 +31,7 @@ public class JavaConverter {
 			e.printStackTrace();
 		}
 
-		name = temp.getName();
+		name = temp.getName().split(".")[0];
 		removedComponent = removed;
 		userReplacement = replacement;
 		hasRemoved = false;

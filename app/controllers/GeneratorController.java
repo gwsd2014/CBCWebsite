@@ -36,7 +36,7 @@ public class GeneratorController extends Controller {
 		}
 
 		int level = user.grade;
-		int weight = user.weight;
+		int weight = getEffectiveWeight(level, user.weight);
 
 		Question question = Gen.createProblem(level, weight);
 

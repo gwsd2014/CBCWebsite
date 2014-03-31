@@ -64,6 +64,13 @@ public class GeneratorController extends Controller {
     		}
     	}
     	
+    	//make lvl 4 min = 2
+    	if(level == 4){
+    		if(realWeight/3 < 2){
+    			return 2;
+    		}
+    	}
+    	
     	if(level > 4){
     		return realWeight/2;
     	}
@@ -72,7 +79,7 @@ public class GeneratorController extends Controller {
     }
 
 	public static void adjustDifficulty(User user, boolean correct) {
-		int[] gradeChange = { 12, 9, 9, 21, 12, 20, 14, 10 };
+		int[] gradeChange = { 12, 9, 9, 21, 21, 20, 14, 10 };
 
 		if (correct) {
 			if (user.weight + 1 == gradeChange[user.grade]) {

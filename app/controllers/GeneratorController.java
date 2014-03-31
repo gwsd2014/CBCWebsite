@@ -55,9 +55,24 @@ public class GeneratorController extends Controller {
 		return ok(viewCode.render(question.lines, question.spaces,
 				modifiedAnswers, spot));
 	}
+    
+    public static int getEffectiveWeight(int level, int realWeight){
+    	//use 3 for most of array
+    	if(level == 1){
+    		if (realWeight > 3){
+    			return 3;
+    		}
+    	}
+    	
+    	if(level > 4){
+    		return realWeight/2;
+    	}
+    	
+    	return realWeight/3;
+    }
 
 	public static void adjustDifficulty(User user, boolean correct) {
-		int[] gradeChange = { 4, 5, 4, 7, 4, 10, 7, 5 };
+		int[] gradeChange = { 9, 9, 9, 21, 12, 20, 14, 10 };
 
 		if (correct) {
 			if (user.weight + 1 == gradeChange[user.grade]) {
@@ -73,7 +88,7 @@ public class GeneratorController extends Controller {
 				// just change weight
 				User.changeWeight(user, user.weight + 1);
 			}
-		} else{
+		} else{ //incorrect answer
             if(user.weight > 1 ){
                 User.changeWeight(user, user.weight - 1);
             }

@@ -114,7 +114,7 @@ public class Control {
 
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		System.out.println("compiling");
-		compiler.run(null, null, null, fileToCompile);
+		compiler.run(null, System.out, null, fileToCompile);
 		System.out.println("finished");
 		URLClassLoader classLoader;
 

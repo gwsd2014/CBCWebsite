@@ -59,7 +59,7 @@ public class GeneratorController extends Controller {
     public static int getEffectiveWeight(int level, int realWeight){
     	//use 3 for simple variable problems
     	if(level < 2){
-    		if (realWeight > 3){
+    		if (realWeight > 9){
     			return 3;
     		}
     	}

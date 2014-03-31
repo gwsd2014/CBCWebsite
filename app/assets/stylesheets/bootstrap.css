@@ -5545,7 +5545,7 @@ a.list-group-item.active > .badge,
   margin-bottom: 30px;
   font-size: 12px;
   font-weight: 200;
-  line-height: 2.1428571435;
+  line-height: 1;
   color: inherit;
   background-color: #ecf0f1;
 }

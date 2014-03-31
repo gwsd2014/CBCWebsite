@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class FunctionComponent extends Component {
-    private String name;
+	private String name;
 	private ClassComponent parentClass;
 
 	private LinkedList<LogicComponent> children;
@@ -113,6 +113,11 @@ public class FunctionComponent extends Component {
 			variables.put(letterVariable + "[" + i + "]", initialValue);
 		}
 
+		// override the test variable, making it one of the array indices
+		int testIndex = rand.nextInt(arraySize);
+		String newTestVariable = letterVariable + "[" + testIndex + "]";
+		overrideTestVariable(newTestVariable);
+
 		// add a blank line at the end of indentation
 		Line blank = new Line(this, true);
 		children.add(blank);
@@ -120,6 +125,11 @@ public class FunctionComponent extends Component {
 		return fullArrayName;
 	}
 
+	private void overrideTestVariable(String newTV){
+		testVariable = newTV;
+		parentClass.overrideTestVariable(newTV);
+	}
+	
 	private int determineArraySize() {
 		int size = this.weight;
 		if (size > 3) {

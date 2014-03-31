@@ -23,6 +23,7 @@ public class ProblemComponent extends Component {
 		this.pt = problemType;
 
 		childClasses = new LinkedList<ClassComponent>();
+		
 		testVariable = chooseVariable();
 
 		createClasses();
@@ -103,6 +104,10 @@ public class ProblemComponent extends Component {
 		}
 	}
 
+	public void overrideTestVariable(String newTV){
+		testVariable = newTV;
+	}
+	
 	public String getTestVariable() {
 		return testVariable;
 	}

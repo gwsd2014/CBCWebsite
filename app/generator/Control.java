@@ -11,6 +11,9 @@ import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 import javax.tools.JavaCompiler;
+import javax.tools.JavaFileManager;
+import javax.tools.JavaFileManager.Location;
+import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
 public class Control {
@@ -114,6 +117,10 @@ public class Control {
 
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		System.out.println("compiling");
+		StandardJavaFileManager sjfm = compiler.getStandardFileManager(null,
+				null, null);
+		JavaFileManager.Location jfm = (Location) sjfm;
+		System.out.println("location: " + jfm.getName());
 		compiler.run(null, System.out, null, fileToCompile);
 		System.out.println("finished");
 		URLClassLoader classLoader;

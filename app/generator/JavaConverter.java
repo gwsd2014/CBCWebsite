@@ -47,7 +47,7 @@ public class JavaConverter {
 	public void convertClass(ClassComponent classComp) {
 
 		// output.println("package generator; \n");
-		//output.println("import generator.simpleInterface;");
+		// output.println("import generator.simpleInterface;");
 		output.println("public class " + name + " implements simpleInterface "
 				+ "{");
 
@@ -142,47 +142,30 @@ public class JavaConverter {
 		// Loop
 		if (logic instanceof LoopComponent) {
 			LoopComponent loop = (LoopComponent) logic;
-			if (loop.isForLoop()) {
 
-				// print test statement
-				String loopStatement = indent + "for ( int "
-						+ loop.getLeftVariable() + " = " + loop.getRightValue()
-						+ " ; " + loop.getLeftVariable() + " "
-						+ tokenConversion(loop.getComparator()) + " "
-						+ loop.getForLoopTestValue() + " ; "
-						+ loop.getLeftVariable() + " "
-						+ tokenConversion(loop.getForLoopIncrementor())
-						+ " ) {";
-				if (!hasRemoved && removedComponent == ComponentTypes.Loop) {
-					loopStatement = loopStatement.replaceFirst("\\?\\?\\?",
-							userReplacement);
-					hasRemoved = true;
-				}
-
-				output.println(loopStatement);
-
-				// print the logic within the loop
-				for (Iterator<LogicComponent> i = loop.getChildLogics()
-						.iterator(); i.hasNext();) {
-					convertLogic(i.next(), indentation + 1);
-				}
-
-				output.println(indent + "}");
-
-			} else {
-				// print test statement
-				output.println(indent + "while ( " + loop.getLeftVariable()
-						+ " " + tokenConversion(loop.getComparator()) + " "
-						+ loop.getRightValue() + " ) {");
-
-				// print the logic within the loop
-				for (Iterator<LogicComponent> i = loop.getChildLogics()
-						.iterator(); i.hasNext();) {
-					convertLogic(i.next(), indentation + 1);
-				}
-
-				output.println(indent + "}");
+			// print test statement
+			String loopStatement = indent + "for ( int "
+					+ loop.getLeftVariable() + " = " + loop.getRightValue()
+					+ " ; " + loop.getLeftVariable() + " "
+					+ tokenConversion(loop.getComparator()) + " "
+					+ loop.getForLoopTestValue() + " ; "
+					+ loop.getLeftVariable() + " "
+					+ tokenConversion(loop.getForLoopIncrementor()) + " ) {";
+			if (!hasRemoved && removedComponent == ComponentTypes.Loop) {
+				loopStatement = loopStatement.replaceFirst("\\?\\?\\?",
+						userReplacement);
+				hasRemoved = true;
 			}
+
+			output.println(loopStatement);
+
+			// print the logic within the loop
+			for (Iterator<LogicComponent> i = loop.getChildLogics().iterator(); i
+					.hasNext();) {
+				convertLogic(i.next(), indentation + 1);
+			}
+
+			output.println(indent + "}");
 
 		}
 

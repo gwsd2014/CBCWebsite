@@ -19,17 +19,21 @@ public class GeneratorController extends Controller {
 			return redirect(routes.UserController.index(request().uri()));
 		}
 
-		System.out.println(group1);
-
+		//default 
+		int correct = -1;
+		
+		
 		if (group1.equalsIgnoreCase("0")) {
 			// incorrect
 			// decrease grade
 			adjustDifficulty(user, false);
+			correct = 0;
 
 		} else if (group1.equalsIgnoreCase("1")) {
 			// correct
 			// increase grade
 			adjustDifficulty(user, true);
+			correct = 1;
 
 		} else {
 			// not an answer
@@ -51,9 +55,11 @@ public class GeneratorController extends Controller {
 			modifiedAnswers[0] = modifiedAnswers[spot];
 			modifiedAnswers[spot] = temp;
 		}
+		
+		
 
 		return ok(viewCode.render(question.lines, question.spaces,
-				modifiedAnswers, spot));
+				modifiedAnswers, spot, correct));
 	}
     
     public static int getEffectiveWeight(int level, int realWeight){

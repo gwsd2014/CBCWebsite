@@ -510,14 +510,29 @@ public class FunctionComponent extends Component {
 				childFunction.levelFiveCallee(parameterValues));
 		children.add(functionCall);
 
-		// pick function type, arithmetic for now
-		ArithmeticComponent firstArith = new ArithmeticComponent(this,
-				this.level, this.weight, this.pt);
-		children.add(firstArith);
+		// pick function type, at random
+		int selection = rand.nextInt(3);
 
-		// create lines
-		variables = firstArith.createLines(deepCopyHashMap(variables),
-				randomVariable);
+		if (selection == 0) {
+			ArithmeticComponent firstArith = new ArithmeticComponent(this,
+					this.level, this.weight, this.pt);
+			children.add(firstArith);
+			variables = firstArith.createLines(deepCopyHashMap(variables),
+					randomVariable);
+		} else if (selection == 1) {
+			LoopComponent firstLoop = new LoopComponent(this.level,
+					this.weight, this.pt, this, 1);
+			children.add(firstLoop);
+			firstLoop.createForLoop(deepCopyHashMap(variables), randomVariable);
+			variables = firstLoop.runLines(deepCopyHashMap(variables));
+
+		} else {
+			ConditionalComponent firstCond = new ConditionalComponent(
+					this.level, this.weight, this.pt, this, 1);
+			children.add(firstCond);
+			variables = firstCond.createLines(deepCopyHashMap(variables),
+					randomVariable);
+		}
 
 		// add blank line
 		Line blankLine = new Line(this, true);

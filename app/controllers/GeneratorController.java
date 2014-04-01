@@ -37,6 +37,9 @@ public class GeneratorController extends Controller {
 
 		} else {
 			// not an answer
+			if(user.grade > 0 || user.weight > 1){
+				correct = -2;
+			}
 		}
 
 		int level = user.grade;

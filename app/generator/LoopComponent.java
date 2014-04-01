@@ -27,6 +27,12 @@ public class LoopComponent extends LogicComponent {
 	private int weight;
 	private ProblemType pt;
 
+	private String functionCallName;
+	private String[] parameterStrings;
+	private int[] parameterValues;
+	private FunctionComponent childFunction;
+	
+
 	public LoopComponent(int level, int weight, ProblemType problemType,
 			Component parent, int newNest) {
 		this.level = level;
@@ -125,6 +131,16 @@ public class LoopComponent extends LogicComponent {
 			childLogics.add(nextArith);
 			// create the arithmetic by do NOT change the current variables
 			nextArith.createLines(deepCopyHashMap(parentMap), testVariable);
+
+		} else if (level == 6 && weight >= 9) {
+			// hard mode loop
+			Line functionCall = new Line(this, false);
+			functionCall.callFunction(testVariable, functionCallName,
+					parameterStrings);
+			// alter the variable by calling function
+			tempMap.put(testVariable,
+					childFunction.levelFiveCallee(parameterValues));
+			childLogics.add(functionCall);
 
 		} else {
 			// coin flip for conditional or another loop
@@ -227,6 +243,22 @@ public class LoopComponent extends LogicComponent {
 		return Integer.toString(rightValue);
 	}
 
+	public void setFunctionCallName(String newName) {
+		functionCallName = newName;
+	}
+
+	public void setParameterStrings(String[] setParams) {
+		parameterStrings = setParams;
+	}
+
+	public void setChildFunction(FunctionComponent setFunc) {
+		childFunction = setFunc;
+	}
+
+	public void setParameterValues(int[] setValues){
+		parameterValues = setValues;
+	}
+	
 	public LinkedList<LogicComponent> getChildLogics() {
 		return childLogics;
 	}

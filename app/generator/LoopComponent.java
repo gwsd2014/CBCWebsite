@@ -31,7 +31,6 @@ public class LoopComponent extends LogicComponent {
 	private String[] parameterStrings;
 	private int[] parameterValues;
 	private FunctionComponent childFunction;
-	
 
 	public LoopComponent(int level, int weight, ProblemType problemType,
 			Component parent, int newNest) {
@@ -123,7 +122,10 @@ public class LoopComponent extends LogicComponent {
 		// weight > 1, and if nesting hasn't expired
 		boolean selectArithmetic = true;
 		if (this.weight >= 2 && nest > 1) {
-			selectArithmetic = random.nextBoolean();
+			// except hard mode case
+			if (!(this.level == 6 && this.weight > 8)) {
+				selectArithmetic = random.nextBoolean();
+			}
 		}
 		if (selectArithmetic) {
 			LogicComponent nextArith = new ArithmeticComponent(this,
@@ -255,10 +257,10 @@ public class LoopComponent extends LogicComponent {
 		childFunction = setFunc;
 	}
 
-	public void setParameterValues(int[] setValues){
+	public void setParameterValues(int[] setValues) {
 		parameterValues = setValues;
 	}
-	
+
 	public LinkedList<LogicComponent> getChildLogics() {
 		return childLogics;
 	}

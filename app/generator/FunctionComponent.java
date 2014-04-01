@@ -125,11 +125,11 @@ public class FunctionComponent extends Component {
 		return fullArrayName;
 	}
 
-	private void overrideTestVariable(String newTV){
+	private void overrideTestVariable(String newTV) {
 		testVariable = newTV;
 		parentClass.overrideTestVariable(newTV);
 	}
-	
+
 	private int determineArraySize() {
 		int size = this.weight;
 		if (size > 3) {
@@ -390,16 +390,25 @@ public class FunctionComponent extends Component {
 		for (int i = 0; i < parameterList.length; i++) {
 			variables.put(parameterList[i], paramValues[i]);
 		}
-		// pick function type, arithmetic for now
-		ArithmeticComponent firstArith = new ArithmeticComponent(this,
-				this.level, this.weight, this.pt);
-		children.add(firstArith);
+		// pick function type, at random
+		int selection = rand.nextInt(3);
+		LogicComponent firstNest;
+
+		if (selection == 0) {
+			firstNest = new ArithmeticComponent(this, this.level, this.weight,
+					this.pt);
+		} else if(selection == 1){
+			firstNest = new LoopComponent(this.level, this.weight, this.pt, this, 1);
+		} else {
+			firstNest = new ConditionalComponent(this.level, this.weight, this.pt, this, 1);
+		}
+		children.add(firstNest);
 
 		// choose which variable to return
 		String randomVariable = selectVariable(variables);
 
 		// create lines
-		variables = firstArith.createLines(deepCopyHashMap(variables),
+		variables = firstNest.createLines(deepCopyHashMap(variables),
 				randomVariable);
 
 		// add blank line

@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class ArithmeticComponent extends LogicComponent {
-    private Component parentComponent;
+	private Component parentComponent;
 	private LinkedList<Line> childLines;
 	private Random random;
 
@@ -58,6 +58,10 @@ public class ArithmeticComponent extends LogicComponent {
 				if (this.level == 4 || this.weight > 3) {
 					leftVariable = testVariable;
 				}
+			}
+
+			if (this.level > 4) {
+				leftVariable = testVariable;
 			}
 
 			// randomly decide whether to add by value or by variable
@@ -146,12 +150,8 @@ public class ArithmeticComponent extends LogicComponent {
 			lines = 1;
 		}
 
-		if (this.level == 5) {
-			lines = 2;
-		}
-
-		if (this.level == 6) {
-			lines = 2;
+		if (this.level > 4){
+			lines = 1;
 		}
 
 		return lines;

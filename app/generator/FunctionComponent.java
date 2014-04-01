@@ -410,12 +410,15 @@ public class FunctionComponent extends Component {
 		String randomVariable = selectVariable(variables);
 
 		// create lines
-		variables = firstNest.createLines(deepCopyHashMap(variables),
-				randomVariable);
-
 		if (selection == 1) {
+			variables = firstNest.createLines(deepCopyHashMap(variables),
+					testVariable);
 			firstNest.runLines(deepCopyHashMap(variables));
+		} else {
+			variables = firstNest.createLines(deepCopyHashMap(variables),
+					randomVariable);
 		}
+
 		// add blank line
 		Line blankLine = new Line(this, true);
 		children.add(blankLine);

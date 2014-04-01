@@ -392,6 +392,10 @@ public class FunctionComponent extends Component {
 		}
 		// pick function type, at random
 		int selection = rand.nextInt(3);
+		if(this.level == 6 && this.weight > 8){
+			//exception for hard mode
+			selection = 0;
+		}
 
 		// choose which variable to return
 		String randomVariable = selectVariable(variables);

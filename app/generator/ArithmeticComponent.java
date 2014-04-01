@@ -60,10 +60,6 @@ public class ArithmeticComponent extends LogicComponent {
 				}
 			}
 
-			if (this.level > 4) {
-				leftVariable = testVariable;
-			}
-
 			// randomly decide whether to add by value or by variable
 			if (random.nextGaussian() < 0) {
 				// adding by value

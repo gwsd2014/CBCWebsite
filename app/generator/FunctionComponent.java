@@ -401,12 +401,12 @@ public class FunctionComponent extends Component {
 					this.level, this.weight, this.pt);
 			children.add(firstArith);
 			variables = firstArith.createLines(deepCopyHashMap(variables),
-					testVariable);
+					randomVariable);
 		} else if (selection == 1) {
 			LoopComponent firstLoop = new LoopComponent(this.level,
 					this.weight, this.pt, this, 1);
 			children.add(firstLoop);
-			firstLoop.createForLoop(deepCopyHashMap(variables), testVariable);
+			firstLoop.createForLoop(deepCopyHashMap(variables), randomVariable);
 			variables = firstLoop.runLines(deepCopyHashMap(variables));
 
 		} else {
@@ -414,7 +414,7 @@ public class FunctionComponent extends Component {
 					this.level, this.weight, this.pt, this, 1);
 			children.add(firstCond);
 			variables = firstCond.createLines(deepCopyHashMap(variables),
-					testVariable);
+					randomVariable);
 		}
 
 		// add blank line

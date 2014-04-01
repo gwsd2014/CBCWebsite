@@ -5543,9 +5543,9 @@ a.list-group-item.active > .badge,
 .jumbotron {
   padding: 30px;
   margin-bottom: 30px;
-  font-size: 12px;
+  font-size: 23px;
   font-weight: 200;
-  line-height: 1;
+  line-height: 2.1428571435;
   color: inherit;
   background-color: #ecf0f1;
 }

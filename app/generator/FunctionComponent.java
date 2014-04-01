@@ -157,9 +157,9 @@ public class FunctionComponent extends Component {
 		}
 
 		// with difficulty 5/6, cap at 3 lines
-		else if (this.level == 5 || this.level == 6) {
-			if (lines > 3) {
-				lines = 3;
+		else if (this.level > 4 ) {
+			if (lines > 2) {
+				lines = 2;
 			}
 		}
 

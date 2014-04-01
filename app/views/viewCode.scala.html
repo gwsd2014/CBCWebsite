@@ -11,16 +11,16 @@
         <!-- --- SD WEBSITE TEMPLATE --- -->
         <!-- Your project name, tagline and description goes here -->
         <div class="jumbotron">
-			@if(integer == -1) {
+			@if(correct == -1) {
 				<p style="font-size:40px;">Welcome to Coding Boot Camp!</br>
 					Your first problem is below. </br>
 					Try your best to follow what the program is doing, and figure out what it is supposed to return </br>
 					Good luck!</p>
 			}
-			@if(integer == 0) {
+			@if(correct == 0) {
 				<p style="font-size:40px;">That was an incorrect answer, try again</p>
 			} 
-			i@f(integer == 1) {
+			i@f(correct == 1) {
 				<p style="font-size:40px;">Correct!</p>
 			}
          <div><p>

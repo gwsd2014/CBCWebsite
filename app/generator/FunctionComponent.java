@@ -552,7 +552,7 @@ public class FunctionComponent extends Component {
 			hardLoop.setChildFunction(childFunction);
 			hardLoop.setParameterValues(parameterValues);
 			hardLoop.createForLoop(deepCopyHashMap(variables), randomVariable);
-			variables = hardLoop.runLines(deepCopyHashMap(variables));
+			variables = hardLoop.runLines(variables);
 			/* } else {
 			ConditionalComponent hardCond = new ConditionalComponent(
 					this.level, this.weight, this.pt, this, 1);

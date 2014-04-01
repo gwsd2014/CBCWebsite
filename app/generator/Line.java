@@ -10,7 +10,10 @@ public class Line extends LogicComponent {
 	private Boolean isBlank;
 	private Boolean isFunctionCall;
 	private Boolean isArrayDeclaration;
+	private FunctionComponent functionCall;
 
+	
+	
 	public Line(Component parent, Boolean blank) {
 		parentComponent = parent;
 		isBlank = blank;
@@ -112,7 +115,15 @@ public class Line extends LogicComponent {
 		tokenList.add(Tokens.VARIABLE);
 		varValMap.put(tokenList.size() - 1, returnVariable);
 	}
+	
+	public HashMap<String, Integer> runLines(HashMap<String, Integer> parentMap){
+		return functionCall.runLines(parentMap);
+	}
 
+	public void setFunctionCall(FunctionComponent func){
+		functionCall = func;
+	}
+	
 	public Component getParent() {
 		return parentComponent;
 	}

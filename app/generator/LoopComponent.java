@@ -141,6 +141,7 @@ public class LoopComponent extends LogicComponent {
 			// alter the variable by calling function
 			tempMap.put(testVariable,
 					childFunction.levelFiveCallee(parameterValues));
+			functionCall.setFunctionCall(childFunction);
 			childLogics.add(functionCall);
 
 		} else if (selection == 1) {

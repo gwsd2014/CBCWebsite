@@ -16,10 +16,6 @@ public abstract class Component {
 	protected HashMap<String, Integer> deepCopyHashMap(
 			HashMap<String, Integer> input) {
 
-		if (input.isEmpty()) {
-			return new HashMap<String, Integer>();
-		}
-
 		HashMap<String, Integer> copy = new HashMap<String, Integer>();
 		Set<String> set = input.keySet();
 		for (Iterator<String> i = set.iterator(); i.hasNext();) {

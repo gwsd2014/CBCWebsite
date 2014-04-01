@@ -397,10 +397,12 @@ public class FunctionComponent extends Component {
 		if (selection == 0) {
 			firstNest = new ArithmeticComponent(this, this.level, this.weight,
 					this.pt);
-		} else if(selection == 1){
-			firstNest = new LoopComponent(this.level, this.weight, this.pt, this, 1);
+		} else if (selection == 1) {
+			firstNest = new LoopComponent(this.level, this.weight, this.pt,
+					this, 1);
 		} else {
-			firstNest = new ConditionalComponent(this.level, this.weight, this.pt, this, 1);
+			firstNest = new ConditionalComponent(this.level, this.weight,
+					this.pt, this, 1);
 		}
 		children.add(firstNest);
 
@@ -411,6 +413,9 @@ public class FunctionComponent extends Component {
 		variables = firstNest.createLines(deepCopyHashMap(variables),
 				randomVariable);
 
+		if (selection == 1) {
+			firstNest.runLines(deepCopyHashMap(variables));
+		}
 		// add blank line
 		Line blankLine = new Line(this, true);
 		children.add(blankLine);

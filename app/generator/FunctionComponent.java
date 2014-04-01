@@ -392,31 +392,29 @@ public class FunctionComponent extends Component {
 		}
 		// pick function type, at random
 		int selection = rand.nextInt(3);
-		LogicComponent firstNest;
-
-		if (selection == 0) {
-			firstNest = new ArithmeticComponent(this, this.level, this.weight,
-					this.pt);
-		} else if (selection == 1) {
-			firstNest = new LoopComponent(this.level, this.weight, this.pt,
-					this, 1);
-		} else {
-			firstNest = new ConditionalComponent(this.level, this.weight,
-					this.pt, this, 1);
-		}
-		children.add(firstNest);
 
 		// choose which variable to return
 		String randomVariable = selectVariable(variables);
 
-		// create lines
-		if (selection == 1) {
-			variables = firstNest.createLines(deepCopyHashMap(variables),
+		if (selection == 0) {
+			ArithmeticComponent firstArith = new ArithmeticComponent(this,
+					this.level, this.weight, this.pt);
+			children.add(firstArith);
+			variables = firstArith.createLines(deepCopyHashMap(variables),
 					testVariable);
-			firstNest.runLines(deepCopyHashMap(variables));
+		} else if (selection == 1) {
+			LoopComponent firstLoop = new LoopComponent(this.level,
+					this.weight, this.pt, this, 1);
+			children.add(firstLoop);
+			firstLoop.createForLoop(deepCopyHashMap(variables), testVariable);
+			variables = firstLoop.runLines(deepCopyHashMap(variables));
+
 		} else {
-			variables = firstNest.createLines(deepCopyHashMap(variables),
-					randomVariable);
+			ConditionalComponent firstCond = new ConditionalComponent(
+					this.level, this.weight, this.pt, this, 1);
+			children.add(firstCond);
+			variables = firstCond.createLines(deepCopyHashMap(variables),
+					testVariable);
 		}
 
 		// add blank line

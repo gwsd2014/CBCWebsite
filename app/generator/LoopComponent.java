@@ -120,21 +120,20 @@ public class LoopComponent extends LogicComponent {
 
 		// determine what should go in the loop, only going beyond arithmetic if
 		// weight > 1, and if nesting hasn't expired
-		boolean selectArithmetic = true;
-		if (this.weight >= 2 && nest > 1) {
-			// except hard mode case
-			if (!(this.level == 6 && this.weight > 8)) {
-				selectArithmetic = random.nextBoolean();
-			}
+		int selection = 0;
+		if (this.level == 6 && this.weight > 8) {
+			selection = -1;
+		} else if (this.weight >= 2 && nest > 1) {
+			selection = random.nextInt(3);
 		}
-		if (selectArithmetic) {
+		if (selection == 0) {
 			LogicComponent nextArith = new ArithmeticComponent(this,
 					this.level, this.weight, this.pt);
 			childLogics.add(nextArith);
 			// create the arithmetic by do NOT change the current variables
 			nextArith.createLines(deepCopyHashMap(parentMap), testVariable);
 
-		} else if (level == 6 && weight >= 9) {
+		} else if (selection == -1) {
 			// hard mode loop
 			Line functionCall = new Line(this, false);
 			functionCall.callFunction(testVariable, functionCallName,
@@ -144,23 +143,20 @@ public class LoopComponent extends LogicComponent {
 					childFunction.levelFiveCallee(parameterValues));
 			childLogics.add(functionCall);
 
+		} else if (selection == 1) {
+			// loop
+			LogicComponent nextLoop = new LoopComponent(this.level,
+					this.weight, this.pt, this, nest - 1);
+			childLogics.add(nextLoop);
+			tempMap = ((LoopComponent) nextLoop).createForLoop(
+					deepCopyHashMap(parentMap), testVariable);
 		} else {
-			// coin flip for conditional or another loop
-			if (random.nextBoolean()) {
-				// loop
-				LogicComponent nextLoop = new LoopComponent(this.level,
-						this.weight, this.pt, this, nest - 1);
-				childLogics.add(nextLoop);
-				tempMap = ((LoopComponent) nextLoop).createForLoop(
-						deepCopyHashMap(parentMap), testVariable);
-			} else {
-				// conditional
-				LogicComponent nextCond = new ConditionalComponent(this.level,
-						this.weight, this.pt, this, nest - 1);
-				childLogics.add(nextCond);
-				tempMap = nextCond.createLines(deepCopyHashMap(parentMap),
-						testVariable);
-			}
+			// conditional
+			LogicComponent nextCond = new ConditionalComponent(this.level,
+					this.weight, this.pt, this, nest - 1);
+			childLogics.add(nextCond);
+			tempMap = nextCond.createLines(deepCopyHashMap(parentMap),
+					testVariable);
 		}
 
 		return tempMap;

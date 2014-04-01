@@ -549,13 +549,13 @@ public class FunctionComponent extends Component {
 			hardLoop.setParameterValues(parameterValues);
 			hardLoop.createForLoop(deepCopyHashMap(variables), randomVariable);
 			variables = hardLoop.runLines(deepCopyHashMap(variables));
-			// } else {
+			/* } else {
 			ConditionalComponent hardCond = new ConditionalComponent(
 					this.level, this.weight, this.pt, this, 1);
 			children.add(hardCond);
 			variables = hardCond.createLines(deepCopyHashMap(variables),
 					randomVariable);
-			// }
+			 }*/
 		}
 		// add blank line
 		Line blankLine = new Line(this, true);

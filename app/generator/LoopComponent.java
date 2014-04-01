@@ -166,6 +166,9 @@ public class LoopComponent extends LogicComponent {
 
 		HashMap<String, Integer> tempMap = parentMap;
 
+		if(tempMap == null){
+			System.out.println("null in runLines");
+		}
 		// loop through number of loop runs
 		for (int i = 0; i < runs; i++) {
 			// loop through all child components

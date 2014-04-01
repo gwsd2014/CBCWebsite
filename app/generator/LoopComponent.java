@@ -6,11 +6,10 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class LoopComponent extends LogicComponent {
-    private Component parentComponent;
-    private Random random;
+	private Component parentComponent;
+	private Random random;
 	private LinkedList<LogicComponent> childLogics;
 
-	private Boolean forLoop;
 	private Tokens comparator;
 	private String leftVariable;
 	private int rightValue;
@@ -52,7 +51,6 @@ public class LoopComponent extends LogicComponent {
 		int arrayLength = Integer.parseInt(arrayFullName.substring(2, 3));
 
 		HashMap<String, Integer> tempMap = parentMap;
-		forLoop = true;
 
 		// create test variable
 		do {
@@ -81,7 +79,6 @@ public class LoopComponent extends LogicComponent {
 			HashMap<String, Integer> parentMap, String testVariable) {
 
 		HashMap<String, Integer> tempMap = parentMap;
-		forLoop = true;
 
 		// create test variable
 		do {
@@ -195,14 +192,6 @@ public class LoopComponent extends LogicComponent {
 			return random.nextInt(5);
 		else
 			return this.weight;
-	}
-
-	/**
-	 * 
-	 * @return true on for loop, false on while loop
-	 */
-	public Boolean isForLoop() {
-		return forLoop;
 	}
 
 	public String getForLoopTestValue() {

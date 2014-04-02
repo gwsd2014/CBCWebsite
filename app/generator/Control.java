@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.tools.JavaCompiler;
@@ -15,6 +16,14 @@ import javax.tools.ToolProvider;
 
 public class Control {
 
+	public static void main(String[] args){
+		Question q = Control.run(6, 12, ProblemType.MULTI_CHOICE);
+		List<String> lines = q.lines;
+		for(int i =0; i<lines.size(); i++){
+			System.out.println(lines.remove(0));
+		}
+	}
+	
 	public static Question run(int level, int weight, ProblemType pt) {
 
 		if (weight < 1) {

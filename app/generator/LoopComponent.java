@@ -27,11 +27,6 @@ public class LoopComponent extends LogicComponent {
 	private int weight;
 	private ProblemType pt;
 
-	private String functionCallName;
-	private String[] parameterStrings;
-	private int[] parameterValues;
-	private FunctionComponent childFunction;
-
 	public LoopComponent(int level, int weight, ProblemType problemType,
 			Component parent, int newNest) {
 		this.level = level;
@@ -121,9 +116,7 @@ public class LoopComponent extends LogicComponent {
 		// determine what should go in the loop, only going beyond arithmetic if
 		// weight > 1, and if nesting hasn't expired
 		int selection = 0;
-		if (this.level == 6 && this.weight > 8) {
-			selection = -1;
-		} else if (this.weight >= 2 && nest > 1) {
+		if (this.weight >= 2 && nest > 1) {
 			selection = random.nextInt(3);
 		}
 		if (selection == 0) {
@@ -133,18 +126,7 @@ public class LoopComponent extends LogicComponent {
 			// create the arithmetic by do NOT change the current variables
 			nextArith.createLines(deepCopyHashMap(parentMap), testVariable);
 
-		} else if (selection == -1) {
-			// hard mode loop
-			Line functionCall = new Line(this, false);
-			functionCall.callFunction(testVariable, functionCallName,
-					parameterStrings);
-			// alter the variable by calling function
-			tempMap.put(testVariable,
-					childFunction.levelFiveCallee(parameterValues));
-			functionCall.setFunctionCall(childFunction);
-			childLogics.add(functionCall);
-
-		} else if (selection == 1) {
+		}  else if (selection == 1) {
 			// loop
 			LogicComponent nextLoop = new LoopComponent(this.level,
 					this.weight, this.pt, this, nest - 1);
@@ -243,22 +225,6 @@ public class LoopComponent extends LogicComponent {
 			return "???";
 		}
 		return Integer.toString(rightValue);
-	}
-
-	public void setFunctionCallName(String newName) {
-		functionCallName = newName;
-	}
-
-	public void setParameterStrings(String[] setParams) {
-		parameterStrings = setParams;
-	}
-
-	public void setChildFunction(FunctionComponent setFunc) {
-		childFunction = setFunc;
-	}
-
-	public void setParameterValues(int[] setValues) {
-		parameterValues = setValues;
 	}
 
 	public LinkedList<LogicComponent> getChildLogics() {

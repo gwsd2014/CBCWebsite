@@ -4,16 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Line extends LogicComponent {
-    private Component parentComponent;
+	private Component parentComponent;
 	private HashMap<Integer, Object> varValMap;
 	private ArrayList<Tokens> tokenList;
 	private Boolean isBlank;
 	private Boolean isFunctionCall;
 	private Boolean isArrayDeclaration;
-	private FunctionComponent functionCall;
 
-	
-	
 	public Line(Component parent, Boolean blank) {
 		parentComponent = parent;
 		isBlank = blank;
@@ -34,7 +31,7 @@ public class Line extends LogicComponent {
 
 	public void declareArray(String name) {
 		isArrayDeclaration = true;
-		
+
 		tokenList.add(Tokens.ARR);
 		tokenList.add(Tokens.VARIABLE);
 		varValMap.put(tokenList.size() - 1, name);
@@ -73,7 +70,7 @@ public class Line extends LogicComponent {
 	public void callFunction(String variableName, String functionName,
 			String[] parameterList) {
 		isFunctionCall = true;
-		
+
 		tokenList.add(Tokens.VARIABLE);
 		varValMap.put(tokenList.size() - 1, variableName);
 		tokenList.add(Tokens.ASSIGN);
@@ -115,15 +112,7 @@ public class Line extends LogicComponent {
 		tokenList.add(Tokens.VARIABLE);
 		varValMap.put(tokenList.size() - 1, returnVariable);
 	}
-	
-	public HashMap<String, Integer> runLines(HashMap<String, Integer> parentMap){
-		return functionCall.runLines(parentMap);
-	}
 
-	public void setFunctionCall(FunctionComponent func){
-		functionCall = func;
-	}
-	
 	public Component getParent() {
 		return parentComponent;
 	}
@@ -139,12 +128,12 @@ public class Line extends LogicComponent {
 	public Boolean getIsBlank() {
 		return isBlank;
 	}
-	
-	public Boolean getIsFunctionCall(){
+
+	public Boolean getIsFunctionCall() {
 		return isFunctionCall;
 	}
-	
-	public Boolean getIsArrayDeclaration(){
+
+	public Boolean getIsArrayDeclaration() {
 		return isArrayDeclaration;
 	}
 }

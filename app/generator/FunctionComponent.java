@@ -392,8 +392,8 @@ public class FunctionComponent extends Component {
 		}
 		// pick function type, at random
 		int selection = rand.nextInt(3);
-		if(this.level == 6 && this.weight > 8){
-			//exception for hard mode
+		if (this.level == 6 && this.weight > 8) {
+			// exception for hard mode
 			selection = 0;
 		}
 
@@ -508,59 +508,36 @@ public class FunctionComponent extends Component {
 			}
 		}
 
-		if (weight <= 8) {
-			functionCall.callFunction(randomVariable, calleeName,
-					parameterStrings);
-			// alter the variable by calling function
-			variables.put(randomVariable,
-					childFunction.levelFiveCallee(parameterValues));
-			children.add(functionCall);
+		functionCall.callFunction(randomVariable, calleeName, parameterStrings);
+		// alter the variable by calling function
+		variables.put(randomVariable,
+				childFunction.levelFiveCallee(parameterValues));
+		children.add(functionCall);
 
-			// pick function type, at random
-			int selection = rand.nextInt(3);
+		// pick function type, at random
+		int selection = rand.nextInt(3);
 
-			if (selection == 0) {
-				ArithmeticComponent firstArith = new ArithmeticComponent(this,
-						this.level, this.weight, this.pt);
-				children.add(firstArith);
-				variables = firstArith.createLines(deepCopyHashMap(variables),
-						randomVariable);
-			} else if (selection == 1) {
-				LoopComponent firstLoop = new LoopComponent(this.level,
-						this.weight, this.pt, this, 1);
-				children.add(firstLoop);
-				firstLoop.createForLoop(deepCopyHashMap(variables),
-						randomVariable);
-				variables = firstLoop.runLines(deepCopyHashMap(variables));
-
-			} else {
-				ConditionalComponent firstCond = new ConditionalComponent(
-						this.level, this.weight, this.pt, this, 1);
-				children.add(firstCond);
-				variables = firstCond.createLines(deepCopyHashMap(variables),
-						randomVariable);
-			}
+		if (selection == 0) {
+			ArithmeticComponent firstArith = new ArithmeticComponent(this,
+					this.level, this.weight, this.pt);
+			children.add(firstArith);
+			variables = firstArith.createLines(deepCopyHashMap(variables),
+					randomVariable);
+		} else if (selection == 1) {
+			LoopComponent firstLoop = new LoopComponent(this.level,
+					this.weight, this.pt, this, 1);
+			children.add(firstLoop);
+			firstLoop.createForLoop(deepCopyHashMap(variables), randomVariable);
+			variables = firstLoop.runLines(deepCopyHashMap(variables));
 
 		} else {
-			// HARD MODE
-			// if (rand.nextBoolean()) {
-			LoopComponent hardLoop = new LoopComponent(this.level, this.weight,
-					this.pt, this, 1);
-			children.add(hardLoop);
-			hardLoop.setFunctionCallName(calleeName);
-			hardLoop.setParameterStrings(parameterStrings);
-			hardLoop.setChildFunction(childFunction);
-			hardLoop.setParameterValues(parameterValues);
-			hardLoop.createForLoop(deepCopyHashMap(variables), randomVariable);
-			variables = hardLoop.runLines(variables);
-			/* } else {
-			ConditionalComponent hardCond = new ConditionalComponent(
+			ConditionalComponent firstCond = new ConditionalComponent(
 					this.level, this.weight, this.pt, this, 1);
-			children.add(hardCond);
-			variables = hardCond.createLines(deepCopyHashMap(variables),
+			children.add(firstCond);
+			variables = firstCond.createLines(deepCopyHashMap(variables),
 					randomVariable);
-			 }*/
 		}
+
 		// add blank line
 		Line blankLine = new Line(this, true);
 		children.add(blankLine);

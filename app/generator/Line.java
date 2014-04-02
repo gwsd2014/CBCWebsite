@@ -45,24 +45,50 @@ public class Line extends LogicComponent {
 		varValMap.put(tokenList.size() - 1, value);
 	}
 
-	public void additionByValue(String name, int value) {
+	/**
+	 * 
+	 * @param name
+	 *            name of variable
+	 * @param value
+	 *            value to adjust by
+	 * @param addition
+	 *            true on addition, false on multiplication
+	 */
+	public void operationByValue(String name, int value, boolean addition) {
 		tokenList.add(Tokens.VARIABLE);
 		varValMap.put(tokenList.size() - 1, name);
 		tokenList.add(Tokens.ASSIGN);
 		tokenList.add(Tokens.VARIABLE);
 		varValMap.put(tokenList.size() - 1, name);
-		tokenList.add(Tokens.PLUS);
+		if (addition) {
+			tokenList.add(Tokens.PLUS);
+		} else {
+			tokenList.add(Tokens.STAR);
+		}
 		tokenList.add(Tokens.VALUE);
 		varValMap.put(tokenList.size() - 1, value);
 	}
 
-	public void additionByVariable(String name1, String name2) {
+	/**
+	 * 
+	 * @param name
+	 *            name of variable
+	 * @param value
+	 *            value to adjust by
+	 * @param addition
+	 *            true on addition, false on multiplication
+	 */
+	public void operationByVariable(String name1, String name2, boolean addition) {
 		tokenList.add(Tokens.VARIABLE);
 		varValMap.put(tokenList.size() - 1, name1);
 		tokenList.add(Tokens.ASSIGN);
 		tokenList.add(Tokens.VARIABLE);
 		varValMap.put(tokenList.size() - 1, name1);
-		tokenList.add(Tokens.PLUS);
+		if (addition) {
+			tokenList.add(Tokens.PLUS);
+		} else {
+			tokenList.add(Tokens.STAR);
+		}
 		tokenList.add(Tokens.VALUE);
 		varValMap.put(tokenList.size() - 1, name2);
 	}

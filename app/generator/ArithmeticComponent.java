@@ -105,7 +105,7 @@ public class ArithmeticComponent extends LogicComponent {
 
 				// choose addition or multiplication
 				boolean addition = true;
-				if (level == 0 && weight > 6) {
+				if (level == 0 && weight > 2) {
 					addition = random.nextBoolean();
 				}
 				if (addition) {

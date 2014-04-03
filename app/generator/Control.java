@@ -118,7 +118,7 @@ public class Control {
 		File sourceFile = new File(root, "javaOutput.java");
 
 		String fileToCompile = temp.getPath();
-		String className = temp.getName();
+		String className = temp.getName().replaceAll(".java", "");
 
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 

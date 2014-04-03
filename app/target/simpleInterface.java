@@ -1,4 +1,4 @@
-package generator;
+package target;
 
 public interface simpleInterface {
 

@@ -115,7 +115,7 @@ public class Control {
 				replacement, temp);
 
 		File root = new File("/export/home/mgoddard/CBCWebsite/temp");
-		File sourceFile = new File(root, "javaOutput.java");
+		File sourceFile = new File(root, "javaOutput.class");
 
 		String fileToCompile = temp.getPath();
 		String className = temp.getName();

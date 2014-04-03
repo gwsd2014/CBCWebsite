@@ -120,9 +120,10 @@ public class Control {
 		String fileToCompile = temp.getPath();
 		String className = temp.getName();
 
-		System.out.println(ToolProvider.getSystemToolClassLoader());
-
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+
+		System.out.println("Working Directory = "
+				+ System.getProperty("user.dir"));
 		System.out.println("compiling");
 
 		compiler.run(null, null, null, fileToCompile);

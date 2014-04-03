@@ -121,7 +121,7 @@ public class Control {
 		String className = temp.getName();
 
 		ClassLoader cl = ToolProvider.getSystemToolClassLoader();
-		URL siURL = cl.getResource("classes/generator/simpleInterface.class");
+		URL siURL = cl.getResource("generator/simpleInterface.class");
 		try {
 			System.out.println(siURL.toURI().toString());
 		} catch (URISyntaxException e1) {

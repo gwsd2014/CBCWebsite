@@ -121,7 +121,7 @@ public class Control {
 		String className = temp.getName();
 
 		ClassLoader cl = ToolProvider.getSystemToolClassLoader();
-		URL siURL = cl.getResource("CBCWebsite/target/scala-2.10/classes/generator/simpleInterface.java");
+		URL siURL = cl.getResource("target/scala-2.10/classes/generator/simpleInterface.java");
 		try {
 			System.out.println(siURL.toURI().toString());
 		} catch (URISyntaxException e1) {

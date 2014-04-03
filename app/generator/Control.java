@@ -115,13 +115,13 @@ public class Control {
 				replacement, temp);
 
 		File root = new File("/export/home/mgoddard/CBCWebsite/temp");
-		File sourceFile = new File(root, "javaOutput.class");
+		File sourceFile = new File(root, "javaOutput.java");
 
 		String fileToCompile = temp.getPath();
 		String className = temp.getName();
 
 		ClassLoader cl = ToolProvider.getSystemToolClassLoader();
-		URL siURL = cl.getResource("target/scala-2.10/classes/generator/simpleInterface.java");
+		URL siURL = cl.getResource("target/scala-2.10/classes/generator/simpleInterface.class");
 		try {
 			System.out.println(siURL.toURI().toString());
 		} catch (URISyntaxException e1) {

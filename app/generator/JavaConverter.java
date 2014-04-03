@@ -47,9 +47,7 @@ public class JavaConverter {
 	public void convertClass(ClassComponent classComp) {
 
 		// output.println("package generator; \n");
-		output.println("import target.simpleInterface;");
-		output.println("public class " + name + " implements simpleInterface "
-				+ "{");
+		output.println("public class " + name + "implements Comparable {");
 
 		for (Iterator<Line> i = classComp.getLines().iterator(); i.hasNext();) {
 			convertLine(i.next(), 1);

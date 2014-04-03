@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.tools.JavaCompiler;
-import javax.tools.JavaCompiler.CompilationTask;
 import javax.tools.ToolProvider;
 
 public class Control {
@@ -121,10 +120,18 @@ public class Control {
 		String fileToCompile = temp.getPath();
 		String className = temp.getName();
 
+		ClassLoader cl = ToolProvider.getSystemToolClassLoader();
+		URL siURL = cl.getResource("CBCWebsite/target/scala-2.10/classes/generator/simpleInterface.java");
+		try {
+			System.out.println(siURL.toURI().toString());
+		} catch (URISyntaxException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		System.out.println("compiling");
 		
-		compiler.run(null, System.out, null, fileToCompile);
+		compiler.run(null, null, null, fileToCompile);
 		System.out.println("finished");
 		URLClassLoader classLoader;
 
@@ -158,10 +165,6 @@ public class Control {
 		 * // TODO // Auto-generated catch block e1.printStackTrace(); }
 		 */
 		return returnedAnswer;
-	}
-
-	private static javaOutput runHelper(Object input) {
-		return (javaOutput) input;
 	}
 
 	private static String readReplacement(ProblemComponent problem) {

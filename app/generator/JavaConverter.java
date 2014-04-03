@@ -47,7 +47,7 @@ public class JavaConverter {
 	public void convertClass(ClassComponent classComp) {
 
 		// output.println("package generator; \n");
-		output.println("public class " + name + " implements Comparable {");
+		output.println("public class " + name + " {");
 
 		for (Iterator<Line> i = classComp.getLines().iterator(); i.hasNext();) {
 			convertLine(i.next(), 1);

@@ -15,14 +15,14 @@ import javax.tools.ToolProvider;
 
 public class Control {
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		Question q = Control.run(6, 12, ProblemType.MULTI_CHOICE);
 		List<String> lines = q.lines;
-		for(int i =0; i<lines.size(); i++){
+		for (int i = 0; i < lines.size(); i++) {
 			System.out.println(lines.remove(0));
 		}
 	}
-	
+
 	public static Question run(int level, int weight, ProblemType pt) {
 
 		if (weight < 1) {
@@ -120,17 +120,11 @@ public class Control {
 		String fileToCompile = temp.getPath();
 		String className = temp.getName();
 
-		ClassLoader cl = ToolProvider.getSystemToolClassLoader();
-		URL siURL = cl.getResource("simpleInterface.class");
-		try {
-			System.out.println(siURL.toURI().toString());
-		} catch (URISyntaxException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		System.out.println(ToolProvider.getSystemToolClassLoader());
+
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 		System.out.println("compiling");
-		
+
 		compiler.run(null, null, null, fileToCompile);
 		System.out.println("finished");
 		URLClassLoader classLoader;

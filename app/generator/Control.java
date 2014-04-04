@@ -61,35 +61,26 @@ public class Control {
 
 		Question returnQuestion = null;
 
-		if (pt == ProblemType.MULTI_CHOICE) {
-			int[] answers = multipleChoiceAnswers(problem);
-			returnQuestion = new Question(lines, spaces, answers);
-		} else { // else do fill in the blank
-
-			File tmp = null;
-			// create random file name
-			try {
-				File root = new File("/export/home/mgoddard/CBCWebsite/temp");
-				tmp = File.createTempFile("FIB", ".java", root);
-			} catch (IOException e) {
-				System.out.println("IOEXCPETION " + e);
-				e.printStackTrace();
-			}
-
-			String userInput = readReplacement(problem);
-			System.out.println("We be here");
-			int returnedAnswer = runCompilerWithReplacement("2 == 2", problem,
-					tmp);
-
-			if (returnedAnswer == problem.getCorrectAnswer()) {
-				int[] yes = { 1, 1, 1, 1 };
-				returnQuestion = new Question(lines, spaces, yes);
-			} else {
-				int[] no = { 0, 0, 0, 0 };
-				returnQuestion = new Question(lines, spaces, no);
-			}
-		}
-
+		// if (pt == ProblemType.MULTI_CHOICE) {
+		int[] answers = multipleChoiceAnswers(problem);
+		returnQuestion = new Question(lines, spaces, answers);
+		/*
+		 * } else { // else do fill in the blank
+		 * 
+		 * File tmp = null; // create random file name try { File root = new
+		 * File("/export/home/mgoddard/CBCWebsite/temp"); tmp =
+		 * File.createTempFile("FIB", ".java", root); } catch (IOException e) {
+		 * System.out.println("IOEXCPETION " + e); e.printStackTrace(); }
+		 * 
+		 * String userInput = readReplacement(problem);
+		 * System.out.println("We be here"); int returnedAnswer =
+		 * runCompilerWithReplacement("2 == 2", problem, tmp);
+		 * 
+		 * if (returnedAnswer == problem.getCorrectAnswer()) { int[] yes = { 1,
+		 * 1, 1, 1 }; returnQuestion = new Question(lines, spaces, yes); } else
+		 * { int[] no = { 0, 0, 0, 0 }; returnQuestion = new Question(lines,
+		 * spaces, no); } }
+		 */
 		return returnQuestion;
 	}
 

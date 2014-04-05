@@ -109,7 +109,7 @@ public class Control {
 			} else if (line.contains("endclass")) {
 				line = line.replaceAll("endclass", "}");
 			} else if (line.contains("class")) {
-				line = "class " + username + " {";
+				line = "public class " + username + " {";
 			}
 			// change function
 			else if (line.contains("endfunction")) {

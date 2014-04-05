@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -238,8 +239,9 @@ public class Control {
 
 			instance = cls.newInstance();
 			Object[] empty = new Object[0];
-			returnedObject = cls.getDeclaredMethods()[0]
-					.invoke(instance, empty);
+			Method mtd = cls.getDeclaredMethods()[0];
+			mtd.setAccessible(true);
+			mtd.invoke(instance, empty);
 		} catch (InstantiationException e) {
 			System.out.println("INSTANTIATION EXCEPTION" + e);
 			e.printStackTrace();

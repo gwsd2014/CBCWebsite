@@ -5,12 +5,12 @@ import java.util.LinkedList;
 
 public class ConverterHtml {
 
-	private StringBuilder builder;
-	private LinkedList<String> list;
-	private ComponentTypes removedComponent;
-	private boolean hasRemoved;
-	private int weight;
-	private int correctAnswer;
+	StringBuilder builder;
+	LinkedList<String> list;
+	ComponentTypes removedComponent;
+	boolean hasRemoved;
+	int weight;
+	String blankAnswer;
 
 	public ConverterHtml() {
 		builder = new StringBuilder();
@@ -113,14 +113,13 @@ public class ConverterHtml {
 			// print test statement
 			ConditionalComponent conditional = (ConditionalComponent) logic;
 			if (!hasRemoved && removedComponent == ComponentTypes.Conditional) {
-				builder.append(indent + "if ( " + conditional.getLeftVariable()
-						+ " " + tokenConversion(conditional.getComparator())
-						+ " ??? )");
+				builder.append(indent + "if ( ??? )");
 				newLine();
 				hasRemoved = true;
 				System.out.println("Expected answer: "
+						+ conditional.getLeftVariable() + " "
+						+ tokenConversion(conditional.getComparator()) + " "
 						+ conditional.getRightValue());
-				correctAnswer = conditional.getRightValue();
 			} else {
 				builder.append(indent + "if ( " + conditional.getLeftVariable()
 						+ " " + tokenConversion(conditional.getComparator())
@@ -146,7 +145,7 @@ public class ConverterHtml {
 			// insert ??? if needed
 			if (!hasRemoved && removedComponent == ComponentTypes.Loop) {
 				// remove different components based on weight
-				correctAnswer = loop.replacePiece();
+				loop.replacePiece();
 				hasRemoved = true;
 			}
 			// print test statement
@@ -205,7 +204,6 @@ public class ConverterHtml {
 					hasRemoved = true;
 					System.out.println("Expected answer: "
 							+ line.getVarValMap().get(counter));
-					correctAnswer = (Integer) line.getVarValMap().get(counter);
 				} else {
 					builder.append(line.getVarValMap().get(counter) + " ");
 				}
@@ -213,10 +211,6 @@ public class ConverterHtml {
 				builder.append(tokenConversion(token) + " ");
 		}
 		newLine();
-	}
-
-	public int getCorrectAnswer() {
-		return correctAnswer;
 	}
 
 	private String tokenConversion(Tokens token) {

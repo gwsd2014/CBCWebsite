@@ -34,7 +34,7 @@ public class Control {
 		ConverterHtml converter = new ConverterHtml();
 
 		LinkedList<String> question = converter.convertProblem(problem,
-				Difficulty.getProblemComponent(pt, level), weight);
+				ComponentTypes.None, 2);
 
 		LinkedList<Integer> spaces = new LinkedList<Integer>();
 		LinkedList<String> lines = new LinkedList<String>();
@@ -60,19 +60,36 @@ public class Control {
 			}
 		}
 
-		int[] answers = new int[4];
-		if (pt == ProblemType.MULTI_CHOICE) {
-			lines.add("What does the above function return after finishing execution?");
-			spaces.add(0);
-			answers = setAnswers(problem.getCorrectAnswer());
-		} else {
-			lines.add("What value must be inserted into the ??? so that the function returns "
-					+ problem.getCorrectAnswer());
-			spaces.add(0);
-			answers = setAnswers(converter.getCorrectAnswer());
-		}
+		Question returnQuestion = null;
 
-		Question returnQuestion = new Question(lines, spaces, answers);
+		if (pt == ProblemType.MULTI_CHOICE) {
+			int[] answers = multipleChoiceAnswers(problem);
+			returnQuestion = new Question(lines, spaces, answers);
+
+		} else { // else do fill in the blank
+
+			File tmp = null; // create random file name
+			try {
+				File root = new File("/export/home/mgoddard/CBCWebsite/temp");
+				tmp = File.createTempFile("FIB", ".java", root);
+			} catch (IOException e) {
+				System.out.println("IOEXCPETION " + e);
+				e.printStackTrace();
+			}
+
+			String userInput = readReplacement(problem);
+			System.out.println("We be here");
+			int returnedAnswer = runCompilerWithReplacement("2 == 2", problem,
+					tmp);
+
+			if (returnedAnswer == problem.getCorrectAnswer()) {
+				int[] yes = { 1, 1, 1, 1 };
+				returnQuestion = new Question(lines, spaces, yes);
+			} else {
+				int[] no = { 0, 0, 0, 0 };
+				returnQuestion = new Question(lines, spaces, no);
+			}
+		}
 
 		return returnQuestion;
 	}
@@ -158,25 +175,12 @@ public class Control {
 		return line;
 	}
 
-	private static int[] setAnswers(int correctAnswer) {
-		Random rand = new Random();
-		int[] retAnswers = new int[4];
-		retAnswers[0] = correctAnswer;
-		// now create the incorrect answers
-
-		retAnswers[1] = correctAnswer + 1;
-
-		retAnswers[2] = correctAnswer * 2;
-		if (retAnswers[2] == 0 || retAnswers[2] == retAnswers[1]) {
-			retAnswers[2] = -1;
-		}
-
-		retAnswers[3] = (rand.nextInt(100) - 50);
-		while (retAnswers[3] == correctAnswer || retAnswers[3] == retAnswers[1]
-				|| retAnswers[3] == retAnswers[2]) {
-			retAnswers[3] = (rand.nextInt(100) - 50);
-		}
-		return retAnswers;
+	private static int[] multipleChoiceAnswers(ProblemComponent problem) {
+		int[] returnAnswers = new int[4];
+		returnAnswers[0] = problem.getCorrectAnswer();
+		returnAnswers[1] = problem.getIncorrect1();
+		returnAnswers[2] = problem.getIncorrect2();
+		returnAnswers[3] = problem.getIncorrect3();
+		return returnAnswers;
 	}
-
 }

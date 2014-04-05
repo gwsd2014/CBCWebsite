@@ -74,7 +74,7 @@ public class Control {
 		if (pt == ProblemType.MULTI_CHOICE) {
 			lines.add("What does the function return after finishing exectution?");
 		} else {
-			lines.add("#" + problem.getCorrectAnswer());
+			lines.add(Integer.toString(problem.getCorrectAnswer()));
 
 			// write the file out to memory
 			File pseudoOutput = new File("temp/" + username + ".txt");

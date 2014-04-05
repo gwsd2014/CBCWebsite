@@ -40,8 +40,7 @@ public class GeneratorController extends Controller {
 			 * // not an answer if (user.grade > 0 || user.weight > 1) { correct
 			 * = -2; }
 			 */
-			correct = Control.evaluateAnswer(group1, user.currentProblem,
-					user.username);
+			correct = Control.evaluateAnswer(group1, user.username);
 
 		}
 
@@ -49,7 +48,6 @@ public class GeneratorController extends Controller {
 		int weight = getEffectiveWeight(level, user.weight);
 
 		Question question = Gen.createProblem(level, weight, user.username);
-		User.changeProbem(user, question.problem);
 
 		// pick spot for the correct answer
 		Random rand = new Random();

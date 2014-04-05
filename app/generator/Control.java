@@ -2,15 +2,18 @@ package generator;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.LinkedList;
 import java.util.List;
@@ -72,23 +75,23 @@ public class Control {
 				current = null;
 			}
 		}
-			
+
 		// add question
 		if (pt == ProblemType.MULTI_CHOICE) {
 			lines.add("What does the function return after finishing exectution?");
 		} else {
-			//write the file out to memory
+			// write the file out to memory
 			File pseudoOutput = new File("temp/" + username + ".txt");
 			try {
 				PrintWriter writer = new PrintWriter(pseudoOutput);
-				for(int i=0; i<lines.size(); i++){
+				for (int i = 0; i < lines.size(); i++) {
 					writer.write(lines.get(i) + "\n");
 				}
 				writer.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
-			
+
 			lines.add("What needs to replace ??? so that the function returns "
 					+ problem.getCorrectAnswer());
 		}
@@ -156,17 +159,16 @@ public class Control {
 		return java;
 	}
 
-	public static int evaluateAnswer(String input, ProblemComponent problem,
-			String username) {
+	public static int evaluateAnswer(String input, String username) {
 		Question returnQuestion = null;
 		LinkedList<Integer> spaces = new LinkedList<Integer>();
 		LinkedList<String> lines = new LinkedList<String>();
 
 		File root = new File("/export/home/mgoddard/CBCWebsite/temp");
-		File tmp = new File(root, "/" + username + ".java");
+		File tmp = new File(root, "/" + username + ".txt");
 
-		String userInput = readReplacement(problem);
-		int returnedAnswer = runCompilerWithReplacement(input, problem, tmp);
+		// String userInput = readReplacement(problem);
+		// int returnedAnswer = runCompilerWithReplacement(input, problem, tmp);
 
 		BufferedReader br;
 		try {
@@ -188,17 +190,15 @@ public class Control {
 			e.printStackTrace();
 		}
 
-		if (returnedAnswer == problem.getCorrectAnswer()) {
-			return 1;
-		} else {
-			return 0;
+		for (int i = 0; i < lines.size(); i++) {
+			System.out.println(lines.get(i));
 		}
 
 		/*
 		 * try { Files.delete(temp.toPath()); } catch (IOException e1) {
 		 * e1.printStackTrace(); }
 		 */
-
+		return 0;
 	}
 
 	private static int runCompilerWithReplacement(String replacement,

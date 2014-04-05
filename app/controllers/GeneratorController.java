@@ -35,7 +35,7 @@ public class GeneratorController extends Controller {
 			adjustDifficulty(user, true);
 			correct = 1;
 
-		} else {
+		} else if(group1.equalsIgnoreCase("fromMain")){
 			/*
 			 * // not an answer if (user.grade > 0 || user.weight > 1) { correct
 			 * = -2; }

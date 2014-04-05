@@ -134,13 +134,15 @@ public class Control {
 
 		Class<?> cls = null;
 		Object instance = null;
+		Object returnedObject = null;
 		try {
 			classLoader = URLClassLoader.newInstance(new URL[] { root.toURI()
 					.toURL() });
 			cls = Class.forName(className, true, classLoader);
 
 			instance = cls.newInstance();
-			cls.getDeclaredMethods()[0].invoke(instance, null);
+			Object[] empty = new Object[0];
+			returnedObject = cls.getDeclaredMethods()[0].invoke(instance, empty);
 		} catch (InstantiationException e) {
 			System.out.println("INSTANTIATION EXCEPTION" + e);
 			e.printStackTrace();
@@ -165,7 +167,7 @@ public class Control {
 		}
 		
 		instance.getClass();
-		int returnedAnswer = 2;
+		int returnedAnswer = (Integer) returnedObject;
 		// int returnedAnswer = instance.Main();
 		System.out.println("With the inputed answer, the function returns "
 				+ returnedAnswer);

@@ -15,6 +15,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javassist.bytecode.Descriptor.Iterator;
+
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 
@@ -79,6 +81,42 @@ public class Control {
 		return returnQuestion;
 	}
 
+	public static LinkedList<String> javaConversion(LinkedList<String> pseudo){
+		LinkedList<String> java = new LinkedList<String>();
+		for(String line : pseudo){
+			String newLine = line;
+			//change class
+			if(line.contains("class")){
+				newLine.concat(" {");
+			}
+			//change function
+			if(line.contains("function")){
+				newLine.replaceAll("function", "int");
+				newLine.concat(" {");
+			}
+			//change if
+			if(line.contains("if")){
+				newLine.concat(" {");
+			}
+			if(line.contains("endif")){
+				newLine.replaceAll("endif", "}");
+			}
+			if(line.contains("else")){
+				newLine.concat(" {");
+			}
+			if(line.contains("endelse")){
+				newLine.replaceAll("endelse", "}");
+			}
+			//change loop
+			if(line.contains("for")){
+				newLine.replaceAll("for( ", "for( int ");
+				newLine.concat(" {");
+			}
+			//change line
+		}
+		return java;
+	}
+	
 	public static int evaluateAnswer(String input, ProblemComponent problem) {
 		Question returnQuestion = null;
 		LinkedList<Integer> spaces = new LinkedList<Integer>();

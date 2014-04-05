@@ -1,7 +1,6 @@
 package models;
 
 import generator.Control;
-import generator.ProblemType;
 import generator.Question;
 import play.db.ebean.Model;
 
@@ -16,7 +15,7 @@ public class Gen extends Model {
 	}
 
 	public static Question createProblem(int level, int weight, String name) {
-		return Control.run(2, 2, ProblemType.FILL_BLANK, name);
+		return Control.run(level, weight, name);
 	}
 
 }

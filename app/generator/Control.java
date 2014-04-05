@@ -266,11 +266,11 @@ public class Control {
 		}
 
 		// instance.getClass();
-		// int returnedAnswer = (Integer) returnedObject;
-		// System.out.println("With the inputed answer, the function returns "
-		// + returnedAnswer);
+		int returnedAnswer = (Integer) returnedObject;
+		System.out.println("With the inputed answer, the function returns "
+				+ returnedAnswer);
 
-		return 10;
+		return returnedAnswer;
 	}
 
 	private static int[] multipleChoiceAnswers(ProblemComponent problem) {

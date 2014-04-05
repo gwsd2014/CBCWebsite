@@ -65,16 +65,25 @@ public class Control {
 				current = null;
 			}
 		}
+
+		// add question
+		if (pt == ProblemType.MULTI_CHOICE) {
+			lines.add("What does the function return after finishing exectution?");
+		} else {
+			lines.add("What needs to replace ??? so that the function returns "
+					+ problem.getCorrectAnswer());
+		}
+		spaces.add(0);
 		int[] answers = multipleChoiceAnswers(problem);
 		returnQuestion = new Question(lines, spaces, answers, problem);
 		return returnQuestion;
 	}
-	
-	public static int evaluateAnswer(String input, ProblemComponent problem){
+
+	public static int evaluateAnswer(String input, ProblemComponent problem) {
 		Question returnQuestion = null;
 		LinkedList<Integer> spaces = new LinkedList<Integer>();
 		LinkedList<String> lines = new LinkedList<String>();
-		
+
 		File tmp = null; // create random file name
 		try {
 			File root = new File("/export/home/mgoddard/CBCWebsite/temp");
@@ -117,8 +126,7 @@ public class Control {
 		 * try { Files.delete(temp.toPath()); } catch (IOException e1) {
 		 * e1.printStackTrace(); }
 		 */
-	
-		
+
 	}
 
 	private static int runCompilerWithReplacement(String replacement,

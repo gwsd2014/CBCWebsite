@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -23,14 +24,18 @@ import javax.tools.ToolProvider;
 public class Control {
 
 	public static void main(String[] args) {
-		Question q = Control.run(6, 12, ProblemType.MULTI_CHOICE);
-		List<String> lines = q.lines;
-		for (int i = 0; i < lines.size(); i++) {
-			System.out.println(lines.remove(0));
+		Question q = Control.run(7, 2, ProblemType.MULTI_CHOICE, "nope");
+
+		System.out.println("after");
+		LinkedList<String> afterlines = javaConversion((LinkedList<String>) q.lines);
+		for (int i = 0; i < 100; i++) {
+			System.out.println(afterlines.remove(0));
 		}
+
 	}
 
-	public static Question run(int level, int weight, ProblemType pt) {
+	public static Question run(int level, int weight, ProblemType pt,
+			String username) {
 
 		if (weight < 1) {
 			weight = 1;
@@ -67,11 +72,23 @@ public class Control {
 				current = null;
 			}
 		}
-
+			
 		// add question
 		if (pt == ProblemType.MULTI_CHOICE) {
 			lines.add("What does the function return after finishing exectution?");
 		} else {
+			//write the file out to memory
+			File pseudoOutput = new File("temp/" + username + ".txt");
+			try {
+				PrintWriter writer = new PrintWriter(pseudoOutput);
+				for(int i=0; i<lines.size(); i++){
+					writer.write(lines.get(i) + "\n");
+				}
+				writer.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			
 			lines.add("What needs to replace ??? so that the function returns "
 					+ problem.getCorrectAnswer());
 		}
@@ -83,71 +100,70 @@ public class Control {
 
 	public static LinkedList<String> javaConversion(LinkedList<String> pseudo) {
 		LinkedList<String> java = new LinkedList<String>();
-		for (String line : pseudo) {
-			String newLine = line;
+		while (pseudo.peek() != null) {
+			String line = pseudo.remove();
+			System.out.println("fresh " + line);
 			// change class
-			if (line.contains("class")) {
-				newLine.concat(" {");
-			}
-			else if (line.contains("endclass")) {
-				newLine.replaceAll("endclass", "}");
+			if (line.contains("What")) {
+				return java;
+			} else if (line.contains("endclass")) {
+				line = line.replaceAll("endclass", "}");
+			} else if (line.contains("class")) {
+				line = line.concat(" {");
 			}
 			// change function
-			else if (line.contains("function")) {
-				newLine.replaceAll("function", "int");
-				newLine.concat(" {");
-			}
 			else if (line.contains("endfunction")) {
-				newLine.replaceAll("endfunction", "}");
+				line = line.replaceAll("endfunction", "}");
+			} else if (line.contains("function")) {
+				line = line.replaceAll("function", "int");
+				line = line.replaceAll("var", "int");
+				line = line.concat(" {");
 			}
 			// change if
-			else if (line.contains("if")) {
-				newLine.concat(" {");
-			}
 			else if (line.contains("endif")) {
-				newLine.replaceAll("endif", "}");
-			}
-			else if (line.contains("else")) {
-				newLine.concat(" {");
-			}
-			else if (line.contains("endelse")) {
-				newLine.replaceAll("endelse", "}");
+				line = line.replaceAll("endif", "}");
+			} else if (line.contains("if")) {
+				line = line.concat(" {");
+			} else if (line.contains("endelse")) {
+				line = line.replaceAll("endelse", "}");
+			} else if (line.contains("else")) {
+				line = line.concat(" {");
 			}
 			// change loop
-			else if (line.contains("for")) {
-				newLine.replaceAll("for ( ", "for ( int ");
-				newLine.concat(" {");
-			}
 			else if (line.contains("endfor")) {
-				newLine.replaceAll("endfor", "}");
+				line = line.replaceAll("endfor", "}");
+			} else if (line.contains("for")) {
+				line = line.replaceAll("for \\( ", "for ( int ");
+				line = line.concat(" {");
 			}
 			// change line
-			else if(line.contains("var")){
-				newLine.replaceAll("var", "int");
+			else if (line.contains("var")) {
+				line = line.replaceAll("var", "int");
+				line = line.concat(";");
 			}
-			//change array
-			else if(line.contains("arr")){
-				newLine.replaceAll("[", "");
-				newLine.replaceAll("]", "");
-				newLine.replaceAll("arr", "int[] ");
+			// change array
+			else if (line.contains("arr")) {
+				line = line.replaceAll("\\[", " = new int[");
+				line = line.replaceAll("arr", "int[]");
+				line = line.concat(";");
 			}
+			// else just a normal line
+			else {
+				line = line.concat(";");
+			}
+			java.add(line);
 		}
 		return java;
 	}
 
-	public static int evaluateAnswer(String input, ProblemComponent problem) {
+	public static int evaluateAnswer(String input, ProblemComponent problem,
+			String username) {
 		Question returnQuestion = null;
 		LinkedList<Integer> spaces = new LinkedList<Integer>();
 		LinkedList<String> lines = new LinkedList<String>();
 
-		File tmp = null; // create random file name
-		try {
-			File root = new File("/export/home/mgoddard/CBCWebsite/temp");
-			tmp = File.createTempFile("FIB", ".java", root);
-		} catch (IOException e) {
-			System.out.println("IOEXCPETION " + e);
-			e.printStackTrace();
-		}
+		File root = new File("/export/home/mgoddard/CBCWebsite/temp");
+		File tmp = new File(root, "/" + username + ".java");
 
 		String userInput = readReplacement(problem);
 		int returnedAnswer = runCompilerWithReplacement(input, problem, tmp);

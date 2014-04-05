@@ -47,7 +47,7 @@ public class GeneratorController extends Controller {
 		int level = user.grade;
 		int weight = getEffectiveWeight(level, user.weight);
 
-		Question question = Gen.createProblem(level, weight);
+		Question question = Gen.createProblem(level, weight, user.username);
 		User.changeProbem(user, question.problem);
 		
 		// pick spot for the correct answer

@@ -66,11 +66,11 @@ public class Control {
 			}
 		}
 		int[] answers = multipleChoiceAnswers(problem);
-		returnQuestion = new Question(lines, spaces, answers);
+		returnQuestion = new Question(lines, spaces, answers, problem);
 		return returnQuestion;
 	}
 	
-	public static void partTwo(String input, ProblemComponent problem){
+	public static int evaluateAnswer(String input, ProblemComponent problem){
 		Question returnQuestion = null;
 		LinkedList<Integer> spaces = new LinkedList<Integer>();
 		LinkedList<String> lines = new LinkedList<String>();
@@ -108,11 +108,9 @@ public class Control {
 		}
 
 		if (returnedAnswer == problem.getCorrectAnswer()) {
-			int[] yes = { 1, 1, 1, 1 };
-			returnQuestion = new Question(lines, spaces, yes);
+			return 1;
 		} else {
-			int[] no = { 0, 0, 0, 0 };
-			returnQuestion = new Question(lines, spaces, no);
+			return 0;
 		}
 
 		/*

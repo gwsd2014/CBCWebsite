@@ -1,5 +1,6 @@
 package controllers;
 
+import generator.Control;
 import generator.Question;
 
 import java.util.Random;
@@ -12,17 +13,16 @@ import views.html.viewCode;
 
 public class GeneratorController extends Controller {
 
-    public static Result execute(String group1) {
+	public static Result execute(String group1) {
 
 		User user = User.byId(session("userId"));
 		if (user == null) {
 			return redirect(routes.UserController.index(request().uri()));
 		}
 
-		//default 
+		// default
 		int correct = -1;
-		
-		
+
 		if (group1.equalsIgnoreCase("0")) {
 			// incorrect
 			// decrease grade
@@ -36,10 +36,12 @@ public class GeneratorController extends Controller {
 			correct = 1;
 
 		} else {
-			// not an answer
-			if(user.grade > 0 || user.weight > 1){
-				correct = -2;
-			}
+			/*
+			 * // not an answer if (user.grade > 0 || user.weight > 1) { correct
+			 * = -2; }
+			 */
+			correct = Control.evaluateAnswer(group1, user.currentProblem);
+
 		}
 
 		int level = user.grade;
@@ -50,6 +52,7 @@ public class GeneratorController extends Controller {
 		// pick spot for the correct answer
 		Random rand = new Random();
 		Integer spot = rand.nextInt(3);
+		
 		Integer[] modifiedAnswers = question.answers;
 
 		// swap the two values, if not 0
@@ -58,34 +61,34 @@ public class GeneratorController extends Controller {
 			modifiedAnswers[0] = modifiedAnswers[spot];
 			modifiedAnswers[spot] = temp;
 		}
-		
-		
 
+		spot = -1;
+		
 		return ok(viewCode.render(question.lines, question.spaces,
 				modifiedAnswers, spot, correct));
 	}
-    
-    public static int getEffectiveWeight(int level, int realWeight){
-    	//use 3 for simple variable problems
-    	if(level < 2){
-    		if (realWeight > 9){
-    			return 3;
-    		}
-    	}
-    	
-    	//make lvl 4 min = 2
-    	if(level == 4){
-    		if(realWeight/3 < 2){
-    			return 2;
-    		}
-    	}
-    	
-    	if(level > 4){
-    		return realWeight/2;
-    	}
-    	
-    	return realWeight/3;
-    }
+
+	public static int getEffectiveWeight(int level, int realWeight) {
+		// use 3 for simple variable problems
+		if (level < 2) {
+			if (realWeight > 9) {
+				return 3;
+			}
+		}
+
+		// make lvl 4 min = 2
+		if (level == 4) {
+			if (realWeight / 3 < 2) {
+				return 2;
+			}
+		}
+
+		if (level > 4) {
+			return realWeight / 2;
+		}
+
+		return realWeight / 3;
+	}
 
 	public static void adjustDifficulty(User user, boolean correct) {
 		int[] gradeChange = { 12, 9, 9, 21, 21, 20, 21, 10 };
@@ -104,10 +107,10 @@ public class GeneratorController extends Controller {
 				// just change weight
 				User.changeWeight(user, user.weight + 1);
 			}
-		} else{ //incorrect answer
-            if(user.weight > 1 ){
-                User.changeWeight(user, user.weight - 1);
-            }
-        }
+		} else { // incorrect answer
+			if (user.weight > 1) {
+				User.changeWeight(user, user.weight - 1);
+			}
+		}
 	}
 }

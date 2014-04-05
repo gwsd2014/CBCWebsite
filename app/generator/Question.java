@@ -7,8 +7,10 @@ public class Question {
     public List<String> lines;
 	public List<Integer> spaces;
 	public Integer[] answers;
-
-	public Question(LinkedList<String> l, LinkedList<Integer> s, int[] a) {
+	public ProblemComponent problem;
+	
+	public Question(LinkedList<String> l, LinkedList<Integer> s, int[] a, ProblemComponent p) {
+		this.problem = p;
 		this.lines = l;
 		this.spaces = s;
 		Integer[] ans = new Integer[a.length];

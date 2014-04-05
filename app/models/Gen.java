@@ -18,4 +18,5 @@ public class Gen extends Model {
     public static Question createProblem(int level, int weight){
         return Control.run(2, 2, ProblemType.FILL_BLANK);
     }
+
 }

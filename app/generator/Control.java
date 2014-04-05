@@ -23,7 +23,7 @@ public class Control {
 
 		System.out.println("after");
 		LinkedList<String> afterlines = javaConversion(
-				(LinkedList<String>) q.lines, "lols");
+				(LinkedList<String>) q.lines, "lols", "doublelol");
 		for (int i = 0; i < 100; i++) {
 			System.out.println(afterlines.remove(0));
 		}
@@ -95,7 +95,7 @@ public class Control {
 	}
 
 	public static LinkedList<String> javaConversion(LinkedList<String> pseudo,
-			String replacement) {
+			String replacement, String username) {
 		LinkedList<String> java = new LinkedList<String>();
 		while (pseudo.peek() != null) {
 			String line = pseudo.remove();
@@ -109,7 +109,7 @@ public class Control {
 			} else if (line.contains("endclass")) {
 				line = line.replaceAll("endclass", "}");
 			} else if (line.contains("class")) {
-				line = line.concat(" {");
+				line = "class " + username + " {";
 			}
 			// change function
 			else if (line.contains("endfunction")) {
@@ -190,7 +190,7 @@ public class Control {
 			System.out.println(lines.get(i));
 		}
 
-		LinkedList<String> javaLines = javaConversion(lines, input);
+		LinkedList<String> javaLines = javaConversion(lines, input, username);
 
 		for (int i = 0; i < javaLines.size(); i++) {
 			System.out.println(javaLines.get(i));
@@ -226,7 +226,6 @@ public class Control {
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
 		compiler.run(null, null, null, fileToCompile);
-		System.out.println("finished");
 		URLClassLoader classLoader;
 
 		Class<?> cls = null;

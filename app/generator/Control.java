@@ -81,42 +81,60 @@ public class Control {
 		return returnQuestion;
 	}
 
-	public static LinkedList<String> javaConversion(LinkedList<String> pseudo){
+	public static LinkedList<String> javaConversion(LinkedList<String> pseudo) {
 		LinkedList<String> java = new LinkedList<String>();
-		for(String line : pseudo){
+		for (String line : pseudo) {
 			String newLine = line;
-			//change class
-			if(line.contains("class")){
+			// change class
+			if (line.contains("class")) {
 				newLine.concat(" {");
 			}
-			//change function
-			if(line.contains("function")){
+			else if (line.contains("endclass")) {
+				newLine.replaceAll("endclass", "}");
+			}
+			// change function
+			else if (line.contains("function")) {
 				newLine.replaceAll("function", "int");
 				newLine.concat(" {");
 			}
-			//change if
-			if(line.contains("if")){
+			else if (line.contains("endfunction")) {
+				newLine.replaceAll("endfunction", "}");
+			}
+			// change if
+			else if (line.contains("if")) {
 				newLine.concat(" {");
 			}
-			if(line.contains("endif")){
+			else if (line.contains("endif")) {
 				newLine.replaceAll("endif", "}");
 			}
-			if(line.contains("else")){
+			else if (line.contains("else")) {
 				newLine.concat(" {");
 			}
-			if(line.contains("endelse")){
+			else if (line.contains("endelse")) {
 				newLine.replaceAll("endelse", "}");
 			}
-			//change loop
-			if(line.contains("for")){
-				newLine.replaceAll("for( ", "for( int ");
+			// change loop
+			else if (line.contains("for")) {
+				newLine.replaceAll("for ( ", "for ( int ");
 				newLine.concat(" {");
 			}
-			//change line
+			else if (line.contains("endfor")) {
+				newLine.replaceAll("endfor", "}");
+			}
+			// change line
+			else if(line.contains("var")){
+				newLine.replaceAll("var", "int");
+			}
+			//change array
+			else if(line.contains("arr")){
+				newLine.replaceAll("[", "");
+				newLine.replaceAll("]", "");
+				newLine.replaceAll("arr", "int[] ");
+			}
 		}
 		return java;
 	}
-	
+
 	public static int evaluateAnswer(String input, ProblemComponent problem) {
 		Question returnQuestion = null;
 		LinkedList<Integer> spaces = new LinkedList<Integer>();

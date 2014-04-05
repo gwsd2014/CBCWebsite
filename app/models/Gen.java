@@ -16,7 +16,7 @@ public class Gen extends Model {
     }
     
     public static Question createProblem(int level, int weight){
-        return Control.run(3, 2, ProblemType.MULTI_CHOICE);
+        return Control.run(1, 2, ProblemType.MULTI_CHOICE);
     }
 
 }

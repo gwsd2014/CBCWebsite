@@ -263,12 +263,12 @@ public class Control {
 			e.printStackTrace();
 		}
 
-		//instance.getClass();
-		int returnedAnswer = (Integer) returnedObject;
-		System.out.println("With the inputed answer, the function returns "
-				+ returnedAnswer);
+		// instance.getClass();
+		// int returnedAnswer = (Integer) returnedObject;
+		// System.out.println("With the inputed answer, the function returns "
+		// + returnedAnswer);
 
-		return returnedAnswer;
+		return 10;
 	}
 
 	private static int[] multipleChoiceAnswers(ProblemComponent problem) {

@@ -1,16 +1,19 @@
 package generator;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.nio.file.Files;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Random;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
@@ -37,36 +40,34 @@ public class Control {
 		LinkedList<String> question = converter.convertProblem(problem,
 				ComponentTypes.None, 2);
 
+		Question returnQuestion = null;
 		LinkedList<Integer> spaces = new LinkedList<Integer>();
 		LinkedList<String> lines = new LinkedList<String>();
-		String current = null;
-		try {
-			current = question.remove();
-		} catch (NoSuchElementException e) {
-			current = null;
-		}
-		while (current != null) {
-			int spaceCount = 0;
-			while (current.startsWith("%")) {
-				spaceCount++;
-				current = current.substring(1);
-			}
-			lines.add(current);
-			spaces.add(spaceCount);
+
+		if (pt == ProblemType.MULTI_CHOICE) {
+			String current = null;
 			try {
 				current = question.remove();
-
 			} catch (NoSuchElementException e) {
 				current = null;
 			}
-		}
+			while (current != null) {
+				int spaceCount = 0;
+				while (current.startsWith("%")) {
+					spaceCount++;
+					current = current.substring(1);
+				}
+				lines.add(current);
+				spaces.add(spaceCount);
+				try {
+					current = question.remove();
 
-		Question returnQuestion = null;
-
-		if (pt == ProblemType.MULTI_CHOICE) {
+				} catch (NoSuchElementException e) {
+					current = null;
+				}
+			}
 			int[] answers = multipleChoiceAnswers(problem);
 			returnQuestion = new Question(lines, spaces, answers);
-
 		} else { // else do fill in the blank
 
 			File tmp = null; // create random file name
@@ -82,6 +83,26 @@ public class Control {
 			System.out.println("We be here");
 			int returnedAnswer = runCompilerWithReplacement("2 == 2", problem,
 					tmp);
+
+			BufferedReader br;
+			try {
+				br = new BufferedReader(new FileReader(tmp));
+				String line;
+				while ((line = br.readLine()) != null) {
+					int spaceCount = 0;
+					while (line.startsWith("\t")) {
+						spaceCount++;
+						line = line.substring(1);
+					}
+					lines.add(line);
+					spaces.add(spaceCount);
+				}
+				br.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
 			if (returnedAnswer == problem.getCorrectAnswer()) {
 				int[] yes = { 1, 1, 1, 1 };
@@ -117,7 +138,6 @@ public class Control {
 				replacement, temp);
 
 		File root = new File("/export/home/mgoddard/CBCWebsite/temp");
-		File sourceFile = new File(root, "javaOutput.java");
 
 		String fileToCompile = temp.getPath();
 		String className = temp.getName().replaceAll(".java", "");
@@ -142,7 +162,8 @@ public class Control {
 
 			instance = cls.newInstance();
 			Object[] empty = new Object[0];
-			returnedObject = cls.getDeclaredMethods()[0].invoke(instance, empty);
+			returnedObject = cls.getDeclaredMethods()[0]
+					.invoke(instance, empty);
 		} catch (InstantiationException e) {
 			System.out.println("INSTANTIATION EXCEPTION" + e);
 			e.printStackTrace();
@@ -165,16 +186,18 @@ public class Control {
 			System.out.println("SECURITY EXCEPTION " + e);
 			e.printStackTrace();
 		}
-		
+
 		instance.getClass();
 		int returnedAnswer = (Integer) returnedObject;
-		// int returnedAnswer = instance.Main();
 		System.out.println("With the inputed answer, the function returns "
 				+ returnedAnswer);
-		/*
-		 * try { Files.delete(sourceFile.toPath()); } catch (IOException e1) {
-		 * // TODO // Auto-generated catch block e1.printStackTrace(); }
-		 */
+
+		try {
+			Files.delete(temp.toPath());
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
 		return returnedAnswer;
 	}
 

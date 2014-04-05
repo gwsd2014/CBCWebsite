@@ -146,7 +146,7 @@ public class ConverterHtml {
 			// insert ??? if needed
 			if (!hasRemoved && removedComponent == ComponentTypes.Loop) {
 				// remove different components based on weight
-				loop.replacePiece();
+				correctAnswer = loop.replacePiece();
 				hasRemoved = true;
 			}
 			// print test statement
@@ -214,8 +214,8 @@ public class ConverterHtml {
 		}
 		newLine();
 	}
-	
-	public int getCorrectAnswer(){
+
+	public int getCorrectAnswer() {
 		return correctAnswer;
 	}
 

@@ -170,21 +170,20 @@ public class LoopComponent extends LogicComponent {
 		childLogics.add(overide);
 	}
 
-	public void replacePiece() {
+	public int replacePiece() {
 		switch (this.weight) {
 		case 1:
 			System.out.println("Expected answer: " + rightValue);
+			int temp = rightValue;
 			rightValue = questionMarks;
-			return;
+			return temp;
 		case 2:
+			int temp2 = forLoopTestValue;
 			System.out.println("Expected answer: " + forLoopTestValue);
 			forLoopTestValue = questionMarks;
-			return;
-		case 3:
-			System.out.println("Expected answer: " + forLoopIncrementor);
-			forLoopIncrementor = Tokens.QUESTIONS;
-			return;
+			return temp2;
 		}
+		return 0;
 	}
 
 	private int determineRuns() {

@@ -2,6 +2,7 @@ package generator;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -132,13 +133,14 @@ public class Control {
 		URLClassLoader classLoader;
 
 		Class<?> cls = null;
-		simpleInterface instance = null;
+		Object instance = null;
 		try {
 			classLoader = URLClassLoader.newInstance(new URL[] { root.toURI()
 					.toURL() });
 			cls = Class.forName(className, true, classLoader);
 
-			instance = (simpleInterface) cls.newInstance();
+			instance = cls.newInstance();
+			cls.getDeclaredMethods()[0].invoke(instance, null);
 		} catch (InstantiationException e) {
 			System.out.println("INSTANTIATION EXCEPTION" + e);
 			e.printStackTrace();
@@ -151,7 +153,18 @@ public class Control {
 		} catch (ClassNotFoundException e) {
 			System.out.println("CLASS NOT FOUND EXCEPTION " + e);
 			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			System.out.println("ILLEGAL ARGUMENT EXCEPTION " + e);
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			System.out.println("INVOKATION TARGET EXCEPTION " + e);
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			System.out.println("SECURITY EXCEPTION " + e);
+			e.printStackTrace();
 		}
+		
+		instance.getClass();
 		int returnedAnswer = 2;
 		// int returnedAnswer = instance.Main();
 		System.out.println("With the inputed answer, the function returns "

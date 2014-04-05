@@ -1,6 +1,7 @@
 package controllers;
 
 import generator.Control;
+import generator.ProblemType;
 import generator.Question;
 
 import java.util.Random;
@@ -68,6 +69,8 @@ public class GeneratorController extends Controller {
 				modifiedAnswers, spot, correct));
 	}
 
+	
+
 	public static int getEffectiveWeight(int level, int realWeight) {
 		// use 3 for simple variable problems
 		if (level < 2) {
@@ -76,6 +79,10 @@ public class GeneratorController extends Controller {
 			}
 		}
 
+		if(level == 2 && realWeight > 9){
+			return 1;
+		}
+		
 		// make lvl 4 min = 2
 		if (level == 4) {
 			if (realWeight / 3 < 2) {
@@ -91,7 +98,7 @@ public class GeneratorController extends Controller {
 	}
 
 	public static void adjustDifficulty(User user, boolean correct) {
-		int[] gradeChange = { 12, 9, 9, 21, 21, 20, 21, 10 };
+		int[] gradeChange = { 12, 12, 9, 21, 21, 20, 21, 10 };
 
 		if (correct) {
 			if (user.weight + 1 == gradeChange[user.grade]) {

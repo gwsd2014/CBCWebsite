@@ -62,8 +62,11 @@ public class Control {
 
 		int[] answers = new int[4];
 		if (pt == ProblemType.MULTI_CHOICE) {
+			lines.add("/n/nWhat does the above function return after finishing execution?");
 			answers = setAnswers(problem.getCorrectAnswer());
 		} else {
+			lines.add("/n/nWhat value must be inserted into the ??? so that the function returns "
+					+ problem.getCorrectAnswer());
 			answers = setAnswers(converter.getCorrectAnswer());
 		}
 

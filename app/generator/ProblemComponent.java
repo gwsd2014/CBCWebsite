@@ -7,9 +7,7 @@ public class ProblemComponent extends Component {
 
     private String testVariable;
 	private int correctAnswer;
-	private int incorrectAnswer1;
-	private int incorrectAnswer2;
-	private int incorrectAnswer3;
+
 	private LinkedList<ClassComponent> childClasses;
 
 	private int weight;
@@ -27,29 +25,9 @@ public class ProblemComponent extends Component {
 		testVariable = chooseVariable();
 
 		createClasses();
-
-		setAnswers();
 	}
 
-	private void setAnswers() {
-		Random rand = new Random();
-
-		// now create the incorrect answers
-
-		incorrectAnswer1 = correctAnswer + 1;
-
-		incorrectAnswer2 = correctAnswer * 2;
-		if (incorrectAnswer2 == 0 || incorrectAnswer2 == incorrectAnswer1) {
-			incorrectAnswer2 = -1;
-		}
-
-		incorrectAnswer3 = (rand.nextInt(100) - 50);
-		while (incorrectAnswer3 == correctAnswer
-				|| incorrectAnswer3 == incorrectAnswer1
-				|| incorrectAnswer3 == incorrectAnswer2) {
-			incorrectAnswer3 = (rand.nextInt(100) - 50);
-		}
-	}
+	
 
 	// create classes
 	private void createClasses() {
@@ -114,18 +92,6 @@ public class ProblemComponent extends Component {
 
 	public int getCorrectAnswer() {
 		return correctAnswer;
-	}
-
-	public int getIncorrect1() {
-		return incorrectAnswer1;
-	}
-
-	public int getIncorrect2() {
-		return incorrectAnswer2;
-	}
-
-	public int getIncorrect3() {
-		return incorrectAnswer3;
 	}
 
 	public LinkedList<ClassComponent> getChildren() {

@@ -9,6 +9,7 @@ import java.net.URLClassLoader;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Random;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
@@ -60,27 +61,15 @@ public class Control {
 		}
 
 		Question returnQuestion = null;
+		Integer[] answers = new Integer[4];
+		if (pt == ProblemType.MULTI_CHOICE) {
+			answers = setAnswers(problem.getCorrectAnswer());
+		} else {
+			answers = setAnswers(converter.getCorrectAnswer());
+		}
 
-		// if (pt == ProblemType.MULTI_CHOICE) {
-		int[] answers = multipleChoiceAnswers(problem);
-		returnQuestion = new Question(lines, spaces, answers);
-		/*
-		 * } else { // else do fill in the blank
-		 * 
-		 * File tmp = null; // create random file name try { File root = new
-		 * File("/export/home/mgoddard/CBCWebsite/temp"); tmp =
-		 * File.createTempFile("FIB", ".java", root); } catch (IOException e) {
-		 * System.out.println("IOEXCPETION " + e); e.printStackTrace(); }
-		 * 
-		 * String userInput = readReplacement(problem);
-		 * System.out.println("We be here"); int returnedAnswer =
-		 * runCompilerWithReplacement("2 == 2", problem, tmp);
-		 * 
-		 * if (returnedAnswer == problem.getCorrectAnswer()) { int[] yes = { 1,
-		 * 1, 1, 1 }; returnQuestion = new Question(lines, spaces, yes); } else
-		 * { int[] no = { 0, 0, 0, 0 }; returnQuestion = new Question(lines,
-		 * spaces, no); } }
-		 */
+		returnQuestion.answers = answers;
+		
 		return returnQuestion;
 	}
 
@@ -165,12 +154,25 @@ public class Control {
 		return line;
 	}
 
-	private static int[] multipleChoiceAnswers(ProblemComponent problem) {
-		int[] returnAnswers = new int[4];
-		returnAnswers[0] = problem.getCorrectAnswer();
-		returnAnswers[1] = problem.getIncorrect1();
-		returnAnswers[2] = problem.getIncorrect2();
-		returnAnswers[3] = problem.getIncorrect3();
-		return returnAnswers;
+	private static Integer[] setAnswers(int correctAnswer) {
+		Random rand = new Random();
+		Integer[] retAnswers = new Integer[4];
+		retAnswers[0] = correctAnswer;
+		// now create the incorrect answers
+
+		retAnswers[1] = correctAnswer + 1;
+
+		retAnswers[2] = correctAnswer * 2;
+		if (retAnswers[2] == 0 || retAnswers[2] == retAnswers[1]) {
+			retAnswers[2] = -1;
+		}
+
+		retAnswers[3] = (rand.nextInt(100) - 50);
+		while (retAnswers[3] == correctAnswer || retAnswers[3] == retAnswers[1]
+				|| retAnswers[3] == retAnswers[2]) {
+			retAnswers[3] = (rand.nextInt(100) - 50);
+		}
+		return retAnswers;
 	}
+
 }

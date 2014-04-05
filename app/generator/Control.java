@@ -30,7 +30,8 @@ public class Control {
 		Question q = Control.run(7, 2, ProblemType.MULTI_CHOICE, "nope");
 
 		System.out.println("after");
-		LinkedList<String> afterlines = javaConversion((LinkedList<String>) q.lines);
+		LinkedList<String> afterlines = javaConversion(
+				(LinkedList<String>) q.lines, "lols");
 		for (int i = 0; i < 100; i++) {
 			System.out.println(afterlines.remove(0));
 		}
@@ -101,11 +102,15 @@ public class Control {
 		return returnQuestion;
 	}
 
-	public static LinkedList<String> javaConversion(LinkedList<String> pseudo) {
+	public static LinkedList<String> javaConversion(LinkedList<String> pseudo,
+			String replacement) {
 		LinkedList<String> java = new LinkedList<String>();
 		while (pseudo.peek() != null) {
 			String line = pseudo.remove();
 			System.out.println("fresh " + line);
+
+			line.replaceAll("???", replacement);
+
 			// change class
 			if (line.contains("What")) {
 				return java;
@@ -192,6 +197,12 @@ public class Control {
 
 		for (int i = 0; i < lines.size(); i++) {
 			System.out.println(lines.get(i));
+		}
+
+		LinkedList<String> javaLines = javaConversion(lines, input);
+
+		for (int i = 0; i < javaLines.size(); i++) {
+			System.out.println(javaLines.get(i));
 		}
 
 		/*

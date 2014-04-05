@@ -191,13 +191,10 @@ public class Control {
 		int returnedAnswer = (Integer) returnedObject;
 		System.out.println("With the inputed answer, the function returns "
 				+ returnedAnswer);
-
-		try {
-			Files.delete(temp.toPath());
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-
+		/*
+		 * try { Files.delete(temp.toPath()); } catch (IOException e1) {
+		 * e1.printStackTrace(); }
+		 */
 		return returnedAnswer;
 	}
 

@@ -74,9 +74,8 @@ public class Control {
 		if (pt == ProblemType.MULTI_CHOICE) {
 			lines.add("What does the function return after finishing exectution?");
 		} else {
-			lines.add("What needs to replace ??? so that the function returns "
-					+ problem.getCorrectAnswer());
-			
+			lines.add("#" + problem.getCorrectAnswer());
+
 			// write the file out to memory
 			File pseudoOutput = new File("temp/" + username + ".txt");
 			try {
@@ -88,8 +87,9 @@ public class Control {
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
-
-			
+			lines.removeLast();
+			lines.add("What needs to replace ??? so that the function returns "
+					+ problem.getCorrectAnswer());
 		}
 		spaces.add(0);
 		int[] answers = multipleChoiceAnswers(problem);
@@ -107,9 +107,8 @@ public class Control {
 			line = line.replaceAll("\\?\\?\\?", replacement);
 
 			// change class
-			if (line.contains("What")) {
-				line = line.substring(line.length() - 1);
-				System.out.println("interpred answer: " + line);
+			if (line.contains("#")) {
+				line = line.substring(1);
 			} else if (line.contains("endclass")) {
 				line = line.replaceAll("endclass", "}");
 			} else if (line.contains("class")) {
@@ -190,6 +189,8 @@ public class Control {
 			e.printStackTrace();
 		}
 
+		int correct = Integer.parseInt(lines.removeLast());
+		System.out.println("CORRECT: " + correct);
 		for (int i = 0; i < lines.size(); i++) {
 			System.out.println(lines.get(i));
 		}
@@ -217,7 +218,11 @@ public class Control {
 		 * try { Files.delete(temp.toPath()); } catch (IOException e1) {
 		 * e1.printStackTrace(); }
 		 */
-		return recieved;
+		if (correct == recieved) {
+			return 1;
+		} else {
+			return 0;
+		}
 	}
 
 	private static int runCompilerWithReplacement(File javaText) {

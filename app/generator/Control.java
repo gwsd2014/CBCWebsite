@@ -60,16 +60,15 @@ public class Control {
 			}
 		}
 
-		Question returnQuestion = null;
-		Integer[] answers = new Integer[4];
+		int[] answers = new int[4];
 		if (pt == ProblemType.MULTI_CHOICE) {
 			answers = setAnswers(problem.getCorrectAnswer());
 		} else {
 			answers = setAnswers(converter.getCorrectAnswer());
 		}
 
-		returnQuestion.answers = answers;
-		
+		Question returnQuestion = new Question(lines, spaces, answers);
+
 		return returnQuestion;
 	}
 
@@ -154,9 +153,9 @@ public class Control {
 		return line;
 	}
 
-	private static Integer[] setAnswers(int correctAnswer) {
+	private static int[] setAnswers(int correctAnswer) {
 		Random rand = new Random();
-		Integer[] retAnswers = new Integer[4];
+		int[] retAnswers = new int[4];
 		retAnswers[0] = correctAnswer;
 		// now create the incorrect answers
 

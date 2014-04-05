@@ -2,24 +2,16 @@ package generator;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.NoSuchElementException;
-
-import javassist.bytecode.Descriptor.Iterator;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
@@ -165,7 +157,6 @@ public class Control {
 	}
 
 	public static int evaluateAnswer(String input, String username) {
-		Question returnQuestion = null;
 		LinkedList<Integer> spaces = new LinkedList<Integer>();
 		LinkedList<String> lines = new LinkedList<String>();
 
@@ -205,25 +196,32 @@ public class Control {
 			System.out.println(javaLines.get(i));
 		}
 
+		// save javaFile to memory
+		File javaOutput = new File("temp/" + username + ".java");
+		try {
+			PrintWriter writer = new PrintWriter(javaOutput);
+			for (int i = 0; i < javaLines.size(); i++) {
+				writer.write(javaLines.get(i) + "\n");
+			}
+			writer.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		int correct = runCompilerWithReplacement(javaOutput);
 		/*
 		 * try { Files.delete(temp.toPath()); } catch (IOException e1) {
 		 * e1.printStackTrace(); }
 		 */
-		return 0;
+		return correct;
 	}
 
-	private static int runCompilerWithReplacement(String replacement,
-			ProblemComponent problem, File temp) {
-
-		JavaConverter javaConverter = new JavaConverter();
-		javaConverter.convertProblem(problem,
-				Difficulty.getProblemComponent(ProblemType.FILL_BLANK, 2),
-				replacement, temp);
+	private static int runCompilerWithReplacement(File javaText) {
 
 		File root = new File("/export/home/mgoddard/CBCWebsite/temp");
 
-		String fileToCompile = temp.getPath();
-		String className = temp.getName().replaceAll(".java", "");
+		String fileToCompile = javaText.getPath();
+		String className = javaText.getName().replaceAll(".java", "");
 
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
@@ -272,18 +270,6 @@ public class Control {
 				+ returnedAnswer);
 
 		return returnedAnswer;
-	}
-
-	private static String readReplacement(ProblemComponent problem) {
-		System.out
-				.println("What should be placed into the ??? such that Main returns "
-						+ problem.getCorrectAnswer());
-		String line = null;
-		/*
-		 * try { line = br.readLine(); } catch (IOException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); }
-		 */
-		return line;
 	}
 
 	private static int[] multipleChoiceAnswers(ProblemComponent problem) {

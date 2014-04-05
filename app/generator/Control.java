@@ -263,7 +263,7 @@ public class Control {
 			e.printStackTrace();
 		}
 
-		instance.getClass();
+		//instance.getClass();
 		int returnedAnswer = (Integer) returnedObject;
 		System.out.println("With the inputed answer, the function returns "
 				+ returnedAnswer);

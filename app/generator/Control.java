@@ -106,7 +106,8 @@ public class Control {
 
 			// change class
 			if (line.contains("What")) {
-				return java;
+				line = line.substring(line.length() - 1);
+				System.out.println("interpred answer: " + line);
 			} else if (line.contains("endclass")) {
 				line = line.replaceAll("endclass", "}");
 			} else if (line.contains("class")) {
@@ -209,12 +210,12 @@ public class Control {
 			e.printStackTrace();
 		}
 
-		int correct = runCompilerWithReplacement(javaOutput);
+		int recieved = runCompilerWithReplacement(javaOutput);
 		/*
 		 * try { Files.delete(temp.toPath()); } catch (IOException e1) {
 		 * e1.printStackTrace(); }
 		 */
-		return correct;
+		return recieved;
 	}
 
 	private static int runCompilerWithReplacement(File javaText) {

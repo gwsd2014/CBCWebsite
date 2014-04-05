@@ -74,6 +74,9 @@ public class Control {
 		if (pt == ProblemType.MULTI_CHOICE) {
 			lines.add("What does the function return after finishing exectution?");
 		} else {
+			lines.add("What needs to replace ??? so that the function returns "
+					+ problem.getCorrectAnswer());
+			
 			// write the file out to memory
 			File pseudoOutput = new File("temp/" + username + ".txt");
 			try {
@@ -86,8 +89,7 @@ public class Control {
 				e.printStackTrace();
 			}
 
-			lines.add("What needs to replace ??? so that the function returns "
-					+ problem.getCorrectAnswer());
+			
 		}
 		spaces.add(0);
 		int[] answers = multipleChoiceAnswers(problem);

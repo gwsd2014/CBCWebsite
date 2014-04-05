@@ -241,7 +241,7 @@ public class Control {
 			Object[] empty = new Object[0];
 			Method mtd = cls.getDeclaredMethods()[0];
 			mtd.setAccessible(true);
-			mtd.invoke(instance, empty);
+			returnedObject = mtd.invoke(instance, empty);
 		} catch (InstantiationException e) {
 			System.out.println("INSTANTIATION EXCEPTION" + e);
 			e.printStackTrace();

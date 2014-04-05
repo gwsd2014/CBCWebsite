@@ -124,6 +124,12 @@ public class User extends Model {
 		return user;
 	}
 
+	public static User changeProbem(User user, ProblemComponent change){
+		user.currentProblem = change;
+		user.save();
+		return user;
+	}
+	
 	public static User changeWeight(User user, int change) {
 		user.weight = change;
 		user.save();

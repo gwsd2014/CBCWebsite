@@ -38,99 +38,93 @@ public class Control {
 		ConverterHtml converter = new ConverterHtml();
 
 		LinkedList<String> question = converter.convertProblem(problem,
-				ComponentTypes.None, 2);
+				Difficulty.getProblemComponent(pt, level), 2);
 
 		Question returnQuestion = null;
 		LinkedList<Integer> spaces = new LinkedList<Integer>();
 		LinkedList<String> lines = new LinkedList<String>();
 
-		if (pt == ProblemType.MULTI_CHOICE) {
-			String current = null;
+		String current = null;
+		try {
+			current = question.remove();
+		} catch (NoSuchElementException e) {
+			current = null;
+		}
+		while (current != null) {
+			int spaceCount = 0;
+			while (current.startsWith("%")) {
+				spaceCount++;
+				current = current.substring(1);
+			}
+			lines.add(current);
+			spaces.add(spaceCount);
 			try {
 				current = question.remove();
+
 			} catch (NoSuchElementException e) {
 				current = null;
 			}
-			while (current != null) {
-				int spaceCount = 0;
-				while (current.startsWith("%")) {
-					spaceCount++;
-					current = current.substring(1);
-				}
-				lines.add(current);
-				spaces.add(spaceCount);
-				try {
-					current = question.remove();
-
-				} catch (NoSuchElementException e) {
-					current = null;
-				}
-			}
-			int[] answers = multipleChoiceAnswers(problem);
-			returnQuestion = new Question(lines, spaces, answers);
-		} else { // else do fill in the blank
-
-			File tmp = null; // create random file name
-			try {
-				File root = new File("/export/home/mgoddard/CBCWebsite/temp");
-				tmp = File.createTempFile("FIB", ".java", root);
-			} catch (IOException e) {
-				System.out.println("IOEXCPETION " + e);
-				e.printStackTrace();
-			}
-
-			String userInput = readReplacement(problem);
-			System.out.println("We be here");
-			int returnedAnswer = runCompilerWithReplacement("2 == 2", problem,
-					tmp);
-
-			BufferedReader br;
-			try {
-				br = new BufferedReader(new FileReader(tmp));
-				String line;
-				while ((line = br.readLine()) != null) {
-					int spaceCount = 0;
-					while (line.startsWith("\t")) {
-						spaceCount++;
-						line = line.substring(1);
-					}
-					lines.add(line);
-					spaces.add(spaceCount);
-				}
-				br.close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-			if (returnedAnswer == problem.getCorrectAnswer()) {
-				int[] yes = { 1, 1, 1, 1 };
-				returnQuestion = new Question(lines, spaces, yes);
-			} else {
-				int[] no = { 0, 0, 0, 0 };
-				returnQuestion = new Question(lines, spaces, no);
-			}
+		}
+		int[] answers = multipleChoiceAnswers(problem);
+		returnQuestion = new Question(lines, spaces, answers);
+		return returnQuestion;
+	}
+	
+	public static void partTwo(String input, ProblemComponent problem){
+		Question returnQuestion = null;
+		LinkedList<Integer> spaces = new LinkedList<Integer>();
+		LinkedList<String> lines = new LinkedList<String>();
+		
+		File tmp = null; // create random file name
+		try {
+			File root = new File("/export/home/mgoddard/CBCWebsite/temp");
+			tmp = File.createTempFile("FIB", ".java", root);
+		} catch (IOException e) {
+			System.out.println("IOEXCPETION " + e);
+			e.printStackTrace();
 		}
 
-		return returnQuestion;
+		String userInput = readReplacement(problem);
+		int returnedAnswer = runCompilerWithReplacement(input, problem, tmp);
+
+		BufferedReader br;
+		try {
+			br = new BufferedReader(new FileReader(tmp));
+			String line;
+			while ((line = br.readLine()) != null) {
+				int spaceCount = 0;
+				while (line.startsWith("\t")) {
+					spaceCount++;
+					line = line.substring(1);
+				}
+				lines.add(line);
+				spaces.add(spaceCount);
+			}
+			br.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		if (returnedAnswer == problem.getCorrectAnswer()) {
+			int[] yes = { 1, 1, 1, 1 };
+			returnQuestion = new Question(lines, spaces, yes);
+		} else {
+			int[] no = { 0, 0, 0, 0 };
+			returnQuestion = new Question(lines, spaces, no);
+		}
+
+		/*
+		 * try { Files.delete(temp.toPath()); } catch (IOException e1) {
+		 * e1.printStackTrace(); }
+		 */
+	
+		
 	}
 
 	private static int runCompilerWithReplacement(String replacement,
 			ProblemComponent problem, File temp) {
-
-		URL Url = ((URLClassLoader) (Thread.currentThread()
-				.getContextClassLoader())).getURLs()[0];
-
-		try {
-			System.out.println("path: " + Url.toURI().toString());
-		} catch (URISyntaxException e1) {
-			System.out.println("e in conversion: " + e1);
-			e1.printStackTrace();
-		}
-
-		System.out.println("control path: " + temp.getPath());
-		System.out.println("name: " + temp.getName());
 
 		JavaConverter javaConverter = new JavaConverter();
 		javaConverter.convertProblem(problem,
@@ -143,10 +137,6 @@ public class Control {
 		String className = temp.getName().replaceAll(".java", "");
 
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-
-		System.out.println("Working Directory = "
-				+ System.getProperty("user.dir"));
-		System.out.println("compiling");
 
 		compiler.run(null, null, null, fileToCompile);
 		System.out.println("finished");
@@ -191,10 +181,7 @@ public class Control {
 		int returnedAnswer = (Integer) returnedObject;
 		System.out.println("With the inputed answer, the function returns "
 				+ returnedAnswer);
-		/*
-		 * try { Files.delete(temp.toPath()); } catch (IOException e1) {
-		 * e1.printStackTrace(); }
-		 */
+
 		return returnedAnswer;
 	}
 

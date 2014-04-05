@@ -48,7 +48,8 @@ public class GeneratorController extends Controller {
 		int weight = getEffectiveWeight(level, user.weight);
 
 		Question question = Gen.createProblem(level, weight);
-
+		user.currentProblem = question.problem;
+		
 		// pick spot for the correct answer
 		Random rand = new Random();
 		Integer spot = rand.nextInt(3);

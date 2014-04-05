@@ -109,7 +109,7 @@ public class Control {
 			String line = pseudo.remove();
 			System.out.println("fresh " + line);
 
-			line.replaceAll("\\?\\?\\?", replacement);
+			line = line.replaceAll("\\?\\?\\?", replacement);
 
 			// change class
 			if (line.contains("What")) {

@@ -34,7 +34,7 @@ public class Control {
 		ConverterHtml converter = new ConverterHtml();
 
 		LinkedList<String> question = converter.convertProblem(problem,
-				ComponentTypes.None, 2);
+				Difficulty.getProblemComponent(pt, level), weight);
 
 		LinkedList<Integer> spaces = new LinkedList<Integer>();
 		LinkedList<String> lines = new LinkedList<String>();

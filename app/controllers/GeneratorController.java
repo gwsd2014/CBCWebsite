@@ -35,12 +35,13 @@ public class GeneratorController extends Controller {
 			adjustDifficulty(user, true);
 			correct = 1;
 
-		} else if(!group1.equalsIgnoreCase("fromMain")){
+		} else if (!group1.equalsIgnoreCase("fromMain")) {
 			/*
 			 * // not an answer if (user.grade > 0 || user.weight > 1) { correct
 			 * = -2; }
 			 */
-			correct = Control.evaluateAnswer(group1, user.currentProblem);
+			correct = Control.evaluateAnswer(group1, user.currentProblem,
+					user.username);
 
 		}
 
@@ -49,11 +50,11 @@ public class GeneratorController extends Controller {
 
 		Question question = Gen.createProblem(level, weight, user.username);
 		User.changeProbem(user, question.problem);
-		
+
 		// pick spot for the correct answer
 		Random rand = new Random();
 		Integer spot = rand.nextInt(3);
-		
+
 		Integer[] modifiedAnswers = question.answers;
 
 		// swap the two values, if not 0
@@ -64,7 +65,7 @@ public class GeneratorController extends Controller {
 		}
 
 		spot = -1;
-		
+
 		return ok(viewCode.render(question.lines, question.spaces,
 				modifiedAnswers, spot, correct));
 	}

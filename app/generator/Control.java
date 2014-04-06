@@ -120,7 +120,11 @@ public class Control {
 			} else if (line.contains("function")) {
 				line = line.replaceAll("function", "int");
 				line = line.replaceAll("var", "int");
-				line = line.concat(" {");
+				if (line.contains("=")) {
+					line = line.concat(";");
+				} else {
+					line = line.concat(" {");
+				}
 			}
 			// change if
 			else if (line.contains("endif")) {

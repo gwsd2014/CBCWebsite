@@ -24,13 +24,13 @@ public class GeneratorController extends Controller {
 		// default
 		int correct = -1;
 
-		if (group1.equalsIgnoreCase("0")) {
+		if (group1.equalsIgnoreCase("poiuc")) {
 			// incorrect
 			// decrease grade
 
 			correct = 0;
 
-		} else if (group1.equalsIgnoreCase("1")) {
+		} else if (group1.equalsIgnoreCase("cuiop")) {
 			// correct
 			// increase grade
 

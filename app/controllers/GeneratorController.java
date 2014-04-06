@@ -80,7 +80,9 @@ public class GeneratorController extends Controller {
 	}
 
 	public static ProblemType getProblemType(int level, int weight) {
-		if ((level == 2 && weight > 9) || (level == 3 && weight > 21)) {
+		if ((level == 2 && weight > 9) || (level == 3 && weight > 21)
+				|| ((level == 5 || level == 6) && weight > 21)
+				|| (level == 7 && weight > 10)) {
 			return ProblemType.FILL_BLANK;
 		}
 		return ProblemType.MULTI_CHOICE;
@@ -110,6 +112,12 @@ public class GeneratorController extends Controller {
 		}
 
 		if (level > 4) {
+			if ((level == 5 || level == 6) && realWeight > 21) {
+				return (realWeight - 21);
+			}
+			if (level == 7 && realWeight > 10) {
+				return (realWeight - 10);
+			}
 			return realWeight / 2;
 		}
 
@@ -117,7 +125,7 @@ public class GeneratorController extends Controller {
 	}
 
 	public static void adjustDifficulty(User user, boolean correct) {
-		int[] gradeChange = { 12, 9, 12, 30, 21, 20, 21, 10 };
+		int[] gradeChange = { 12, 9, 12, 30, 21, 30, 30, 15 };
 
 		if (correct) {
 			if (user.weight + 1 == gradeChange[user.grade]) {

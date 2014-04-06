@@ -20,14 +20,14 @@ import javax.tools.ToolProvider;
 public class Control {
 
 	public static void main(String[] args) {
-//		Question q = Control.run(7, 2, "nope");
-//
-//		System.out.println("after");
-//		LinkedList<String> afterlines = javaConversion(
-//				(LinkedList<String>) q.lines, "lols", "doublelol");
-//		for (int i = 0; i < 100; i++) {
-//			System.out.println(afterlines.remove(0));
-//		}
+		// Question q = Control.run(7, 2, "nope");
+		//
+		// System.out.println("after");
+		// LinkedList<String> afterlines = javaConversion(
+		// (LinkedList<String>) q.lines, "lols", "doublelol");
+		// for (int i = 0; i < 100; i++) {
+		// System.out.println(afterlines.remove(0));
+		// }
 
 	}
 
@@ -89,7 +89,7 @@ public class Control {
 			}
 			lines.removeLast();
 			lines.add("What needs to replace ??? so that the function returns "
-					+ problem.getCorrectAnswer());
+					+ problem.getCorrectAnswer() + "?");
 		}
 		spaces.add(0);
 		int[] answers = multipleChoiceAnswers(problem);

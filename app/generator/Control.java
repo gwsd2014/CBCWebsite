@@ -20,24 +20,23 @@ import javax.tools.ToolProvider;
 public class Control {
 
 	public static void main(String[] args) {
-		Question q = Control.run(7, 2, "nope");
-
-		System.out.println("after");
-		LinkedList<String> afterlines = javaConversion(
-				(LinkedList<String>) q.lines, "lols", "doublelol");
-		for (int i = 0; i < 100; i++) {
-			System.out.println(afterlines.remove(0));
-		}
+//		Question q = Control.run(7, 2, "nope");
+//
+//		System.out.println("after");
+//		LinkedList<String> afterlines = javaConversion(
+//				(LinkedList<String>) q.lines, "lols", "doublelol");
+//		for (int i = 0; i < 100; i++) {
+//			System.out.println(afterlines.remove(0));
+//		}
 
 	}
 
-	public static Question run(int level, int weight, String username) {
+	public static Question run(int level, int weight, ProblemType pt,
+			String username) {
 
 		if (weight < 1) {
 			weight = 1;
 		}
-
-		ProblemType pt = getProblemType(level, weight);
 
 		ProblemComponent problem = new ProblemComponent(level, weight, pt);
 		ConverterHtml converter = new ConverterHtml();
@@ -96,13 +95,6 @@ public class Control {
 		int[] answers = multipleChoiceAnswers(problem);
 		returnQuestion = new Question(lines, spaces, answers, problem);
 		return returnQuestion;
-	}
-
-	public static ProblemType getProblemType(int level, int weight) {
-		if(level == 2 && weight > 9){
-			return ProblemType.FILL_BLANK;
-		}
-		return ProblemType.MULTI_CHOICE;
 	}
 
 	public static LinkedList<String> javaConversion(LinkedList<String> pseudo,

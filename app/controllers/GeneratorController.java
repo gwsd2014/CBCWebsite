@@ -47,8 +47,8 @@ public class GeneratorController extends Controller {
 
 		int level = user.grade;
 		int weight = getEffectiveWeight(level, user.weight);
-
-		Question question = Gen.createProblem(level, weight, user.username);
+		ProblemType pt = getProblemType(level, user.weight);
+		Question question = Gen.createProblem(level, weight, pt, user.username);
 
 		// pick spot for the correct answer
 		Random rand = new Random();
@@ -62,14 +62,19 @@ public class GeneratorController extends Controller {
 			modifiedAnswers[0] = modifiedAnswers[spot];
 			modifiedAnswers[spot] = temp;
 		}
-
-		spot = -1;
-
+		if (pt == ProblemType.FILL_BLANK) {
+			spot = -1;
+		}
 		return ok(viewCode.render(question.lines, question.spaces,
 				modifiedAnswers, spot, correct));
 	}
 
-	
+	public static ProblemType getProblemType(int level, int weight) {
+		if (level == 2 && weight > 9) {
+			return ProblemType.FILL_BLANK;
+		}
+		return ProblemType.MULTI_CHOICE;
+	}
 
 	public static int getEffectiveWeight(int level, int realWeight) {
 		// use 3 for simple variable problems
@@ -79,10 +84,10 @@ public class GeneratorController extends Controller {
 			}
 		}
 
-		if(level == 2 && realWeight > 9){
+		if (level == 2 && realWeight > 9) {
 			return 1;
 		}
-		
+
 		// make lvl 4 min = 2
 		if (level == 4) {
 			if (realWeight / 3 < 2) {

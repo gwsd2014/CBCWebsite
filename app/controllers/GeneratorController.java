@@ -27,13 +27,13 @@ public class GeneratorController extends Controller {
 		if (group1.equalsIgnoreCase("0")) {
 			// incorrect
 			// decrease grade
-			adjustDifficulty(user, false);
+
 			correct = 0;
 
 		} else if (group1.equalsIgnoreCase("1")) {
 			// correct
 			// increase grade
-			adjustDifficulty(user, true);
+
 			correct = 1;
 
 		} else if (!group1.equalsIgnoreCase("fromMain")) {
@@ -43,6 +43,12 @@ public class GeneratorController extends Controller {
 			 */
 			correct = Control.evaluateAnswer(group1, user.username);
 
+		}
+
+		if (correct == 1) {
+			adjustDifficulty(user, true);
+		} else if (correct == 0) {
+			adjustDifficulty(user, false);
 		}
 
 		int level = user.grade;

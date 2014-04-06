@@ -103,7 +103,7 @@ public class GeneratorController extends Controller {
 	}
 
 	public static void adjustDifficulty(User user, boolean correct) {
-		int[] gradeChange = { 12, 12, 9, 21, 21, 20, 21, 10 };
+		int[] gradeChange = { 12, 9, 12, 21, 21, 20, 21, 10 };
 
 		if (correct) {
 			if (user.weight + 1 == gradeChange[user.grade]) {

@@ -253,24 +253,31 @@ public class Control {
 		} catch (InstantiationException e) {
 			System.out.println("INSTANTIATION EXCEPTION" + e);
 			e.printStackTrace();
+			return -1234567;
 		} catch (IllegalAccessException e) {
 			System.out.println("ILLEGAL ACCESS EXCEPTION" + e);
 			e.printStackTrace();
+			return -1234567;
 		} catch (MalformedURLException e) {
 			System.out.println("MALFORMED URL EXCPETION " + e);
 			e.printStackTrace();
+			return -1234567;
 		} catch (ClassNotFoundException e) {
 			System.out.println("CLASS NOT FOUND EXCEPTION " + e);
 			e.printStackTrace();
+			return -1234567;
 		} catch (IllegalArgumentException e) {
 			System.out.println("ILLEGAL ARGUMENT EXCEPTION " + e);
 			e.printStackTrace();
+			return -1234567;
 		} catch (InvocationTargetException e) {
 			System.out.println("INVOKATION TARGET EXCEPTION " + e);
 			e.printStackTrace();
+			return -1234567;
 		} catch (SecurityException e) {
 			System.out.println("SECURITY EXCEPTION " + e);
 			e.printStackTrace();
+			return -1234567;
 		}
 
 		// instance.getClass();

@@ -88,7 +88,7 @@ public class Control {
 				e.printStackTrace();
 			}
 			lines.removeLast();
-			lines.add("What needs to replace ??? so that the function returns "
+			lines.add("What needs to replace ??? so that the Main function returns "
 					+ problem.getCorrectAnswer() + "?");
 		}
 		spaces.add(0);

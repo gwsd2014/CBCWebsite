@@ -89,6 +89,7 @@ public class GeneratorController extends Controller {
 	}
 
 	public static int getEffectiveWeight(int level, int realWeight) {
+		
 		// use 3 for simple variable problems
 		if (level < 2) {
 			if (realWeight > 9) {
@@ -125,7 +126,7 @@ public class GeneratorController extends Controller {
 	}
 
 	public static void adjustDifficulty(User user, boolean correct) {
-		int[] gradeChange = { 12, 9, 12, 30, 21, 30, 30, 15 };
+		int[] gradeChange = { 12, 9, 12, 30, 21, 26, 30, 15 };
 
 		if (correct) {
 			if (user.weight + 1 == gradeChange[user.grade]) {

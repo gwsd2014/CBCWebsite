@@ -36,6 +36,10 @@ public class GeneratorController extends Controller {
 
 			correct = 1;
 
+		} else if (group1.equalsIgnoreCase("skip")) {
+			User.changeGrade(user, user.grade + 1);
+		} else if (group1.equalsIgnoreCase("minus")) {
+			User.changeGrade(user, user.grade - 1);
 		} else if (!group1.equalsIgnoreCase("fromMain")) {
 			/*
 			 * // not an answer if (user.grade > 0 || user.weight > 1) { correct
@@ -76,7 +80,7 @@ public class GeneratorController extends Controller {
 	}
 
 	public static ProblemType getProblemType(int level, int weight) {
-		if (level == 2 && weight > 9) {
+		if ((level == 2 && weight > 9) || (level == 3 && weight > 21)) {
 			return ProblemType.FILL_BLANK;
 		}
 		return ProblemType.MULTI_CHOICE;
@@ -94,6 +98,10 @@ public class GeneratorController extends Controller {
 			return 1;
 		}
 
+		if (level == 3 && realWeight > 21) {
+			return (realWeight - 21) / 3;
+		}
+
 		// make lvl 4 min = 2
 		if (level == 4) {
 			if (realWeight / 3 < 2) {
@@ -109,7 +117,7 @@ public class GeneratorController extends Controller {
 	}
 
 	public static void adjustDifficulty(User user, boolean correct) {
-		int[] gradeChange = { 12, 9, 12, 21, 21, 20, 21, 10 };
+		int[] gradeChange = { 12, 9, 12, 30, 21, 20, 21, 10 };
 
 		if (correct) {
 			if (user.weight + 1 == gradeChange[user.grade]) {

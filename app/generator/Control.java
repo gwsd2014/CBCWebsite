@@ -128,7 +128,7 @@ public class Control {
 			}
 			// change if
 			else if (line.contains("endif")) {
-				line = line.replaceAll("endelse", "}");
+				line = "}";
 			} else if (line.contains("if")) {
 				line = line.concat(" {");
 			} else if (line.contains("else")) {

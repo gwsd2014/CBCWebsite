@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class ProblemComponent extends Component {
 
-    private String testVariable;
+	private String testVariable;
 	private int correctAnswer;
 	private int incorrectAnswer1;
 	private int incorrectAnswer2;
@@ -23,7 +23,7 @@ public class ProblemComponent extends Component {
 		this.pt = problemType;
 
 		childClasses = new LinkedList<ClassComponent>();
-		
+
 		testVariable = chooseVariable();
 
 		createClasses();
@@ -35,19 +35,20 @@ public class ProblemComponent extends Component {
 		Random rand = new Random();
 
 		// now create the incorrect answers
+		do {
+			incorrectAnswer1 = correctAnswer + rand.nextInt(6) - 3;
+		} while (incorrectAnswer1 == correctAnswer);
 
-		incorrectAnswer1 = correctAnswer + 1;
-
-		incorrectAnswer2 = correctAnswer * 2;
-		if (incorrectAnswer2 == 0 || incorrectAnswer2 == incorrectAnswer1) {
-			incorrectAnswer2 = -1;
+		incorrectAnswer2 = correctAnswer * (rand.nextInt(3) + 1);
+		while(incorrectAnswer2 == incorrectAnswer1 || incorrectAnswer2 == correctAnswer){
+			incorrectAnswer2 = correctAnswer + rand.nextInt(10);
 		}
 
-		incorrectAnswer3 = (rand.nextInt(100) - 50);
+		incorrectAnswer3 = (rand.nextInt(10) - 5);
 		while (incorrectAnswer3 == correctAnswer
 				|| incorrectAnswer3 == incorrectAnswer1
 				|| incorrectAnswer3 == incorrectAnswer2) {
-			incorrectAnswer3 = (rand.nextInt(100) - 50);
+			incorrectAnswer3 = (rand.nextInt(10) - 5);
 		}
 	}
 
@@ -104,10 +105,10 @@ public class ProblemComponent extends Component {
 		}
 	}
 
-	public void overrideTestVariable(String newTV){
+	public void overrideTestVariable(String newTV) {
 		testVariable = newTV;
 	}
-	
+
 	public String getTestVariable() {
 		return testVariable;
 	}

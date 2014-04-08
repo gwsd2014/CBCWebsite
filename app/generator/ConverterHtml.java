@@ -128,8 +128,6 @@ public class ConverterHtml {
 			}
 			convertLogic(conditional.getIfComponent(), indentation + 1);
 
-			builder.append(indent + "endif");
-			newLine();
 			builder.append(indent + "else");
 			newLine();
 

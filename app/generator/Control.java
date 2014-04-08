@@ -127,14 +127,12 @@ public class Control {
 				}
 			}
 			// change if
-			else if (line.contains("endif")) {
-				line = line.replaceAll("endif", "}");
-			} else if (line.contains("if")) {
+			else if (line.contains("if")) {
 				line = line.concat(" {");
 			} else if (line.contains("endelse")) {
 				line = line.replaceAll("endelse", "}");
 			} else if (line.contains("else")) {
-				line = line.concat(" {");
+				line = "} else {";
 			}
 			// change loop
 			else if (line.contains("endfor")) {

@@ -133,7 +133,7 @@ public class ConverterHtml {
 
 			convertLogic(conditional.getElseComponent(), indentation + 1);
 
-			builder.append(indent + "endelse");
+			builder.append(indent + "endif");
 			newLine();
 		}
 

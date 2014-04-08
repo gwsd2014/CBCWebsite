@@ -44,9 +44,9 @@
 			@helper.form(action = routes.GeneratorController.execute("value")){
                 <input type="radio" name="group1" style="margin-bottom: 0"
                    @if(spot == 0){
-                        value="cuiop"
+                        required value="cuiop"
                     }else{
-                        value="poiuc"
+                        required value="poiuc"
                     }
                 > @answers.apply(0)<br>
                 <input type="radio" name="group1"

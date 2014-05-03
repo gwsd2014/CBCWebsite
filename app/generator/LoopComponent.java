@@ -6,11 +6,10 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class LoopComponent extends LogicComponent {
-    private Component parentComponent;
-    private Random random;
+	private Component parentComponent;
+	private Random random;
 	private LinkedList<LogicComponent> childLogics;
 
-	private Boolean forLoop;
 	private Tokens comparator;
 	private String leftVariable;
 	private int rightValue;
@@ -52,7 +51,6 @@ public class LoopComponent extends LogicComponent {
 		int arrayLength = Integer.parseInt(arrayFullName.substring(2, 3));
 
 		HashMap<String, Integer> tempMap = parentMap;
-		forLoop = true;
 
 		// create test variable
 		do {
@@ -81,7 +79,6 @@ public class LoopComponent extends LogicComponent {
 			HashMap<String, Integer> parentMap, String testVariable) {
 
 		HashMap<String, Integer> tempMap = parentMap;
-		forLoop = true;
 
 		// create test variable
 		do {
@@ -118,34 +115,31 @@ public class LoopComponent extends LogicComponent {
 
 		// determine what should go in the loop, only going beyond arithmetic if
 		// weight > 1, and if nesting hasn't expired
-		boolean selectArithmetic = true;
+		int selection = 0;
 		if (this.weight >= 2 && nest > 1) {
-			selectArithmetic = random.nextBoolean();
+			selection = random.nextInt(3);
 		}
-		if (selectArithmetic) {
+		if (selection == 0) {
 			LogicComponent nextArith = new ArithmeticComponent(this,
 					this.level, this.weight, this.pt);
 			childLogics.add(nextArith);
 			// create the arithmetic by do NOT change the current variables
 			nextArith.createLines(deepCopyHashMap(parentMap), testVariable);
 
+		}  else if (selection == 1) {
+			// loop
+			LogicComponent nextLoop = new LoopComponent(this.level,
+					this.weight, this.pt, this, nest - 1);
+			childLogics.add(nextLoop);
+			tempMap = ((LoopComponent) nextLoop).createForLoop(
+					deepCopyHashMap(parentMap), testVariable);
 		} else {
-			// coin flip for conditional or another loop
-			if (random.nextBoolean()) {
-				// loop
-				LogicComponent nextLoop = new LoopComponent(this.level,
-						this.weight, this.pt, this, nest - 1);
-				childLogics.add(nextLoop);
-				tempMap = ((LoopComponent) nextLoop).createForLoop(
-						deepCopyHashMap(parentMap), testVariable);
-			} else {
-				// conditional
-				LogicComponent nextCond = new ConditionalComponent(this.level,
-						this.weight, this.pt, this, nest - 1);
-				childLogics.add(nextCond);
-				tempMap = nextCond.createLines(deepCopyHashMap(parentMap),
-						testVariable);
-			}
+			// conditional
+			LogicComponent nextCond = new ConditionalComponent(this.level,
+					this.weight, this.pt, this, nest - 1);
+			childLogics.add(nextCond);
+			tempMap = nextCond.createLines(deepCopyHashMap(parentMap),
+					testVariable);
 		}
 
 		return tempMap;
@@ -155,6 +149,9 @@ public class LoopComponent extends LogicComponent {
 
 		HashMap<String, Integer> tempMap = parentMap;
 
+		if(parentMap.isEmpty()){
+			System.out.println("parentMap empty");
+		}
 		// loop through number of loop runs
 		for (int i = 0; i < runs; i++) {
 			// loop through all child components
@@ -195,14 +192,6 @@ public class LoopComponent extends LogicComponent {
 			return random.nextInt(5);
 		else
 			return this.weight;
-	}
-
-	/**
-	 * 
-	 * @return true on for loop, false on while loop
-	 */
-	public Boolean isForLoop() {
-		return forLoop;
 	}
 
 	public String getForLoopTestValue() {

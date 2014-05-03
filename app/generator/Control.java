@@ -1,11 +1,16 @@
 package generator;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.file.Files;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
@@ -14,7 +19,20 @@ import javax.tools.ToolProvider;
 
 public class Control {
 
-    public static Question run(int level, int weight, ProblemType pt) {
+	public static void main(String[] args) {
+		// Question q = Control.run(7, 2, "nope");
+		//
+		// System.out.println("after");
+		// LinkedList<String> afterlines = javaConversion(
+		// (LinkedList<String>) q.lines, "lols", "doublelol");
+		// for (int i = 0; i < 100; i++) {
+		// System.out.println(afterlines.remove(0));
+		// }
+
+	}
+
+	public static Question run(int level, int weight, ProblemType pt,
+			String username) {
 
 		if (weight < 1) {
 			weight = 1;
@@ -24,10 +42,12 @@ public class Control {
 		ConverterHtml converter = new ConverterHtml();
 
 		LinkedList<String> question = converter.convertProblem(problem,
-				ComponentTypes.None, 2);
+				Difficulty.getProblemComponent(pt, level), 2);
 
+		Question returnQuestion = null;
 		LinkedList<Integer> spaces = new LinkedList<Integer>();
 		LinkedList<String> lines = new LinkedList<String>();
+
 		String current = null;
 		try {
 			current = question.remove();
@@ -50,92 +70,224 @@ public class Control {
 			}
 		}
 
-		Question returnQuestion = null;
-
+		// add question
 		if (pt == ProblemType.MULTI_CHOICE) {
-			int[] answers = multipleChoiceAnswers(problem);
-			returnQuestion = new Question(lines, spaces, answers);
-		} else { // else do fill in the blank
-			String userInput = readReplacement(problem);
-			int returnedAnswer = runCompilerWithReplacement("2 == 2", problem);
-			if (returnedAnswer == problem.getCorrectAnswer()) {
-				int[] yes = { 1, 1, 1, 1 };
-				returnQuestion = new Question(lines, spaces, yes);
-			} else {
-				int[] no = { 0, 0, 0, 0 };
-				returnQuestion = new Question(lines, spaces, no);
-			}
-		}
+			lines.add("What does the function return after finishing exectution?");
+		} else {
+			lines.add(Integer.toString(problem.getCorrectAnswer()));
 
+			// write the file out to memory
+			File pseudoOutput = new File("temp/" + username + ".txt");
+			try {
+				PrintWriter writer = new PrintWriter(pseudoOutput);
+				for (int i = 0; i < lines.size(); i++) {
+					writer.write(lines.get(i) + "\n");
+				}
+				writer.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+			lines.removeLast();
+			lines.add("What needs to replace ??? so that the Main function returns "
+					+ problem.getCorrectAnswer() + "?");
+		}
+		spaces.add(0);
+		int[] answers = multipleChoiceAnswers(problem);
+		returnQuestion = new Question(lines, spaces, answers, problem);
 		return returnQuestion;
 	}
 
-	private static int runCompilerWithReplacement(String replacement,
-			ProblemComponent problem) {
+	public static LinkedList<String> javaConversion(LinkedList<String> pseudo,
+			String replacement, String username) {
+		LinkedList<String> java = new LinkedList<String>();
+		while (pseudo.peek() != null) {
+			String line = pseudo.remove();
+			System.out.println("fresh " + line);
 
-		String clss = Control.class.getProtectionDomain().getCodeSource()
-				.getLocation().getPath();
-		System.err.println("Control: " + clss);
+			line = line.replaceAll("\\?\\?\\?", replacement);
 
-		JavaConverter javaConverter = new JavaConverter();
-		javaConverter.convertProblem(problem,
-				Difficulty.getProblemComponent(ProblemType.FILL_BLANK, 2),
-				replacement);
+			// change class
+			if (line.contains("#")) {
+				line = line.substring(1);
+			} else if (line.contains("endclass")) {
+				line = line.replaceAll("endclass", "}");
+			} else if (line.contains("class")) {
+				line = "public class " + username + " {";
+			}
+			// change function
+			else if (line.contains("endfunction")) {
+				line = line.replaceAll("endfunction", "}");
+			} else if (line.contains("function")) {
+				line = line.replaceAll("function", "int");
+				line = line.replaceAll("var", "int");
+				if (line.contains("=")) {
+					line = line.concat(";");
+				} else {
+					line = line.concat(" {");
+				}
+			}
+			// change if
+			else if (line.contains("endif")) {
+				line = "}";
+			} else if (line.contains("if")) {
+				line = line.concat(" {");
+			} else if (line.contains("else")) {
+				line = "} else {";
+			}
+			// change loop
+			else if (line.contains("endfor")) {
+				line = line.replaceAll("endfor", "}");
+			} else if (line.contains("for")) {
+				line = line.replaceAll("for \\( ", "for ( int ");
+				line = line.concat(" {");
+			}
+			// change line
+			else if (line.contains("var")) {
+				line = line.replaceAll("var", "int");
+				line = line.concat(";");
+			}
+			// change array
+			else if (line.contains("arr")) {
+				line = line.replaceAll("\\[", " = new int[");
+				line = line.replaceAll("arr", "int[]");
+				line = line.concat(";");
+			}
+			// else just a normal line
+			else {
+				line = line.concat(";");
+			}
+			java.add(line);
+		}
+		return java;
+	}
 
-		File root = new File("/app");
-		File sourceFile = new File("app/generator/javaOutput.java");
+	public static int evaluateAnswer(String input, String username) {
+		LinkedList<Integer> spaces = new LinkedList<Integer>();
+		LinkedList<String> lines = new LinkedList<String>();
 
-		String fileToCompile = sourceFile.getPath();
+		File root = new File("/export/home/mgoddard/CBCWebsite/temp");
+		File tmp = new File(root, "/" + username + ".txt");
+
+		// String userInput = readReplacement(problem);
+		// int returnedAnswer = runCompilerWithReplacement(input, problem, tmp);
+
+		BufferedReader br;
+		try {
+			br = new BufferedReader(new FileReader(tmp));
+			String line;
+			while ((line = br.readLine()) != null) {
+				int spaceCount = 0;
+				while (line.startsWith("\t")) {
+					spaceCount++;
+					line = line.substring(1);
+				}
+				lines.add(line);
+				spaces.add(spaceCount);
+			}
+			br.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		int correct = Integer.parseInt(lines.removeLast());
+		System.out.println("CORRECT: " + correct);
+		for (int i = 0; i < lines.size(); i++) {
+			System.out.println(lines.get(i));
+		}
+
+		LinkedList<String> javaLines = javaConversion(lines, input, username);
+
+		for (int i = 0; i < javaLines.size(); i++) {
+			System.out.println(javaLines.get(i));
+		}
+
+		// save javaFile to memory
+		File javaOutput = new File("temp/" + username + ".java");
+		try {
+			PrintWriter writer = new PrintWriter(javaOutput);
+			for (int i = 0; i < javaLines.size(); i++) {
+				writer.write(javaLines.get(i) + "\n");
+			}
+			writer.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		int recieved = runCompilerWithReplacement(javaOutput);
+		/*
+		 * try { Files.delete(temp.toPath()); } catch (IOException e1) {
+		 * e1.printStackTrace(); }
+		 */
+		if (correct == recieved) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+
+	private static int runCompilerWithReplacement(File javaText) {
+
+		File root = new File("/export/home/mgoddard/CBCWebsite/temp");
+
+		String fileToCompile = javaText.getPath();
+		String className = javaText.getName().replaceAll(".java", "");
+
 		JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
 		compiler.run(null, null, null, fileToCompile);
-		
 		URLClassLoader classLoader;
-		Class<?> cls;
-		simpleInterface instance = null;
+
+		Class<?> cls = null;
+		Object instance = null;
+		Object returnedObject = null;
 		try {
 			classLoader = URLClassLoader.newInstance(new URL[] { root.toURI()
 					.toURL() });
-			cls = Class.forName("generator.javaOutput", true, classLoader);
-			instance = (simpleInterface) cls.newInstance();
-		} catch (ClassNotFoundException e) { // TODO
-			System.err.println("CLASS NOT FOUND EXCEPTION IN CONTROL " + e);
-			e.printStackTrace();
-		} catch (InstantiationException e) { // TODO
+			cls = Class.forName(className, true, classLoader);
+
+			instance = cls.newInstance();
+			Object[] empty = new Object[0];
+			Method mtd = cls.getDeclaredMethods()[0];
+			mtd.setAccessible(true);
+			returnedObject = mtd.invoke(instance, empty);
+		} catch (InstantiationException e) {
 			System.out.println("INSTANTIATION EXCEPTION" + e);
 			e.printStackTrace();
-		} catch (IllegalAccessException e) { // TODO
+			return -1234567;
+		} catch (IllegalAccessException e) {
 			System.out.println("ILLEGAL ACCESS EXCEPTION" + e);
 			e.printStackTrace();
+			return -1234567;
 		} catch (MalformedURLException e) {
 			System.out.println("MALFORMED URL EXCPETION " + e);
 			e.printStackTrace();
+			return -1234567;
+		} catch (ClassNotFoundException e) {
+			System.out.println("CLASS NOT FOUND EXCEPTION " + e);
+			e.printStackTrace();
+			return -1234567;
+		} catch (IllegalArgumentException e) {
+			System.out.println("ILLEGAL ARGUMENT EXCEPTION " + e);
+			e.printStackTrace();
+			return -1234567;
+		} catch (InvocationTargetException e) {
+			System.out.println("INVOKATION TARGET EXCEPTION " + e);
+			e.printStackTrace();
+			return -1234567;
+		} catch (SecurityException e) {
+			System.out.println("SECURITY EXCEPTION " + e);
+			e.printStackTrace();
+			return -1234567;
 		}
 
-		int returnedAnswer = instance.Main();
+		// instance.getClass();
+		int returnedAnswer = (Integer) returnedObject;
 		System.out.println("With the inputed answer, the function returns "
 				+ returnedAnswer);
 
-		try {
-			Files.delete(sourceFile.toPath());
-		} catch (IOException e1) { // TODO
-			// Auto-generated catch block
-			e1.printStackTrace();
-		}
-
 		return returnedAnswer;
-	}
-
-	private static String readReplacement(ProblemComponent problem) {
-		System.out
-				.println("What should be placed into the ??? such that Main returns "
-						+ problem.getCorrectAnswer());
-		String line = null;
-		/*
-		 * try { line = br.readLine(); } catch (IOException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); }
-		 */
-		return line;
 	}
 
 	private static int[] multipleChoiceAnswers(ProblemComponent problem) {

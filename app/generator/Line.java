@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Line extends LogicComponent {
-    private Component parentComponent;
+	private Component parentComponent;
 	private HashMap<Integer, Object> varValMap;
 	private ArrayList<Tokens> tokenList;
 	private Boolean isBlank;
@@ -31,7 +31,7 @@ public class Line extends LogicComponent {
 
 	public void declareArray(String name) {
 		isArrayDeclaration = true;
-		
+
 		tokenList.add(Tokens.ARR);
 		tokenList.add(Tokens.VARIABLE);
 		varValMap.put(tokenList.size() - 1, name);
@@ -45,24 +45,50 @@ public class Line extends LogicComponent {
 		varValMap.put(tokenList.size() - 1, value);
 	}
 
-	public void additionByValue(String name, int value) {
+	/**
+	 * 
+	 * @param name
+	 *            name of variable
+	 * @param value
+	 *            value to adjust by
+	 * @param addition
+	 *            true on addition, false on multiplication
+	 */
+	public void operationByValue(String name, int value, boolean addition) {
 		tokenList.add(Tokens.VARIABLE);
 		varValMap.put(tokenList.size() - 1, name);
 		tokenList.add(Tokens.ASSIGN);
 		tokenList.add(Tokens.VARIABLE);
 		varValMap.put(tokenList.size() - 1, name);
-		tokenList.add(Tokens.PLUS);
+		if (addition) {
+			tokenList.add(Tokens.PLUS);
+		} else {
+			tokenList.add(Tokens.STAR);
+		}
 		tokenList.add(Tokens.VALUE);
 		varValMap.put(tokenList.size() - 1, value);
 	}
 
-	public void additionByVariable(String name1, String name2) {
+	/**
+	 * 
+	 * @param name
+	 *            name of variable
+	 * @param value
+	 *            value to adjust by
+	 * @param addition
+	 *            true on addition, false on multiplication
+	 */
+	public void operationByVariable(String name1, String name2, boolean addition) {
 		tokenList.add(Tokens.VARIABLE);
 		varValMap.put(tokenList.size() - 1, name1);
 		tokenList.add(Tokens.ASSIGN);
 		tokenList.add(Tokens.VARIABLE);
 		varValMap.put(tokenList.size() - 1, name1);
-		tokenList.add(Tokens.PLUS);
+		if (addition) {
+			tokenList.add(Tokens.PLUS);
+		} else {
+			tokenList.add(Tokens.STAR);
+		}
 		tokenList.add(Tokens.VALUE);
 		varValMap.put(tokenList.size() - 1, name2);
 	}
@@ -70,7 +96,7 @@ public class Line extends LogicComponent {
 	public void callFunction(String variableName, String functionName,
 			String[] parameterList) {
 		isFunctionCall = true;
-		
+
 		tokenList.add(Tokens.VARIABLE);
 		varValMap.put(tokenList.size() - 1, variableName);
 		tokenList.add(Tokens.ASSIGN);
@@ -128,12 +154,12 @@ public class Line extends LogicComponent {
 	public Boolean getIsBlank() {
 		return isBlank;
 	}
-	
-	public Boolean getIsFunctionCall(){
+
+	public Boolean getIsFunctionCall() {
 		return isFunctionCall;
 	}
-	
-	public Boolean getIsArrayDeclaration(){
+
+	public Boolean getIsArrayDeclaration() {
 		return isArrayDeclaration;
 	}
 }

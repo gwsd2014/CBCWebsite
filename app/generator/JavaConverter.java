@@ -1,5 +1,6 @@
 package generator;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.net.URL;
@@ -8,27 +9,28 @@ import java.util.Iterator;
 
 public class JavaConverter {
 
-    PrintWriter output;
+	PrintWriter output;
 	ComponentTypes removedComponent;
 	String userReplacement;
+	String name;
 	boolean hasRemoved;
 
 	public JavaConverter() {
-		try {
-			String clss = JavaConverter.class.getProtectionDomain()
-					.getCodeSource().getLocation().getPath();
-			//System.out.println("JavaConverter: " + clss);
 
-			output = new PrintWriter("app/generator/javaOutput.java");
-		} catch (FileNotFoundException e) {
-			System.out.println("FILE NOT FOUND EXCEPTION IN JAVA CONVERTER " + e);
-			e.printStackTrace();
-		}
 	}
 
 	public PrintWriter convertProblem(ProblemComponent problem,
-			ComponentTypes removed, String replacement) {
+			ComponentTypes removed, String replacement, File temp) {
 
+		try {
+			System.out.println("JC input path: " + temp.getPath());
+			output = new PrintWriter(temp.getPath());
+		} catch (FileNotFoundException e) {
+			System.out.println("FILE NOT FOUND EXCEPTION IN JAVA CONVERTER "
+					+ e);
+			e.printStackTrace();
+		}
+		name = temp.getName().replaceAll(".java", "");
 		removedComponent = removed;
 		userReplacement = replacement;
 		hasRemoved = false;
@@ -44,17 +46,8 @@ public class JavaConverter {
 
 	public void convertClass(ClassComponent classComp) {
 
-		ClassLoader cl = ClassLoader.getSystemClassLoader();
-
-		URL[] urls = ((URLClassLoader) cl).getURLs();
-
-		for (URL url : urls) {
-			System.out.println(url.getFile());
-		}
-		output.println("package generator; \n");
-		output.println("import generator.simpleInterface; \n");
-
-		output.println("public class javaOutput implements simpleInterface{");
+		// output.println("package generator; \n");
+		output.println("public class " + name + " {");
 
 		for (Iterator<Line> i = classComp.getLines().iterator(); i.hasNext();) {
 			convertLine(i.next(), 1);
@@ -147,47 +140,30 @@ public class JavaConverter {
 		// Loop
 		if (logic instanceof LoopComponent) {
 			LoopComponent loop = (LoopComponent) logic;
-			if (loop.isForLoop()) {
 
-				// print test statement
-				String loopStatement = indent + "for ( int "
-						+ loop.getLeftVariable() + " = " + loop.getRightValue()
-						+ " ; " + loop.getLeftVariable() + " "
-						+ tokenConversion(loop.getComparator()) + " "
-						+ loop.getForLoopTestValue() + " ; "
-						+ loop.getLeftVariable() + " "
-						+ tokenConversion(loop.getForLoopIncrementor())
-						+ " ) {";
-				if (!hasRemoved && removedComponent == ComponentTypes.Loop) {
-					loopStatement = loopStatement.replaceFirst("\\?\\?\\?",
-							userReplacement);
-					hasRemoved = true;
-				}
-
-				output.println(loopStatement);
-
-				// print the logic within the loop
-				for (Iterator<LogicComponent> i = loop.getChildLogics()
-						.iterator(); i.hasNext();) {
-					convertLogic(i.next(), indentation + 1);
-				}
-
-				output.println(indent + "}");
-
-			} else {
-				// print test statement
-				output.println(indent + "while ( " + loop.getLeftVariable()
-						+ " " + tokenConversion(loop.getComparator()) + " "
-						+ loop.getRightValue() + " ) {");
-
-				// print the logic within the loop
-				for (Iterator<LogicComponent> i = loop.getChildLogics()
-						.iterator(); i.hasNext();) {
-					convertLogic(i.next(), indentation + 1);
-				}
-
-				output.println(indent + "}");
+			// print test statement
+			String loopStatement = indent + "for ( int "
+					+ loop.getLeftVariable() + " = " + loop.getRightValue()
+					+ " ; " + loop.getLeftVariable() + " "
+					+ tokenConversion(loop.getComparator()) + " "
+					+ loop.getForLoopTestValue() + " ; "
+					+ loop.getLeftVariable() + " "
+					+ tokenConversion(loop.getForLoopIncrementor()) + " ) {";
+			if (!hasRemoved && removedComponent == ComponentTypes.Loop) {
+				loopStatement = loopStatement.replaceFirst("\\?\\?\\?",
+						userReplacement);
+				hasRemoved = true;
 			}
+
+			output.println(loopStatement);
+
+			// print the logic within the loop
+			for (Iterator<LogicComponent> i = loop.getChildLogics().iterator(); i
+					.hasNext();) {
+				convertLogic(i.next(), indentation + 1);
+			}
+
+			output.println(indent + "}");
 
 		}
 

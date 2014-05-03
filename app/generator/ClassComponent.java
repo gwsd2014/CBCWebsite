@@ -206,6 +206,11 @@ public class ClassComponent extends Component {
 		return variables.get(testVariable);
 	}
 
+	public void overrideTestVariable(String newTV){
+		testVariable = newTV;
+		parentProblem.overrideTestVariable(newTV);
+	}
+	
 	private int determineAmountOfFunctions() {
 		if (this.level == 6) {
 			return 2;
@@ -216,20 +221,6 @@ public class ClassComponent extends Component {
 		}
 
 		return 1;
-	}
-
-	private void declareVariables() {
-		// declare test variable
-		Line decl = new Line(this, false);
-		childLines.add(decl);
-		int initialValue = rand.nextInt(range) - range / 2;
-		decl.declareVariable(testVariable, initialValue);
-		variables.put(testVariable, initialValue);
-
-		// declare other variables
-		if (this.weight > 1) {
-			// make more lines
-		}
 	}
 
 	public String getName() {

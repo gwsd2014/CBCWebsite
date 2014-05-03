@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class ArithmeticComponent extends LogicComponent {
-    private Component parentComponent;
+	private Component parentComponent;
 	private LinkedList<Line> childLines;
 	private Random random;
 
@@ -67,13 +67,30 @@ public class ArithmeticComponent extends LogicComponent {
 
 				int increment = random.nextInt(range) - range / 2;
 
-				Line additionLine = new Line(this, false);
-				childLines.add(additionLine);
+				// choose addition or multiplication
+				boolean addition = true;
+				if (level == 0 && weight > 6) {
+					addition = random.nextBoolean();
+				}
+				if (addition) {
 
-				// create addition line, and change the value in the variable
-				// map
-				additionLine.additionByValue(leftVariable, increment);
-				currentMap.put(leftVariable, previousValue + increment);
+					Line additionLine = new Line(this, false);
+					childLines.add(additionLine);
+
+					// create addition line, and change the value in the
+					// variable
+					// map
+					additionLine
+							.operationByValue(leftVariable, increment, true);
+					currentMap.put(leftVariable, previousValue + increment);
+				} else {
+					Line multiplicationLine = new Line(this, false);
+					childLines.add(multiplicationLine);
+
+					multiplicationLine.operationByValue(leftVariable,
+							increment, false);
+					currentMap.put(leftVariable, previousValue * increment);
+				}
 			} else {
 				// adding by variable
 				int previousValue = currentMap.get(leftVariable);
@@ -86,14 +103,31 @@ public class ArithmeticComponent extends LogicComponent {
 					randomVariable = variablesIterator.next();
 				}
 
-				Line additionLine = new Line(this, false);
-				childLines.add(additionLine);
+				// choose addition or multiplication
+				boolean addition = true;
+				if (level == 0 && weight > 2) {
+					addition = random.nextBoolean();
+				}
+				if (addition) {
+					Line additionLine = new Line(this, false);
+					childLines.add(additionLine);
 
-				// create addition line, and change the value in the variable
-				// map
-				additionLine.additionByVariable(leftVariable, randomVariable);
-				currentMap.put(leftVariable,
-						previousValue + currentMap.get(randomVariable));
+					// create addition line, and change the value in the
+					// variable
+					// map
+					additionLine.operationByVariable(leftVariable,
+							randomVariable, true);
+					currentMap.put(leftVariable,
+							previousValue + currentMap.get(randomVariable));
+				} else {
+					Line multiplicationLine = new Line(this, false);
+					childLines.add(multiplicationLine);
+
+					multiplicationLine.operationByVariable(leftVariable,
+							randomVariable, false);
+					currentMap.put(leftVariable,
+							previousValue * currentMap.get(randomVariable));
+				}
 			}
 
 		}
@@ -146,12 +180,8 @@ public class ArithmeticComponent extends LogicComponent {
 			lines = 1;
 		}
 
-		if (this.level == 5) {
-			lines = 2;
-		}
-
-		if (this.level == 6) {
-			lines = 2;
+		if (this.level > 4) {
+			lines = 1;
 		}
 
 		return lines;

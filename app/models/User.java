@@ -15,6 +15,7 @@ import com.avaje.ebean.annotation.CreatedTimestamp;
 import com.avaje.ebean.annotation.UpdatedTimestamp;
 
 import formdata.RegistrationData;
+import generator.ProblemComponent;
 
 @Entity
 public class User extends Model {
@@ -83,6 +84,8 @@ public class User extends Model {
 	@Required
 	public boolean disavowed = false;
 
+	public ProblemComponent currentProblem;
+	
 	// Constructors
 	public User(String email, String username, String password,
 			String firstName, String lastName, UserType type, int grade,
@@ -121,6 +124,12 @@ public class User extends Model {
 		return user;
 	}
 
+	public static User changeProbem(User user, ProblemComponent change){
+		user.currentProblem = change;
+		user.save();
+		return user;
+	}
+	
 	public static User changeWeight(User user, int change) {
 		user.weight = change;
 		user.save();

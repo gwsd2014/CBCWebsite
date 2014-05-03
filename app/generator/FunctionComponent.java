@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Random;
 
 public class FunctionComponent extends Component {
-    private String name;
+	private String name;
 	private ClassComponent parentClass;
 
 	private LinkedList<LogicComponent> children;
@@ -113,11 +113,21 @@ public class FunctionComponent extends Component {
 			variables.put(letterVariable + "[" + i + "]", initialValue);
 		}
 
+		// override the test variable, making it one of the array indices
+		int testIndex = rand.nextInt(arraySize);
+		String newTestVariable = letterVariable + "[" + testIndex + "]";
+		overrideTestVariable(newTestVariable);
+
 		// add a blank line at the end of indentation
 		Line blank = new Line(this, true);
 		children.add(blank);
 
 		return fullArrayName;
+	}
+
+	private void overrideTestVariable(String newTV) {
+		testVariable = newTV;
+		parentClass.overrideTestVariable(newTV);
 	}
 
 	private int determineArraySize() {
@@ -147,9 +157,9 @@ public class FunctionComponent extends Component {
 		}
 
 		// with difficulty 5/6, cap at 3 lines
-		else if (this.level == 5 || this.level == 6) {
-			if (lines > 3) {
-				lines = 3;
+		else if (this.level > 4) {
+			if (lines > 2) {
+				lines = 2;
 			}
 		}
 
@@ -380,17 +390,36 @@ public class FunctionComponent extends Component {
 		for (int i = 0; i < parameterList.length; i++) {
 			variables.put(parameterList[i], paramValues[i]);
 		}
-		// pick function type, arithmetic for now
-		ArithmeticComponent firstArith = new ArithmeticComponent(this,
-				this.level, this.weight, this.pt);
-		children.add(firstArith);
+		// pick function type, at random
+		int selection = rand.nextInt(3);
+		if (this.level == 6 && this.weight > 8) {
+			// exception for hard mode
+			selection = 0;
+		}
 
 		// choose which variable to return
 		String randomVariable = selectVariable(variables);
 
-		// create lines
-		variables = firstArith.createLines(deepCopyHashMap(variables),
-				randomVariable);
+		if (selection == 0) {
+			ArithmeticComponent firstArith = new ArithmeticComponent(this,
+					this.level, this.weight, this.pt);
+			children.add(firstArith);
+			variables = firstArith.createLines(deepCopyHashMap(variables),
+					randomVariable);
+		} else if (selection == 1) {
+			LoopComponent firstLoop = new LoopComponent(this.level,
+					this.weight, this.pt, this, 1);
+			children.add(firstLoop);
+			firstLoop.createForLoop(deepCopyHashMap(variables), randomVariable);
+			variables = firstLoop.runLines(deepCopyHashMap(variables));
+
+		} else {
+			ConditionalComponent firstCond = new ConditionalComponent(
+					this.level, this.weight, this.pt, this, 1);
+			children.add(firstCond);
+			variables = firstCond.createLines(deepCopyHashMap(variables),
+					randomVariable);
+		}
 
 		// add blank line
 		Line blankLine = new Line(this, true);
@@ -485,14 +514,29 @@ public class FunctionComponent extends Component {
 				childFunction.levelFiveCallee(parameterValues));
 		children.add(functionCall);
 
-		// pick function type, arithmetic for now
-		ArithmeticComponent firstArith = new ArithmeticComponent(this,
-				this.level, this.weight, this.pt);
-		children.add(firstArith);
+		// pick function type, at random
+		int selection = rand.nextInt(3);
 
-		// create lines
-		variables = firstArith.createLines(deepCopyHashMap(variables),
-				randomVariable);
+		if (selection == 0) {
+			ArithmeticComponent firstArith = new ArithmeticComponent(this,
+					this.level, this.weight, this.pt);
+			children.add(firstArith);
+			variables = firstArith.createLines(deepCopyHashMap(variables),
+					randomVariable);
+		} else if (selection == 1) {
+			LoopComponent firstLoop = new LoopComponent(this.level,
+					this.weight, this.pt, this, 1);
+			children.add(firstLoop);
+			firstLoop.createForLoop(deepCopyHashMap(variables), randomVariable);
+			variables = firstLoop.runLines(deepCopyHashMap(variables));
+
+		} else {
+			ConditionalComponent firstCond = new ConditionalComponent(
+					this.level, this.weight, this.pt, this, 1);
+			children.add(firstCond);
+			variables = firstCond.createLines(deepCopyHashMap(variables),
+					randomVariable);
+		}
 
 		// add blank line
 		Line blankLine = new Line(this, true);

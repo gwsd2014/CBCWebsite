@@ -1,4 +1,4 @@
-@(question: List[String], spaces: List[Integer], answers: Array[Integer], spot: Integer)
+@(question: List[String], spaces: List[Integer], answers: Array[Integer], spot: Integer, correct: Integer)
 
 @main("Dashboard", true) {
 
@@ -11,47 +11,68 @@
         <!-- --- SD WEBSITE TEMPLATE --- -->
         <!-- Your project name, tagline and description goes here -->
         <div class="jumbotron">
-          <h1>Problem:</h1>
-          <hr style="border-color: rgb(51, 51, 51);">
+			@if(correct == -1) {
+				<p style="font-size:28px;">Welcome to Coding Boot Camp!</br>
+					Your first problem is below. </br>
+					Try your best to follow what the program is doing, and figure out what it is supposed to return </br>
+					Good luck!</p>
+			}
+			@if(correct == 0) {
+				<p style="font-size:40px;">That was an incorrect answer, try again</p>
+			} 
+			@if(correct == 1) {
+				<p style="font-size:40px;">Correct!</p>
+			}
+			@if(correct == -2) {
+				<p stryle="font-size:40px;">Welcome back!</p>
+			}
          <div><p>
             @for((line, index) <- question.zipWithIndex){
                 @for( i <- 1 to spaces.get(index)){
                     &nbsp;&nbsp;&nbsp;&nbsp;
                 }
                 @line </br>
-            }</p>
+            }
          </div>
-            @helper.form(action = routes.GeneratorController.execute("value")){
-                <input type="radio" name="group1"
+		 @if(spot == -1){
+			@helper.form(action = routes.GeneratorController.execute("group1")){
+				<input type="text" name="group1"></br>
+				<input type="submit" value="Submit">
+			}
+		 }
+         @if(spot != -1){
+			@helper.form(action = routes.GeneratorController.execute("value")){
+                <input type="radio" name="group1" style="margin-bottom: 0"
                    @if(spot == 0){
-                        value="1"
+                        required value="cuiop"
                     }else{
-                        value="0"
+                        required value="poiuc"
                     }
                 > @answers.apply(0)<br>
                 <input type="radio" name="group1"
                     @if(spot == 1){
-                        value="1"
+                        value="cuiop"
                     }else{
-                        value="0"
+                        value="poiuc"
                     }
                 > @answers.apply(1)<br>
                 <input type="radio" name="group1"
                     @if(spot == 2){
-                        value="1"
+                        value="cuiop"
                     }else{
-                        value="0"
+                        value="poiuc"
                     }
                 > @answers.apply(2)<br>
                 <input type="radio" name="group1"
                     @if(spot == 3){
-                        value="1"
+                        value="cuiop"
                     }else{
-                        value="0"
+                        value="poiuc"
                     }
                 > @answers.apply(3)<br> 
                 <input type="submit" value="Submit">
             }
+		}
         </div>
     </div>
 

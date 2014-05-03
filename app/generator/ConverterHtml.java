@@ -5,11 +5,12 @@ import java.util.LinkedList;
 
 public class ConverterHtml {
 
-    StringBuilder builder;
+	StringBuilder builder;
 	LinkedList<String> list;
 	ComponentTypes removedComponent;
 	boolean hasRemoved;
 	int weight;
+	String blankAnswer;
 
 	public ConverterHtml() {
 		builder = new StringBuilder();
@@ -108,7 +109,7 @@ public class ConverterHtml {
 
 		// Conditional
 		if (logic instanceof ConditionalComponent) {
-			
+
 			// print test statement
 			ConditionalComponent conditional = (ConditionalComponent) logic;
 			if (!hasRemoved && removedComponent == ComponentTypes.Conditional) {
@@ -127,62 +128,41 @@ public class ConverterHtml {
 			}
 			convertLogic(conditional.getIfComponent(), indentation + 1);
 
-			builder.append(indent + "endif");
-			newLine();
 			builder.append(indent + "else");
 			newLine();
 
 			convertLogic(conditional.getElseComponent(), indentation + 1);
 
-			builder.append(indent + "endelse");
+			builder.append(indent + "endif");
 			newLine();
 		}
 
 		// Loop
 		if (logic instanceof LoopComponent) {
 			LoopComponent loop = (LoopComponent) logic;
-			if (loop.isForLoop()) {
-				// insert ??? if needed
-				if (!hasRemoved && removedComponent == ComponentTypes.Loop) {
-					// remove different components based on weight
-					loop.replacePiece();
-					hasRemoved = true;
-				}
-				// print test statement
-				builder.append(indent + "for ( " + loop.getLeftVariable()
-						+ " = " + loop.getRightValue() + " ; "
-						+ loop.getLeftVariable() + " "
-						+ tokenConversion(loop.getComparator()) + " "
-						+ loop.getForLoopTestValue() + " ; "
-						+ loop.getLeftVariable() + " "
-						+ tokenConversion(loop.getForLoopIncrementor()) + " )");
-				newLine();
-
-				// print the logic within the loop
-				for (Iterator<LogicComponent> i = loop.getChildLogics()
-						.iterator(); i.hasNext();) {
-					convertLogic(i.next(), indentation + 1);
-				}
-
-				builder.append(indent + "endfor");
-				newLine();
-
-			} else {
-				// print test statement
-				builder.append(indent + "while ( " + loop.getLeftVariable()
-						+ " " + tokenConversion(loop.getComparator()) + " "
-						+ loop.getRightValue() + " )");
-				newLine();
-
-				// print the logic within the loop
-				for (Iterator<LogicComponent> i = loop.getChildLogics()
-						.iterator(); i.hasNext();) {
-					convertLogic(i.next(), indentation + 1);
-				}
-
-				builder.append(indent + "endwhile");
-				newLine();
+			// insert ??? if needed
+			if (!hasRemoved && removedComponent == ComponentTypes.Loop) {
+				// remove different components based on weight
+				loop.replacePiece();
+				hasRemoved = true;
 			}
+			// print test statement
+			builder.append(indent + "for ( " + loop.getLeftVariable() + " = "
+					+ loop.getRightValue() + " ; " + loop.getLeftVariable()
+					+ " " + tokenConversion(loop.getComparator()) + " "
+					+ loop.getForLoopTestValue() + " ; "
+					+ loop.getLeftVariable() + " "
+					+ tokenConversion(loop.getForLoopIncrementor()) + " )");
+			newLine();
+
+			// print the logic within the loop
+			for (Iterator<LogicComponent> i = loop.getChildLogics().iterator(); i
+					.hasNext();) {
+				convertLogic(i.next(), indentation + 1);
+			}
+
+			builder.append(indent + "endfor");
+			newLine();
 
 		}
 

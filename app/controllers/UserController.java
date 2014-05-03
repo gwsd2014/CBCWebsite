@@ -64,8 +64,11 @@ public class UserController extends Controller {
 		} else {
 			User newUser = User
 					.create(new User(createUserForm.get(), "Student"));
-			// newUser.instructor = User.byId(session("userId"));
-			flash("success", "User created.");
+
+			session().clear();
+			session("userId", newUser.id.toString());
+			session("userFirstName", newUser.firstName);
+			
 			return ok(index.render());
 		}
 	}
